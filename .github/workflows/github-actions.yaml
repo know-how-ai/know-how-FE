@@ -58,25 +58,16 @@ jobs:
                   echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
                   echo "🖥️ The workflow is now ready to merge your code on the runner."
 
-            - name: Automatically Merge PR
-              uses: plm9606/automerge_actions@1.2.3
-              with:
-                  lable-name: automation
-                  reviewer-number: 0
-                  merge-method: merge
-                  github-token: ${{ secrets.GITHUB_TOKEN }} # The token will expire on Mon, Sep 25 2023
-                  pull-number: 0
+            - name: Checkout repository
+              uses: actions/checkout@v2
 
-            # - name: Checkout repository
-            #   uses: actions/checkout@v2
+            - name: Merge to main branch
+              if: ${{ needs.test.outputs.output1 }} == 'success'
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email "<>"
+                  git checkout main
+                  git merge dev
+                  git push origin main
 
-            # - name: Merge to main branch
-            #   if: ${{ needs.test.outputs.output1 }} == 'success'
-            #   run: |
-            #       git config user.name "GitHub Actions"
-            #       git config user.email "<>"
-            #       git checkout main
-            #       git merge --ff-only ${{ github.ref }}
-            #       git push
-
-            # - run: echo "🍏 This job's status is ${{ job.status }}."
+            - run: echo "🍏 This job's status is ${{ job.status }}."
