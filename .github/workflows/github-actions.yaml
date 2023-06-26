@@ -67,9 +67,9 @@ jobs:
               uses: peter-evans/create-pull-request@v5
               with:
                   token: ${{ secrets.TOKEN }}
-                  title: Automatic Pull Request from Dev to Deploy
+                  title: Automatic Pull Request from dev to main
                   body: This is an automatic pull request created by GitHub Actions.
-                  branch: "deploy"
+                  branch: "main"
                   labels: |
                       automation
 
