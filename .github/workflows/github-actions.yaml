@@ -68,7 +68,6 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   title: Automatic Pull Request from Dev to Main
                   body: This is an automatic pull request created by GitHub Actions.
-                  base: dev
                   branch: main
                   labels: |
                       automation
