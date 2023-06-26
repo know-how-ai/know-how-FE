@@ -16,12 +16,12 @@ const Btn = styled.button`
     font-size: 14px;
 `;
 
-const Test = () => {
+const Example = () => {
     const dispatch = useDispatch();
     const onDispatch = () => dispatch(testAction("리덕스 테스트 액션!!"));
 
     return (
-        <Container>
+        <Container data-testid="test-container">
             <Btn type="button" onClick={onDispatch}>
                 버튼
             </Btn>
@@ -29,4 +29,6 @@ const Test = () => {
     );
 };
 
-export default Test;
+Example.displayName = "Example";
+
+export default Example;
