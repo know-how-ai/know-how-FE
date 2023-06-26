@@ -61,13 +61,11 @@ jobs:
                   echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
                   echo "🖥️ The workflow is now ready to merge your code on the runner."
 
-            - name: Checkout repository
-              uses: actions/checkout@v2
-
             - name: PR to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
               uses: peter-evans/create-pull-request@v5
               with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
                   title: Automatic Pull Request from Dev to Main
                   body: This is an automatic pull request created by GitHub Actions.
                   base: dev
