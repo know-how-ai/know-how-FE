@@ -29,11 +29,12 @@ jobs:
 
             - run: echo "🍏 This job's status is ${{ job.status }}."
 
-            - name: 🍏 Set test status state
-              id: test-status
-              run: echo "::save-state name=status::${{ job.status }}"
+            - name: 🍏 Set state about test status
+              run: echo "{test_status}=${{ job.status }}" >> $GITHUB_TEST_STATUS
 
-            - run: echo "${{ github.job_status }}"
+            - run: echo "${{ test_status }}"
+            - run: echo "${{ GITHUB_TEST_STATUS }}"
+            - run: echo "${{ github.test_status }}"
 
     merge:
         needs: test
