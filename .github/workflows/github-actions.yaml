@@ -1,4 +1,4 @@
-name: Running Test by Dev branch
+name: Running Test then Merge by Dev branch
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
@@ -13,10 +13,12 @@ jobs:
         outputs:
             output1: ${{ steps.testjob.outputs.test }}
         steps:
-            - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-            - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-            - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-            - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+            - name: Starts out Test by Jest
+              run: |
+                  echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+                  echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+                  echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+                  echo "🖥️ The workflow is now ready to test your code on the runner."
 
             - name: Init actions/checkout
               uses: actions/checkout@v3
@@ -49,21 +51,32 @@ jobs:
         steps:
             # - run: echo ${{ needs.test.outputs.output1 }}
             # - run: echo "$RESULT"
-            - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-            - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-            - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-            - run: echo "🖥️ The workflow is now ready to merge your code on the runner."
-
-            - name: Checkout repository
-              uses: actions/checkout@v2
-
-            - name: Merge to main branch
-              if: ${{ needs.test.outputs.output1 }} == 'success'
+            - name: Starts out Merge
               run: |
-                  git config user.name "GitHub Actions"
-                  git config user.email "<>"
-                  git checkout main
-                  git merge --ff-only ${{ github.ref }}
-                  git push
+                  echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+                  echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+                  echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+                  echo "🖥️ The workflow is now ready to merge your code on the runner."
 
-            - run: echo "🍏 This job's status is ${{ job.status }}."
+            - name: Automatically Merge PR
+              uses: plm9606/automerge_actions@1.2.2
+              with:
+                  lable-name: automation
+                  reviewer-number: 0
+                  merge-method: merge
+                  github-token: ${{ secrets.TOKEN }} # The token will expire on Mon, Sep 25 2023
+
+
+            # - name: Checkout repository
+            #   uses: actions/checkout@v2
+
+            # - name: Merge to main branch
+            #   if: ${{ needs.test.outputs.output1 }} == 'success'
+            #   run: |
+            #       git config user.name "GitHub Actions"
+            #       git config user.email "<>"
+            #       git checkout main
+            #       git merge --ff-only ${{ github.ref }}
+            #       git push
+
+            # - run: echo "🍏 This job's status is ${{ job.status }}."
