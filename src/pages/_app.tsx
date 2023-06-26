@@ -1,9 +1,9 @@
 import { GlobalStyle } from "@/components/styles/global-style";
 import { theme } from "@/components/styles/theme";
-import wrapper from "@/contexts/configureStore";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import Head from "next/head";
+import { wrapper } from "@/contexts/store";
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
@@ -15,6 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 />
             </Head>
             <GlobalStyle />
+
             <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
             </ThemeProvider>
@@ -22,4 +23,4 @@ const App = ({ Component, pageProps }: AppProps) => {
     );
 };
 
-export default wrapper.withRedux(App);
+export default wrapper.withRedux(App); // for SSR(getInitialProps | getServerSideProps)

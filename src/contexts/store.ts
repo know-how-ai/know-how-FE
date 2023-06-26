@@ -1,21 +1,39 @@
-import { HYDRATE } from "next-redux-wrapper";
-import { Action, Reducer, combineReducers } from "redux";
-import testReducer from "./testCtx";
+import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "redux";
+import { configureStore, type PayloadAction } from "@reduxjs/toolkit";
+import counterReducer from "./counterSlice";
+import reverseReducer from "./reverseSlice";
 
 type TYPE_HYDRATE = "__NEXT_REDUX_WRAPPER_HYDRATE__";
 type ActionType = TYPE_HYDRATE | string;
 
-interface ActionInterface extends Action<ActionType> {
-    payload?: any;
+interface AnyObject {
+    [key: string]: any;
 }
 
-const rootReducer: Reducer = (state, action: ActionInterface) => {
+const rootReducer = (
+    state: any,
+    action: PayloadAction<AnyObject, ActionType>
+) => {
     if (action.type === (HYDRATE as TYPE_HYDRATE)) {
-        return action.payload;
+        return { ...state, ...action.payload };
     } else {
-        const combinedReducer = combineReducers({ testReducer }); // input reducers in object
+        const combinedReducer = combineReducers({
+            counter: counterReducer,
+            reverse: reverseReducer,
+        }); // input reducers in object
         return combinedReducer(state, action);
     }
 };
 
-export default rootReducer;
+const makeStore = () => {
+    return configureStore({ reducer: rootReducer });
+};
+
+export const store = makeStore();
+export const wrapper = createWrapper(makeStore, {
+    debug: process.env.NODE_ENV === "development",
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
