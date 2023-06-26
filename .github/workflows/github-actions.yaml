@@ -58,20 +58,36 @@ jobs:
                   echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
                   echo "🖥️ The workflow is now ready to merge your code on the runner."
 
-            - uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
+            # - uses: actions/checkout@v3
+            #   with:
+            #       fetch-depth: 0
 
-            - name: PR to main branch
-              if: ${{ needs.test.outputs.output1 }} == 'success'
-              uses: peter-evans/create-pull-request@v5
+            # - name: PR to main branch
+            #   if: ${{ needs.test.outputs.output1 }} == 'success'
+            #   uses: peter-evans/create-pull-request@v5
+            #   with:
+            #       token: ${{ secrets.GITHUB_TOKEN }}
+            #       title: Automatic Pull Request from Dev to Main
+            #       body: This is an automatic pull request created by GitHub Actions.
+            #       branch: deploy
+            #       labels: |
+            #           automation
+
+            - name: Create Pull Request
+              uses: actions/github-script@v2
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  title: Automatic Pull Request from Dev to Main
-                  body: This is an automatic pull request created by GitHub Actions.
-                  branch: deploy
-                  labels: |
-                      automation
+                  script: |
+                      const github = require('@actions/github');
+
+                      const base = 'deploy';
+                      const head = 'dev';
+
+                      github.pulls.create({
+                        base: base,
+                        head: head,
+                        title: 'New Pull Request from Dev',
+                        body: 'This is a new pull request from the Dev branch.',
+                      });
 
             - name: Merge to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
