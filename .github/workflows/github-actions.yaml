@@ -67,9 +67,9 @@ jobs:
               uses: peter-evans/create-pull-request@v5
               with:
                   token: ${{ secrets.TOKEN }}
-                  title: Automatic Pull Request from Dev to Main
+                  title: Automatic Pull Request from Dev to Deploy
                   body: This is an automatic pull request created by GitHub Actions.
-                  branch: "main"
+                  branch: "deploy"
                   labels: |
                       automation
 
@@ -90,11 +90,11 @@ jobs:
             #             body: 'This is a new pull request from the Dev branch.',
             #           });
 
-            - name: Merge to main branch
-              if: ${{ needs.test.outputs.output1 }} == 'success'
-              uses: peter-evans/enable-pull-request-automerge@v3
-              with:
-                  token: ${{ secrets.TOKEN }}
-                  pull-request-number: 1
+            # - name: Merge to main branch
+            #   if: ${{ needs.test.outputs.output1 }} == 'success'
+            #   uses: peter-evans/enable-pull-request-automerge@v3
+            #   with:
+            #       token: ${{ secrets.TOKEN }}
+            #       pull-request-number: 1
 
             - run: echo "🍏 This job's status is ${{ job.status }}."
