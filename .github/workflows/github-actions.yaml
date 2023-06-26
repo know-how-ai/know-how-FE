@@ -61,13 +61,27 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
+            - name: PR to main branch
+              if: ${{ needs.test.outputs.output1 }} == 'success'
+              uses: peter-evans/create-pull-request@v3
+              with:
+                  title: Automatic Pull Request from Dev to Main
+                  body: This is an automatic pull request created by GitHub Actions.
+                  branch: dev
+                  target: main
+
             - name: Merge to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
-              run: |
-                  git config user.name "GitHub Actions"
-                  git config user.email "<>"
-                  git checkout main
-                  git merge dev
-                  git push origin main
+              uses: peter-evans/merge-pull-request@v3
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: dev
+                  target: main
+
+              # run: |
+              #     git checkout main
+              #     git merge dev
+              #     git push origin main
+              # error: pathspec 'main' did not match any file(s) known to git
 
             - run: echo "🍏 This job's status is ${{ job.status }}."
