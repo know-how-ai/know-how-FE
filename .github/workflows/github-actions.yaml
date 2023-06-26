@@ -66,12 +66,14 @@ jobs:
 
             - name: PR to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
-              uses: peter-evans/create-pull-request@v3
+              uses: peter-evans/create-pull-request@v5
               with:
                   title: Automatic Pull Request from Dev to Main
                   body: This is an automatic pull request created by GitHub Actions.
-                  branch: dev
-                  target: main
+                  base: dev
+                  branch: main
+                  labels: |
+                      automation
 
             - name: Merge to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
