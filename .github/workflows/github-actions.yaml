@@ -59,13 +59,13 @@ jobs:
                   echo "🖥️ The workflow is now ready to merge your code on the runner."
 
             - name: Automatically Merge PR
-              uses: plm9606/automerge_actions@1.2.2
+              uses: plm9606/automerge_actions@1.2.3
               with:
                   lable-name: automation
                   reviewer-number: 0
                   merge-method: merge
-                  github-token: ${{ secrets.TOKEN }} # The token will expire on Mon, Sep 25 2023
-
+                  github-token: ${{ secrets.GITHUB_TOKEN }} # The token will expire on Mon, Sep 25 2023
+                  pull-number: 0
 
             # - name: Checkout repository
             #   uses: actions/checkout@v2
