@@ -42,7 +42,11 @@ jobs:
         runs-on: ubuntu-latest
 
         needs: test
-        # if: ${{ needs.test.output.output1 == 'success' }}
+
+        env:
+            RESULT: ${{ needs.test.outputs.output1 }}
+
+        if: ${{ needs.test.output.output1 == 'success' }}
         steps:
             - run: echo ${{ needs.test.outputs.output1 }}
             # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
