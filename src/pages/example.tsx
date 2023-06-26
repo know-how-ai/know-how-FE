@@ -1,5 +1,5 @@
 import { decrease, increase } from "@/contexts/counterSlice";
-import { reDecrease, reIncrease } from "@/contexts/reverseSlice";
+import { onModal, offModal } from "@/contexts/uiSlice";
 import { wrapper } from "@/contexts/store";
 import { useAppDispatch, useAppSelector } from "@/libs/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
@@ -39,37 +39,41 @@ interface Props {
 
 const Example: NextPage<Props> = (props) => {
     const dispatch = useAppDispatch();
-    const { value: count } = useAppSelector((state) => state.counter);
-    const { num } = useAppSelector((state) => state.reverse);
+    const { value } = useAppSelector((state) => state.counter);
+    const { showModal } = useAppSelector((state) => state.ui);
 
     return (
         <Container data-testid="test-container">
-            <Btn
-                aria-label="Increment value"
-                onClick={() => dispatch(increase())}
-            >
-                Increment
-            </Btn>
-            <NumSpan>{count}</NumSpan>
-            <Btn
-                aria-label="Decrement value"
-                onClick={() => dispatch(decrease())}
-            >
-                Decrement
-            </Btn>
-            <Btn
-                aria-label="Increment value"
-                onClick={() => dispatch(reIncrease())}
-            >
-                Increment
-            </Btn>
-            <NumSpan>{num}</NumSpan>
-            <Btn
-                aria-label="Decrement value"
-                onClick={() => dispatch(reDecrease())}
-            >
-                Decrement
-            </Btn>
+            <div>
+                <Btn
+                    aria-label="Increment value"
+                    onClick={() => dispatch(increase())}
+                >
+                    Increment
+                </Btn>
+                <NumSpan>{value}</NumSpan>
+                <Btn
+                    aria-label="Decrement value"
+                    onClick={() => dispatch(decrease())}
+                >
+                    Decrement
+                </Btn>
+            </div>
+            <div>
+                <Btn
+                    aria-label="Show Modal"
+                    onClick={() => dispatch(onModal())}
+                >
+                    Turn on Modal
+                </Btn>
+                <Btn
+                    aria-label="Decrement value"
+                    onClick={() => dispatch(offModal())}
+                >
+                    Turn off Modal
+                </Btn>
+            </div>
+            {showModal ? <NumSpan>모달이 켜졌어요!</NumSpan> : null}
         </Container>
     );
 };
@@ -82,7 +86,7 @@ export const getServerSideProps: GetServerSideProps =
         store.dispatch(increase());
         store.dispatch(increase());
 
-        store.dispatch(reIncrease());
+        store.dispatch(onModal());
 
         // props에 초기값으로 넘겨줄 수 있지만, 변하는 값이 아니라서 갱신하지 않으면 불변.
         // 컴포넌트 내에서 useAppSelector를 통해서 사용하는 것이 좋음.

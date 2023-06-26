@@ -2,7 +2,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from "redux";
 import { configureStore, type PayloadAction } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
-import reverseReducer from "./reverseSlice";
+import uiReducer from "./uiSlice";
 
 type TYPE_HYDRATE = "__NEXT_REDUX_WRAPPER_HYDRATE__";
 type ActionType = TYPE_HYDRATE | string;
@@ -20,7 +20,7 @@ const rootReducer = (
     } else {
         const combinedReducer = combineReducers({
             counter: counterReducer,
-            reverse: reverseReducer,
+            ui: uiReducer,
         }); // input reducers in object
         return combinedReducer(state, action);
     }
