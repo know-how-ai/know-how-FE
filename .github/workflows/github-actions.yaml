@@ -5,7 +5,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
     push:
         branches:
-            - dev
+            - dev # 실행할 브랜치
 
 jobs:
     test:
@@ -46,7 +46,7 @@ jobs:
         env:
             RESULT: ${{ needs.test.outputs.output1 }}
 
-        if: ${{ needs.test.output.output1 == 'success' }}
+        if: $RESULT == 'success'
         steps:
             - run: echo ${{ needs.test.outputs.output1 }}
             # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
