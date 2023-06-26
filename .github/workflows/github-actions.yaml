@@ -6,6 +6,9 @@ on:
     push:
         branches:
             - dev # 실행할 브랜치
+    pull_request:
+        branches:
+            - main
 
 jobs:
     test:
@@ -72,11 +75,10 @@ jobs:
 
             - name: Merge to main branch
               if: ${{ needs.test.outputs.output1 }} == 'success'
-              uses: peter-evans/merge-pull-request@v3
+              uses: peter-evans/enable-pull-request-automerge@v3
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: dev
-                  target: main
+                  pull-request-number: 1
 
               # run: |
               #     git checkout main
