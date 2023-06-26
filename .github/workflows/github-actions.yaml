@@ -29,13 +29,15 @@ jobs:
 
             - run: echo "🍏 This job's status is ${{ job.status }}."
 
-            - name: Set test status output
+            - name: 🍏 Set test status state
               id: test-status
-              run: echo "::set-output name=status::${{ job.status }}"
+              run: echo "::save-state name=status::${{ job.status }}"
+
+            - run: echo "${{ github.job_status }}"
 
     merge:
         needs: test
-        if: ${{ needs.test.outputs.status == 'success' }}
+        if: ${{ github.job_status == 'success' }}
         runs-on: ubuntu-latest
 
         steps:
