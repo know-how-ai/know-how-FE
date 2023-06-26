@@ -38,13 +38,11 @@ jobs:
             - name: 🍏 Set state about test status
               run: echo "{test_status}=${{ job.status }}" >> $GITHUB_TEST_STATUS
 
-            - run: echo "${{ test_status }}"
-            - run: echo "${{ GITHUB_TEST_STATUS }}"
-            - run: echo "${{ github.test_status }}"
+            - run: echo "${{ env.GITHUB_TEST_STATUS }}"
 
     merge:
         needs: test
-        if: ${{ GITHUB_TEST_STATUS == 'success' }}
+        if: ${{ env.GITHUB_TEST_STATUS == 'success' }}
         runs-on: ubuntu-latest
 
         steps:
