@@ -30,7 +30,7 @@ jobs:
             - run: echo "🍏 This job's status is ${{ job.status }}."
 
     merge:
-        if: ${{ always() && steps.test.outputs.result == 'success' }}
+        if: ${{ steps.test.outputs.result == 'success' }}
         runs-on: ubuntu-latest
 
         steps:
