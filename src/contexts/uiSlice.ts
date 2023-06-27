@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ReactNode } from "react";
+import { useAppSelector } from "./contextHooks";
 
 interface UIState {
     isDarkmode: Boolean;
@@ -21,7 +22,7 @@ interface UIAction {
 }
 
 const uiSlice = createSlice({
-    name: "reverse",
+    name: "ui",
     initialState,
     reducers: {
         onDarkmode: (state) => {
@@ -44,5 +45,6 @@ const uiSlice = createSlice({
 const { actions, reducer: uiReducer } = uiSlice;
 
 export const { offDarkmode, offModal, onDarkmode, onModal } = actions;
+export const useUISelector = useAppSelector<UIState>;
 
 export default uiReducer;

@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import { configureStore, type PayloadAction } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
 import uiReducer from "./uiSlice";
+import userReducer from "./userSlice";
 
 type TYPE_HYDRATE = "__NEXT_REDUX_WRAPPER_HYDRATE__";
 type ActionType = TYPE_HYDRATE | string;
@@ -21,6 +22,7 @@ const rootReducer = (
         const combinedReducer = combineReducers({
             counter: counterReducer,
             ui: uiReducer,
+            user: userReducer,
         }); // input reducers in object
         return combinedReducer(state, action);
     }
