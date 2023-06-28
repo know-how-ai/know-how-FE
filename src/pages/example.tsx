@@ -4,7 +4,8 @@ import { wrapper } from "@/contexts/store";
 import { useAppDispatch, useAppSelector } from "@/contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { Layout, Button, Input, Select } from "@/components";
+import { Button, Input, Select } from "@/components"; // Layout import 이슈 있음
+import Layout from "@/components/layout/layout";
 import { type FormEvent, useState } from "react";
 // import dynamic from "next/dynamic";
 // const Select = dynamic(() => import("@/components/atom/Select/Select"), {
