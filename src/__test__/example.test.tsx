@@ -8,7 +8,7 @@ jest.mock("next/router", () => require("next-router-mock"));
 
 test("Jest 테스팅", async () => {
     // const user = userEvent.setup()
-    await mockRouter.push("/test");
+    await mockRouter.push("/example");
 
     useThemeRenderWithRedux(<Example />);
 
