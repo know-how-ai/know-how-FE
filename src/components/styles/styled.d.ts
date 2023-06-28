@@ -7,7 +7,7 @@ declare module "styled-components" {
             blue: string;
             gray: string;
             green: string;
-            lightGreen: string;
+            lightGreen: "#99ecdd";
             darkGray: string;
             backgroundColor: string;
             textColor: string;
@@ -22,6 +22,10 @@ declare module "styled-components" {
         };
         transition: {
             fast: "all 0.3s ease-in-out;";
+        };
+        border: {
+            active: "2px solid #99ecdd;";
+            nonActive: "2px solid transparent;";
         };
     }
 }

@@ -22,6 +22,10 @@ export const lightTheme: DefaultTheme = {
     transition: {
         fast: "all 0.3s ease-in-out;",
     },
+    border: {
+        active: "2px solid #99ecdd;",
+        nonActive: "2px solid transparent;",
+    },
 };
 
 export const darkTheme: DefaultTheme = {
@@ -45,6 +49,10 @@ export const darkTheme: DefaultTheme = {
     },
     transition: {
         fast: "all 0.3s ease-in-out;",
+    },
+    border: {
+        active: "2px solid #99ecdd;",
+        nonActive: "2px solid transparent;",
     },
 };
 

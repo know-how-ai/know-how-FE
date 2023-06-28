@@ -1,10 +1,10 @@
-import type { HTMLInputTypeAttribute } from "react";
+import type { ChangeEvent, HTMLInputTypeAttribute } from "react";
 import styled from "styled-components";
 
 const Input_ = styled.input`
     color: black;
     background-color: white;
-    border: 2px solid transparent;
+    border: ${(p) => p.theme.border.nonActive};
     border-radius: 1rem;
     transition: ${(p) => p.theme.transition.fast};
     padding: 1rem;
@@ -15,7 +15,7 @@ const Input_ = styled.input`
     }
 
     :focus {
-        border: 2px solid ${(p) => p.theme.color.lightGreen};
+        border: ${(p) => p.theme.border.active};
         /* background-color: transparent; */
     }
 
@@ -31,6 +31,8 @@ interface InputProps {
     required?: boolean;
     disabled?: boolean;
     placeholder?: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    currentValue?: string;
 }
 
 const Input = ({
@@ -38,10 +40,14 @@ const Input = ({
     disabled,
     placeholder,
     required,
+    onChange,
+    currentValue,
     ...rest
 }: InputProps) => {
     return (
         <Input_
+            value={currentValue}
+            onChange={onChange}
             type={type}
             disabled={disabled}
             placeholder={placeholder}

@@ -1,5 +1,4 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import userEvent from "@testing-library/user-event";
 import { store, wrapper } from "../contexts/store";
 import { Provider } from "react-redux";
 import { useUISelector } from "@/contexts/uiSlice";
@@ -43,5 +42,3 @@ export const useThemeRenderWithRedux = (
         wrapper: StoreWrapper,
     });
 };
-
-export const useEvent = userEvent.setup();

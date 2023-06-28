@@ -4,9 +4,12 @@ import { wrapper } from "@/contexts/store";
 import { useAppDispatch, useAppSelector } from "@/contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import Layout from "@/components/layout/layout";
-import Button from "@/components/atom/Button/Button";
-import Input from "@/components/atom/Input/Input";
+import { Layout, Button, Input, Select } from "@/components";
+import { type FormEvent, useState } from "react";
+// import dynamic from "next/dynamic";
+// const Select = dynamic(() => import("@/components/atom/Select/Select"), {
+//     ssr: true,
+// });
 
 const Container = styled.div`
     display: flex;
@@ -31,6 +34,10 @@ const Example: NextPage<Props> = (props) => {
     const dispatch = useAppDispatch();
     const { value } = useAppSelector((state) => state.counter);
     const { isDarkmode } = useUISelector((state) => state.ui);
+
+    const options = ["Chocolate", "Strawberry", "Banana"];
+    const [selectVal, setSelectVal] = useState(options[0]);
+    const [inputVal, setInputVal] = useState("");
 
     return (
         <Layout title="테스트">
@@ -66,17 +73,32 @@ const Example: NextPage<Props> = (props) => {
                     다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
                 </NumSpan>
 
-                <div>
-                    <div>
-                        <Input type="text" />
-                    </div>
-                    <div>
-                        <Input type="checkbox" />
-                    </div>
-                    <div>
-                        <Input type="number" />
-                    </div>
-                </div>
+                <form
+                    onSubmit={(e: FormEvent) => {
+                        e.preventDefault();
+                        console.log(inputVal, selectVal);
+                        setInputVal("");
+                        setSelectVal(options[0]);
+                    }}
+                >
+                    <Input
+                        currentValue={inputVal}
+                        onChange={(e) => {
+                            setInputVal(e.currentTarget.value);
+                        }}
+                        type="text"
+                    />
+                    <Select
+                        selectedValue={selectVal}
+                        onChange={(e) => {
+                            setSelectVal(e.target.value);
+                        }}
+                        options={options}
+                    />
+                    <Button>Submit</Button>
+                </form>
+
+                <Input type="text"></Input>
             </Container>
         </Layout>
     );
