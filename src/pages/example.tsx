@@ -10,9 +10,9 @@ import { wrapper } from "@/contexts/store";
 import { useAppDispatch, useAppSelector } from "@/contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { Button, Input, Modal, Select } from "@/components"; // Layout import 이슈 있음
-import Layout from "@/components/layout";
+import { Button, Input, Modal, Select, Layout } from "@/components"; // Layout import 이슈 있음
 import { type FormEvent, useState } from "react";
+
 // import dynamic from "next/dynamic";
 // const Select = dynamic(() => import("@/components/atom/Select/Select"), {
 //     ssr: true,
