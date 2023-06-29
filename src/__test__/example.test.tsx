@@ -12,8 +12,8 @@ test("Jest 테스팅", async () => {
 
     useThemeRenderWithRedux(<Example />);
 
-    const inputs = await screen.findAllByRole("textbox");
-    inputs.forEach((input) => {
+    const btns = await screen.findAllByRole("button");
+    btns.forEach((input) => {
         expect(input).toBeInTheDocument();
     });
 });

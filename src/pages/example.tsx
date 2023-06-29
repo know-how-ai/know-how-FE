@@ -1,11 +1,17 @@
 import { decrease, increase } from "@/contexts/counterSlice";
-import { onDarkmode, offDarkmode, useUISelector } from "@/contexts/uiSlice";
+import {
+    onDarkmode,
+    offDarkmode,
+    useUISelector,
+    offModal,
+    onModal,
+} from "@/contexts/uiSlice";
 import { wrapper } from "@/contexts/store";
 import { useAppDispatch, useAppSelector } from "@/contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { Button, Input, Select } from "@/components"; // Layout import 이슈 있음
-import Layout from "@/components/layout/layout";
+import { Button, Input, Modal, Select } from "@/components"; // Layout import 이슈 있음
+import Layout from "@/components/layout";
 import { type FormEvent, useState } from "react";
 // import dynamic from "next/dynamic";
 // const Select = dynamic(() => import("@/components/atom/Select/Select"), {
@@ -16,7 +22,6 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     padding: 4rem center;
-    flex-direction: column;
     gap: 1.5rem;
 `;
 
@@ -34,7 +39,7 @@ interface Props {
 const Example: NextPage<Props> = (props) => {
     const dispatch = useAppDispatch();
     const { value } = useAppSelector((state) => state.counter);
-    const { isDarkmode } = useUISelector((state) => state.ui);
+    const { isDarkmode, showModal } = useUISelector((state) => state.ui);
 
     const options = ["Chocolate", "Strawberry", "Banana"];
     const [selectVal, setSelectVal] = useState(options[0]);
@@ -42,7 +47,7 @@ const Example: NextPage<Props> = (props) => {
 
     return (
         <Layout title="테스트">
-            <Container data-testid="test-container">
+            <Container>
                 <Button
                     aria-label="Increment value"
                     onClick={() => dispatch(increase())}
@@ -56,7 +61,8 @@ const Example: NextPage<Props> = (props) => {
                 >
                     Decrement
                 </Button>
-
+            </Container>
+            <Container>
                 <Button
                     aria-label="Show Modal"
                     onClick={() => dispatch(onDarkmode())}
@@ -69,38 +75,58 @@ const Example: NextPage<Props> = (props) => {
                 >
                     Turn off Dark
                 </Button>
+            </Container>
+            <Container>
+                <Button
+                    aria-label="Show Modal"
+                    onClick={() => dispatch(onModal())}
+                >
+                    모달 열기
+                </Button>
+                <Button
+                    aria-label="Decrement value"
+                    onClick={() => dispatch(offModal())}
+                >
+                    모달 닫기
+                </Button>
+            </Container>
 
-                <NumSpan>
-                    다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
-                </NumSpan>
+            <NumSpan>
+                다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
+            </NumSpan>
 
-                <form
-                    onSubmit={(e: FormEvent) => {
-                        e.preventDefault();
-                        console.log(inputVal, selectVal);
-                        setInputVal("");
-                        setSelectVal(options[0]);
+            {showModal ? (
+                <Modal
+                    handleClose={() => {
+                        dispatch(offModal());
                     }}
                 >
-                    <Input
-                        currentValue={inputVal}
-                        onChange={(e) => {
-                            setInputVal(e.currentTarget.value);
+                    <form
+                        onSubmit={(e: FormEvent) => {
+                            e.preventDefault();
+                            console.log(inputVal, selectVal);
+                            setInputVal("");
+                            setSelectVal(options[0]);
                         }}
-                        type="text"
-                    />
-                    <Select
-                        selectedValue={selectVal}
-                        onChange={(e) => {
-                            setSelectVal(e.target.value);
-                        }}
-                        options={options}
-                    />
-                    <Button>Submit</Button>
-                </form>
-
-                <Input type="text"></Input>
-            </Container>
+                    >
+                        <Input
+                            currentValue={inputVal}
+                            onChange={(e) => {
+                                setInputVal(e.currentTarget.value);
+                            }}
+                            type="text"
+                        />
+                        <Select
+                            selectedValue={selectVal}
+                            onChange={(e) => {
+                                setSelectVal(e.target.value);
+                            }}
+                            options={options}
+                        />
+                        <Button>Submit</Button>
+                    </form>
+                </Modal>
+            ) : null}
         </Layout>
     );
 };

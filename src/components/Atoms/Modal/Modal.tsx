@@ -54,7 +54,7 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
     const handleKeydownEscape = useCallback(
         // close modal by pressing Escape key
         (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
+            if (/escape/i.test(e.key)) {
                 return handleClose();
             }
         },
@@ -77,7 +77,7 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
 
     return (
         <RootContainer>
-            <ModalContainer aria-modal ref={ref}>
+            <ModalContainer aria-modal ref={ref} data-testid={"modal"}>
                 <CloseBtn
                     aria-label="Closing this modal button"
                     onClick={onClickClose}

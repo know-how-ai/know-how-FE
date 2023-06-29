@@ -1,7 +1,8 @@
 import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
-import { Input, Button, Select } from "@/components/Atoms";
+import { Input, Button, Select, Modal } from "@/components/Atoms";
+import { useState } from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -63,5 +64,63 @@ describe("Components: atoms unit test", () => {
 
         fireEvent.change(select, { target: { value: berry } });
         expect(selected).toBe(berry);
+    });
+
+    test("Modal", async () => {
+        let showModal = false;
+
+        const ModalComponent = () => {
+            const showingModal = () => {
+                showModal = true;
+            };
+            const hideModal = () => {
+                showModal = false;
+            };
+
+            return (
+                <>
+                    <Button onClick={showingModal}>Modal On</Button>
+
+                    {showModal ? (
+                        <Modal handleClose={hideModal}>
+                            <Button onClick={hideModal}>Modal Off</Button>
+                        </Modal>
+                    ) : null}
+                </>
+            );
+        };
+
+        const { unmount } = useThemeRenderWithRedux(<ModalComponent />);
+
+        const onModalButton = screen.getByRole("button", {
+            name: /modal on/i,
+        });
+
+        expect(onModalButton).toBeInTheDocument();
+        expect(screen.queryByTestId(/modal/i)).not.toBeInTheDocument();
+
+        // show modal
+        await user.click(onModalButton);
+
+        // re-rendering
+        unmount();
+        const { unmount: unmount2 } = useThemeRenderWithRedux(
+            <ModalComponent />
+        );
+        expect(showModal).toBe(true);
+        expect(screen.getByTestId(/modal/i)).toBeInTheDocument();
+
+        const offModalButton = screen.getByRole("button", {
+            name: /modal off/i,
+        });
+
+        // hide modal
+        await user.click(offModalButton);
+
+        // re-rendering
+        unmount2();
+        useThemeRenderWithRedux(<ModalComponent />);
+        expect(showModal).toBe(false);
+        expect(screen.queryByTestId(/modal/i)).not.toBeInTheDocument();
     });
 });
