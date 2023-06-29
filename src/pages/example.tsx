@@ -1,18 +1,18 @@
-import { decrease, increase } from "@contexts/counterSlice";
+import { decrease, increase } from "../contexts/counterSlice";
 import {
     onDarkmode,
     offDarkmode,
     useUISelector,
     offModal,
     onModal,
-} from "@contexts/uiSlice";
-import { wrapper } from "@contexts/store";
-import { useAppDispatch, useAppSelector } from "@contexts/contextHooks";
+} from "../contexts/uiSlice";
+import { wrapper } from "../contexts/store";
+import { useAppDispatch, useAppSelector } from "../contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { Button, Input, Modal, Select } from "@components/atoms"; // Layout import 이슈 있음
+import { Button, Input, Modal, Select } from "../components/atoms"; // Layout import 이슈 있음
 import { type FormEvent, useState } from "react";
-import Layout from "@/layout/Layout";
+import Layout from "../layout/Layout";
 
 const Container = styled.div`
     display: flex;

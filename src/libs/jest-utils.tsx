@@ -1,9 +1,9 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import { store, wrapper } from "../contexts/store";
+import { store } from "../contexts/store";
 import { Provider } from "react-redux";
-import { useUISelector } from "@/contexts/uiSlice";
+import { useUISelector } from "../contexts/uiSlice";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "@/components/styles/theme";
+import { darkTheme, lightTheme } from "../components/styles/theme";
 import { type RenderOptions, render } from "@testing-library/react";
 
 interface Props {
