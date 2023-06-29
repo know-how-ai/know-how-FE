@@ -1,8 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useThemeRenderWithRedux } from "@libs/jest-utils";
-import { Input, Button, Select, Modal } from "@/components/atoms";
-import { useState } from "react";
+import { useThemeRenderWithRedux } from "../libs/jest-utils";
+import { Input, Button, Select, Modal } from "../components/atoms";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
