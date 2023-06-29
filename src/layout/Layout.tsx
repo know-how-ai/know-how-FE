@@ -21,7 +21,7 @@ const Header = styled.header`
     filter: ${(props) => props.theme.filter.blur};
 `;
 
-const Main = styled.header`
+const Main = styled.main`
     display: flex;
     justify-content: center;
     flex-direction: column;

@@ -1,4 +1,3 @@
-import React from "react";
 import { decrease, increase } from "../contexts/counterSlice";
 import {
     onDarkmode,
@@ -12,11 +11,8 @@ import { useAppDispatch, useAppSelector } from "../contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
 import { type FormEvent, useState } from "react";
-import Layout from "../layout/Layout";
-import Button from "@components/atoms/button/Button";
-import Modal from "@components/atoms/modal/Modal";
-import Select from "@components/atoms/select/Select";
-import Input from "@components/atoms/input/Input";
+import Layout from "../layout";
+import { Button, Modal, Select, Input, Badge, Label } from "@components/atoms";
 
 const Container = styled.div`
     display: flex;
@@ -44,6 +40,7 @@ const Example: NextPage<Props> = (props) => {
     const options = ["Chocolate", "Strawberry", "Banana"];
     const [selectVal, setSelectVal] = useState(options[0]);
     const [inputVal, setInputVal] = useState("");
+    const [act, setAct] = useState(false);
 
     return (
         <Layout title="테스트">
@@ -95,6 +92,15 @@ const Example: NextPage<Props> = (props) => {
                 다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
             </NumSpan>
 
+            <Badge
+                active={act}
+                onClick={() => {
+                    setAct((prev) => !prev);
+                }}
+            >
+                반가워요
+            </Badge>
+
             {showModal ? (
                 <Modal
                     handleClose={() => {
@@ -102,6 +108,13 @@ const Example: NextPage<Props> = (props) => {
                     }}
                 >
                     <form
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2rem",
+                            alignItems: "start",
+                            justifyContent: "center",
+                        }}
                         onSubmit={(e: FormEvent) => {
                             e.preventDefault();
                             console.log(inputVal, selectVal);
@@ -109,20 +122,29 @@ const Example: NextPage<Props> = (props) => {
                             setSelectVal(options[0]);
                         }}
                     >
-                        <Input
-                            currentValue={inputVal}
-                            onChange={(e) => {
-                                setInputVal(e.currentTarget.value);
-                            }}
-                            type="text"
-                        />
-                        <Select
-                            selectedValue={selectVal}
-                            onChange={(e) => {
-                                setSelectVal(e.target.value);
-                            }}
-                            options={options}
-                        />
+                        <Container>
+                            <Label htmlFor="inputVal">아이스크림 이름</Label>
+
+                            <Input
+                                id="inputVal"
+                                currentValue={inputVal}
+                                onChange={(e) => {
+                                    setInputVal(e.currentTarget.value);
+                                }}
+                                type="text"
+                            />
+                        </Container>
+                        <Container>
+                            <Label htmlFor="selectVal">아이스크림 맛</Label>
+                            <Select
+                                id="selectVal"
+                                selectedValue={selectVal}
+                                onChange={(e) => {
+                                    setSelectVal(e.target.value);
+                                }}
+                                options={options}
+                            />
+                        </Container>
                         <Button>Submit</Button>
                     </form>
                 </Modal>

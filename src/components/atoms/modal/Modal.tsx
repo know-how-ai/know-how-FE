@@ -1,4 +1,4 @@
-import { media } from "@/components/styles/theme";
+import { media } from "@components/styles/theme";
 import {
     useRef,
     useCallback,
@@ -13,25 +13,28 @@ const RootContainer = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    opacity: 0.7;
+    background-color: #00000030;
     filter: ${(p) => p.theme.filter.blur};
     z-index: 20;
     inset: 0;
 `;
 
 const ModalContainer = styled.div`
+    opacity: 1;
     position: relative;
-    padding: 2.5rem;
+    padding: 4rem;
 `;
 
 const ModalContent = styled.div`
-    outline: none;
-    width: 80vw;
-    max-width: 100%;
     background-color: ${(p) => p.theme.color.backgroundColor};
+    border: ${(p) => p.theme.border.active};
+    padding: 2rem;
+    outline: none;
+    width: 50vw;
+    max-width: 100%;
     z-index: 21;
-    ${media.mobile} {
-        width: 90vw;
+    ${media.tablet} {
+        width: 80vw;
     }
 `;
 

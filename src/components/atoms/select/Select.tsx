@@ -33,12 +33,14 @@ interface SelectProps {
     options: string[];
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     selectedValue: string;
+    id?: string;
 }
 
 const Select: FC<SelectProps> = forwardRef(
-    ({ options, onChange, selectedValue, ...rest }, selectRef) => {
+    ({ options, onChange, selectedValue, id, ...rest }, selectRef) => {
         return (
             <Select_
+                id={id}
                 ref={selectRef as MutableRefObject<HTMLSelectElement>}
                 value={selectedValue}
                 onChange={onChange}

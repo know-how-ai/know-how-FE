@@ -1,6 +1,5 @@
-import React from "react";
 import type { PropsWithChildren, ReactNode } from "react";
-import { store, wrapper } from "../contexts/store";
+import { store } from "../contexts/store";
 import { Provider } from "react-redux";
 import { useUISelector } from "../contexts/uiSlice";
 import { darkTheme, lightTheme } from "../components/styles/theme";

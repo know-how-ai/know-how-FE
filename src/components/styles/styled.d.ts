@@ -8,9 +8,11 @@ declare module "styled-components" {
             gray: string;
             green: string;
             lightGreen: "#99ecdd";
+            midGreen: "#00a07f";
             darkGray: string;
             backgroundColor: string;
             textColor: string;
+            transparent: "transparent";
         };
         boxShadow: {
             normal: "0 3px 8px 0 rgb(0 0 0 / 10%)";

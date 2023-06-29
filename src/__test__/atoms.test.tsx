@@ -1,10 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useThemeRenderWithRedux } from "../libs/jest-utils";
-import Input from "@components/atoms/input/Input";
-import Button from "@components/atoms/button";
-import Select from "@components/atoms/select/Select";
-import Modal from "@components/atoms/modal/Modal";
+import { useThemeRenderWithRedux } from "@libs/jest-utils";
+import { Input, Button, Modal, Select, Label, Badge } from "@components/atoms";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -34,6 +31,48 @@ describe("Components: atoms unit test", () => {
 
         await user.type(input, "a");
         expect(inputVal).toBe("a");
+    });
+
+    test("Label with Input", async () => {
+        let inputVal = "";
+
+        useThemeRenderWithRedux(
+            <>
+                <Label htmlFor="test">label test</Label>
+                <Input
+                    currentValue={inputVal}
+                    type="text"
+                    id="test"
+                    onChange={({ currentTarget: { value } }) => {
+                        inputVal = value;
+                    }}
+                />
+            </>
+        );
+
+        const input = await screen.findByRole("textbox");
+        const label = await screen.findByText(/label test/);
+        expect(input).toBeInTheDocument();
+        expect(label).toBeInTheDocument();
+        expect(input).toBeEnabled();
+
+        // await user.type(input, "input testing");
+        fireEvent.change(input, { target: { value: "input testing" } });
+        expect(inputVal).toBe("input testing");
+
+        await user.click(label);
+        await user.keyboard("a");
+
+        expect(inputVal).toBe("a");
+    });
+
+    test("Badge", async () => {
+        useThemeRenderWithRedux(<Badge>Test Button</Badge>);
+
+        const badge = screen.getByText(/test button/i);
+        expect(badge).toBeInTheDocument();
+        expect(badge).toBeEnabled();
+        expect(badge).toHaveTextContent(/test button/i);
     });
 
     test("Button", async () => {

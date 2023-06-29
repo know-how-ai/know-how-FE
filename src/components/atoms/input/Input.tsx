@@ -33,10 +33,12 @@ interface InputProps {
     placeholder?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     currentValue?: string;
+    id?: string;
 }
 
 const Input = ({
     type,
+    id,
     disabled,
     placeholder,
     required,
@@ -52,6 +54,7 @@ const Input = ({
             disabled={disabled}
             placeholder={placeholder}
             required={required}
+            id={id}
             {...rest}
         />
     );
