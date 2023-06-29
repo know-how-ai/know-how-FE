@@ -1,4 +1,3 @@
-export * from "./Atoms";
+export * from "./atoms";
 // export * from "./Molecules";
 // export * from "./Organisms";
-export { default as Layout } from "./Layout";
