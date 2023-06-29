@@ -1,10 +1,10 @@
-import { GlobalStyle } from "../components/styles/global-style";
-import { darkTheme, lightTheme } from "../components/styles/theme";
+import { GlobalStyle } from "@components/styles/global-style";
+import { darkTheme, lightTheme } from "@components/styles/theme";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import Head from "next/head";
-import { wrapper } from "../contexts/store";
-import { useUISelector } from "../contexts/uiSlice";
+import { wrapper } from "@contexts/store";
+import { useUISelector } from "@contexts/uiSlice";
 
 const App = ({ Component, pageProps }: AppProps) => {
     const { isDarkmode } = useUISelector((state) => state.ui);

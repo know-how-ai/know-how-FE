@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import Example from "../pages/example";
-import { useThemeRenderWithRedux } from "../libs/jest-utils";
+import { useThemeRenderWithRedux } from "@libs/jest-utils";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
