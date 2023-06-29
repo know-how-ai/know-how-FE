@@ -1,11 +1,5 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 const nextJest = require("next/jest");
-// npm i -D ts-jest, for using tsconfig's paths
-const { compilerOptions } = require("./tsconfig.json");
-const { pathsToModuleNameMapper } = require("ts-jest");
-const paths = pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: "<rootDir>/",
-});
 
 // Providing the path to your Next.js app which will enable loading next.config.js and .env files
 const createJestConfig = nextJest({
@@ -19,7 +13,6 @@ const customJestConfig = {
     testEnvironment: "jest-environment-jsdom",
     moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/src/$1", // tsconfig에서 절대경로 사용 시에 jest가 인식하도록 경로 매핑
-        ...paths, // by ts-jest
     },
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
