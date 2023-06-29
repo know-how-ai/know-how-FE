@@ -15,12 +15,12 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
-    "ignorePatterns": ["jest.*.js"],
+    "ignorePatterns": ["jest.*.js", "*.*.js"],
     "extends": [
-        "plugin:@next/next/recommended",
         "plugin:jest/recommended",
         "plugin:testing-library/react",
-        "plugin:jest-dom/recommended"
+        "plugin:jest-dom/recommended",
+        "plugin:@next/next/recommended"
     ],
     "plugins": ["jest", "import", "testing-library", "jest-dom", "jsx-a11y"],
     "rules": {

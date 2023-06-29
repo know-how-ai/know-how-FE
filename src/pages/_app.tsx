@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import Head from "next/head";
 import { wrapper } from "../contexts/store";
 import { useUISelector } from "../contexts/uiSlice";
+import React from "react";
 
 const App = ({ Component, pageProps }: AppProps) => {
     const { isDarkmode } = useUISelector((state) => state.ui);

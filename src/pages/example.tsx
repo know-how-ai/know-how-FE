@@ -1,3 +1,4 @@
+import React from "react";
 import { decrease, increase } from "../contexts/counterSlice";
 import {
     onDarkmode,
