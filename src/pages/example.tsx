@@ -10,9 +10,12 @@ import { wrapper } from "../contexts/store";
 import { useAppDispatch, useAppSelector } from "../contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { Button, Input, Modal, Select } from "../components/atoms"; // Layout import 이슈 있음
 import { type FormEvent, useState } from "react";
 import Layout from "../layout/Layout";
+import Button from "@components/atoms/button/Button";
+import Modal from "@components/atoms/modal/Modal";
+import Select from "@components/atoms/select/Select";
+import Input from "@components/atoms/input/Input";
 
 const Container = styled.div`
     display: flex;
