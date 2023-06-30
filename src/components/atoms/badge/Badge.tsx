@@ -33,16 +33,18 @@ const Badge_ = styled.span<Props>`
 interface BadgeProps extends Props {
     children?: ReactNode | string | any;
     onClick?: () => void;
+    className?: string;
 }
 
 const Badge: FC<BadgeProps> = ({
     children,
     onClick,
     active = false,
+    className,
     // disabled = false,
 }) => {
     return (
-        <Badge_ onClick={onClick} active={active}>
+        <Badge_ onClick={onClick} active={active} className={className}>
             # {children}
         </Badge_>
     );

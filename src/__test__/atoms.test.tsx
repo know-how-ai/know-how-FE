@@ -1,7 +1,18 @@
 import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
-import { Input, Button, Modal, Select, Label, Badge } from "@components/atoms";
+import mockRouter from "next-router-mock";
+import {
+    Input,
+    Button,
+    Modal,
+    Select,
+    Label,
+    Badge,
+    ErrorMessage,
+    Anchor,
+} from "@components/atoms";
+import { ReactElement, cloneElement } from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -51,7 +62,7 @@ describe("Components: atoms unit test", () => {
         );
 
         const input = await screen.findByRole("textbox");
-        const label = await screen.findByText(/label test/);
+        const label = await screen.findByText(/label test/i);
         expect(input).toBeInTheDocument();
         expect(label).toBeInTheDocument();
         expect(input).toBeEnabled();
@@ -66,6 +77,63 @@ describe("Components: atoms unit test", () => {
         expect(inputVal).toBe("a");
     });
 
+    test("ErrorMessage with Input", async () => {
+        let [inputVal, errStatus] = ["", false];
+        const ErrorComponent = () => {
+            return (
+                <>
+                    <Input
+                        currentValue={inputVal}
+                        type="text"
+                        id="test"
+                        onChange={({ currentTarget: { value } }) => {
+                            inputVal = value;
+                            errStatus = !!inputVal.match(/error/i);
+                        }}
+                    />
+
+                    {errStatus ? (
+                        <ErrorMessage>Ocurring Error</ErrorMessage>
+                    ) : null}
+                </>
+            );
+        };
+
+        const { unmount: unmount1 } = useThemeRenderWithRedux(
+            <ErrorComponent />
+        );
+
+        const input1 = await screen.findByRole("textbox");
+        const errMessage = screen.queryByText(/ocurring error/i);
+        expect(input1).toBeInTheDocument();
+        expect(input1).toBeEnabled();
+        expect(errMessage).not.toBeInTheDocument();
+
+        // await user.type(input, "input testing");
+        fireEvent.change(input1, { target: { value: "error testing" } });
+        expect(inputVal).toBe("error testing");
+        expect(errStatus).toBe(true);
+
+        // re-rendering
+        unmount1();
+        const { unmount: unmount2 } = useThemeRenderWithRedux(
+            <ErrorComponent />
+        );
+
+        expect(screen.getByText(/ocurring error/i)).toBeInTheDocument();
+
+        const input2 = await screen.findByRole("textbox");
+        fireEvent.change(input2, { target: { value: "a" } });
+        expect(inputVal).toBe("a");
+        expect(errStatus).toBe(false);
+
+        // re-rendering
+        unmount2();
+        useThemeRenderWithRedux(<ErrorComponent />);
+
+        expect(screen.queryByText(/ocurring error/i)).not.toBeInTheDocument();
+    });
+
     test("Badge", async () => {
         useThemeRenderWithRedux(<Badge>Test Button</Badge>);
 
@@ -73,6 +141,31 @@ describe("Components: atoms unit test", () => {
         expect(badge).toBeInTheDocument();
         expect(badge).toBeEnabled();
         expect(badge).toHaveTextContent(/test button/i);
+    });
+
+    test("Anchor", async () => {
+        await mockRouter.push("/");
+
+        const targetUrl = "/example";
+
+        useThemeRenderWithRedux(<Anchor href={targetUrl}>Test Anchor</Anchor>);
+
+        const anchor = screen.getByRole("link");
+
+        anchor.addEventListener("click", (e) => {
+            e.preventDefault();
+            mockRouter.push(targetUrl);
+        });
+
+        expect(anchor).toBeInTheDocument();
+        expect(anchor).toBeEnabled();
+        expect(anchor).toHaveTextContent(/test anchor/i);
+        expect(mockRouter.pathname).toBe("/");
+
+        // await user.click(anchor);
+        await user.click(anchor);
+
+        expect(mockRouter.pathname).not.toBe("/");
     });
 
     test("Button", async () => {

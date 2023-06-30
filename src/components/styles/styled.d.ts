@@ -13,9 +13,11 @@ declare module "styled-components" {
             backgroundColor: string;
             textColor: string;
             transparent: "transparent";
+            red: "#df4558";
         };
         boxShadow: {
-            normal: "0 3px 8px 0 rgb(0 0 0 / 10%)";
+            normal: "0 3px 8px 0 rgb(0 0 0 / 15%)";
+            strong: "0 3px 24px 0 rgb(0 0 0 / 30%)";
             purple: "0 3px 8px 0 #d6c9ff";
             blue: "0 3px 8px 0 #b3e2e6";
         };
@@ -27,7 +29,8 @@ declare module "styled-components" {
         };
         border: {
             active: "2px solid #99ecdd;";
-            nonActive: "2px solid transparent;";
+            nonActive: "2px solid transparent;" | string;
+            radius: "1rem";
         };
     }
 }

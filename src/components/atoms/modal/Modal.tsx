@@ -13,28 +13,51 @@ const RootContainer = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    background-color: #00000030;
+    background-color: #00000050;
     filter: ${(p) => p.theme.filter.blur};
     z-index: 20;
     inset: 0;
+    transition: ${(p) => p.theme.transition.fast};
+    animation: fadeIn 0.3s ease-out;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 `;
 
 const ModalContainer = styled.div`
     opacity: 1;
     position: relative;
-    padding: 4rem;
+    margin: 4rem;
+    box-sizing: border-box;
 `;
 
 const ModalContent = styled.div`
     background-color: ${(p) => p.theme.color.backgroundColor};
-    border: ${(p) => p.theme.border.active};
-    padding: 2rem;
+    /* border: ${(p) => p.theme.border.active}; */
+    box-shadow: ${(p) => p.theme.boxShadow.strong};
+    border-radius: ${(p) => p.theme.border.radius};
+    padding: 2.5rem;
     outline: none;
     width: 50vw;
     max-width: 100%;
     z-index: 21;
     ${media.tablet} {
         width: 80vw;
+    }
+    transition: ${(p) => p.theme.transition.fast};
+    animation: hovering 0.3s ease-in-out;
+    @keyframes hovering {
+        from {
+            transform: translateY(2rem);
+        }
+        to {
+            transform: translateY(0rem);
+        }
     }
 `;
 

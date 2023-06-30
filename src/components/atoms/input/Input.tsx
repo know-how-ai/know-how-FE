@@ -1,22 +1,26 @@
 import type { ChangeEvent, HTMLInputTypeAttribute } from "react";
 import styled from "styled-components";
 
-const Input_ = styled.input`
+interface StyleProps {
+    disabled?: boolean;
+}
+
+const Input_ = styled.input<StyleProps>`
     color: black;
     background-color: white;
     border: ${(p) => p.theme.border.nonActive};
-    border-radius: 1rem;
+    border-radius: ${(p) => p.theme.border.radius};
     transition: ${(p) => p.theme.transition.fast};
     padding: 1rem;
 
-    :disabled,
+    /* NEED TO: Disabled style */
+
     :hover {
         opacity: 0.7;
     }
 
     :focus {
         border: ${(p) => p.theme.border.active};
-        /* background-color: transparent; */
     }
 
     /* ::-webkit-inner-spin-button,
@@ -26,14 +30,14 @@ const Input_ = styled.input`
     } */
 `;
 
-interface InputProps {
+interface InputProps extends StyleProps {
     type: HTMLInputTypeAttribute;
     required?: boolean;
-    disabled?: boolean;
     placeholder?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     currentValue?: string;
     id?: string;
+    className?: string;
 }
 
 const Input = ({
@@ -44,6 +48,7 @@ const Input = ({
     required,
     onChange,
     currentValue,
+    className,
     ...rest
 }: InputProps) => {
     return (
@@ -55,6 +60,7 @@ const Input = ({
             placeholder={placeholder}
             required={required}
             id={id}
+            className={className}
             {...rest}
         />
     );

@@ -11,6 +11,7 @@ import styled from "styled-components";
 const Select_ = styled.select`
     border: ${(p) => p.theme.border.nonActive};
     transition: ${(p) => p.theme.transition.fast};
+    border-radius: ${(p) => p.theme.border.radius};
     cursor: pointer;
     padding: 1rem;
 
@@ -34,15 +35,20 @@ interface SelectProps {
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     selectedValue: string;
     id?: string;
+    className?: string;
 }
 
 const Select: FC<SelectProps> = forwardRef(
-    ({ options, onChange, selectedValue, id, ...rest }, selectRef) => {
+    (
+        { options, onChange, className, selectedValue, id, ...rest },
+        selectRef
+    ) => {
         return (
             <Select_
                 id={id}
                 ref={selectRef as MutableRefObject<HTMLSelectElement>}
                 value={selectedValue}
+                className={className}
                 onChange={onChange}
                 role="combobox"
                 {...rest}

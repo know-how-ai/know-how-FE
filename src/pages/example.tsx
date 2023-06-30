@@ -12,7 +12,15 @@ import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
 import { type FormEvent, useState } from "react";
 import Layout from "../layout";
-import { Button, Modal, Select, Input, Badge, Label } from "@components/atoms";
+import {
+    Button,
+    Modal,
+    Select,
+    Input,
+    Badge,
+    Label,
+    Anchor,
+} from "@components/atoms";
 
 const Container = styled.div`
     display: flex;
@@ -91,6 +99,8 @@ const Example: NextPage<Props> = (props) => {
             <NumSpan>
                 다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
             </NumSpan>
+
+            <Anchor href={"/"}>홈으로 가기</Anchor>
 
             <Badge
                 active={act}
