@@ -1,13 +1,11 @@
 import { GlobalStyle } from "@components/styles/global-style";
-import { darkTheme, lightTheme } from "@components/styles/theme";
 import type { AppProps } from "next/app";
-import { ThemeProvider } from "styled-components";
 import Head from "next/head";
 import { wrapper } from "@contexts/store";
-import { useUISelector } from "@contexts/uiSlice";
+import { Provider } from "react-redux";
 
-const App = ({ Component, pageProps }: AppProps) => {
-    const { isDarkmode } = useUISelector((state) => state.ui);
+const App = ({ Component, ...rest }: AppProps) => {
+    const { store, props } = wrapper.useWrappedStore(rest); // for SSR(getInitialProps | getServerSideProps)
 
     return (
         <>
@@ -17,13 +15,12 @@ const App = ({ Component, pageProps }: AppProps) => {
                     content="width=device-width, initial-scale=1"
                 />
             </Head>
-            <GlobalStyle />
-
-            <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
-                <Component {...pageProps} />
-            </ThemeProvider>
+            <Provider store={store}>
+                <GlobalStyle />
+                <Component {...props?.pageProps} />
+            </Provider>
         </>
     );
 };
 
-export default wrapper.withRedux(App); // for SSR(getInitialProps | getServerSideProps)
+export default App;

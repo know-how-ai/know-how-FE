@@ -21,6 +21,11 @@ import {
     Label,
     Anchor,
 } from "@components/atoms";
+import dynamic from "next/dynamic";
+
+const Toast = dynamic(() => import("@components/atoms/toast/Toast"), {
+    ssr: false,
+});
 
 const Container = styled.div`
     display: flex;
@@ -49,6 +54,7 @@ const Example: NextPage<Props> = (props) => {
     const [selectVal, setSelectVal] = useState(options[0]);
     const [inputVal, setInputVal] = useState("");
     const [act, setAct] = useState(false);
+    const [isShow, setIsShow] = useState(false);
 
     return (
         <Layout title="테스트">
@@ -100,16 +106,32 @@ const Example: NextPage<Props> = (props) => {
                 다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
             </NumSpan>
 
-            <Anchor href={"/"}>홈으로 가기</Anchor>
+            <Container>
+                <Anchor href={"/"}>
+                    <Button>홈으로 가기</Button>
+                </Anchor>
 
-            <Badge
-                active={act}
-                onClick={() => {
-                    setAct((prev) => !prev);
-                }}
-            >
-                반가워요
-            </Badge>
+                <Badge
+                    active={act}
+                    onClick={() => {
+                        setAct((prev) => !prev);
+                    }}
+                >
+                    반가워요
+                </Badge>
+
+                <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
+            </Container>
+
+            {isShow ? (
+                <Toast
+                    duration={3900}
+                    isShow={isShow}
+                    handleClose={() => setIsShow(false)}
+                >
+                    토스트
+                </Toast>
+            ) : null}
 
             {showModal ? (
                 <Modal
@@ -117,6 +139,7 @@ const Example: NextPage<Props> = (props) => {
                         dispatch(offModal());
                     }}
                 >
+                    <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
                     <form
                         style={{
                             display: "flex",

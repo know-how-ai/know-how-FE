@@ -1,3 +1,4 @@
+import { fadeIn, uprise } from "@components/styles/keyframes";
 import { media } from "@components/styles/theme";
 import {
     useRef,
@@ -18,15 +19,7 @@ const RootContainer = styled.div`
     z-index: 20;
     inset: 0;
     transition: ${(p) => p.theme.transition.fast};
-    animation: fadeIn 0.3s ease-out;
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
+    animation: ${fadeIn} 0.3s ease-out;
 `;
 
 const ModalContainer = styled.div`
@@ -50,15 +43,7 @@ const ModalContent = styled.div`
         width: 80vw;
     }
     transition: ${(p) => p.theme.transition.fast};
-    animation: hovering 0.3s ease-in-out;
-    @keyframes hovering {
-        from {
-            transform: translateY(2rem);
-        }
-        to {
-            transform: translateY(0rem);
-        }
-    }
+    animation: ${uprise} 0.3s ease-in-out;
 `;
 
 const CloseBtn = styled.button`

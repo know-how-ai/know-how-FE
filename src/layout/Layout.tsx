@@ -1,7 +1,9 @@
+import { darkTheme, lightTheme } from "@components/styles/theme";
+import { useUISelector } from "@contexts/uiSlice";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { FC, ReactNode } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
 interface Props {
     children: ReactNode;
@@ -46,14 +48,16 @@ const Footer = styled.footer`
 `;
 
 const Layout: FC<Props> = ({ children, title }) => {
-    const router = useRouter();
+    // const router = useRouter();
+    const { isDarkmode } = useUISelector((state) => state.ui);
 
     return (
         <>
             <Head>
                 <title>{`${title} | Galaxy Market`}</title>
             </Head>
-            <>
+
+            <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
                 <Header>
                     <div>헤더헤더</div>
                 </Header>
@@ -63,7 +67,7 @@ const Layout: FC<Props> = ({ children, title }) => {
                 <Footer>
                     <div>푸터푸터</div>
                 </Footer>
-            </>
+            </ThemeProvider>
         </>
     );
 };

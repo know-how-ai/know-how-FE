@@ -6,3 +6,5 @@ export { default as Badge } from "./badge";
 export { default as Label } from "./label";
 export { default as Anchor } from "./anchor";
 export { default as ErrorMessage } from "./errorMessage";
+export { default as Editor } from "./editor";
+export { default as Toast } from "./toast";

@@ -11,8 +11,8 @@ import {
     Badge,
     ErrorMessage,
     Anchor,
+    Toast,
 } from "@components/atoms";
-import { ReactElement, cloneElement } from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -256,5 +256,57 @@ describe("Components: atoms unit test", () => {
         useThemeRenderWithRedux(<ModalComponent />);
         expect(showModal).toBe(false);
         expect(screen.queryByTestId(/modal/i)).not.toBeInTheDocument();
+    });
+
+    test("Toast", async () => {
+        let showing = false;
+        const timer = 3000;
+
+        const ToastComponent = () => {
+            const showToast = () => {
+                showing = true;
+            };
+            const hideToast = () => {
+                showing = false;
+            };
+
+            return (
+                <>
+                    <Button onClick={showToast}>Toast On</Button>
+
+                    {showing ? (
+                        <Toast
+                            isShow={showing}
+                            duration={timer}
+                            handleClose={hideToast}
+                        >
+                            Baaam
+                        </Toast>
+                    ) : null}
+                </>
+            );
+        };
+
+        const { unmount } = useThemeRenderWithRedux(<ToastComponent />);
+
+        const onModalButton = screen.getByRole("button", {
+            name: /toast on/i,
+        });
+
+        expect(onModalButton).toBeInTheDocument();
+        expect(screen.queryByTestId(/toast/i)).not.toBeInTheDocument();
+
+        // show toast
+        await user.click(onModalButton);
+
+        // re-rendering
+        unmount();
+        useThemeRenderWithRedux(<ToastComponent />);
+        expect(showing).toBe(true);
+        expect(screen.getByTestId(/toast/i)).toBeInTheDocument();
+
+        setTimeout(() => {
+            expect(screen.queryByTestId(/toast/i)).not.toBeInTheDocument();
+        }, timer + 100);
     });
 });
