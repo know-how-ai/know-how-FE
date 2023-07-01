@@ -15,14 +15,24 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
-    "ignorePatterns": ["jest.*.js", "*.*.js"],
+    "ignorePatterns": [
+        "jest.*.js",
+        "*.*.js"
+    ],
     "extends": [
         "plugin:jest/recommended",
         "plugin:testing-library/react",
         "plugin:jest-dom/recommended",
-        "plugin:@next/next/recommended"
+        "plugin:@next/next/recommended",
+        "plugin:storybook/recommended"
     ],
-    "plugins": ["jest", "import", "testing-library", "jest-dom", "jsx-a11y"],
+    "plugins": [
+        "jest",
+        "import",
+        "testing-library",
+        "jest-dom",
+        "jsx-a11y"
+    ],
     "rules": {
         "import/extensions": [
             "error",
