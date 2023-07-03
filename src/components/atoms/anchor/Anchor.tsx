@@ -7,6 +7,9 @@ import styled from "styled-components";
 const Anchor_ = styled.span`
     padding: 0;
     margin: 0;
+    color: ${(p) => p.theme.color.light};
+    text-decoration: none;
+
     :visited {
         color: ${(p) => p.theme.color.lightBlue};
     }

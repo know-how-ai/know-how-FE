@@ -1,5 +1,5 @@
-import { fadeIn, uprise } from "@components/styles/keyframes";
-import { media } from "@components/styles/theme";
+import { fadeIn, uprise } from "../../styles/keyframes";
+import { media } from "../../styles/theme";
 import {
     useRef,
     useCallback,
@@ -9,6 +9,7 @@ import {
     type ReactNode,
 } from "react";
 import styled from "styled-components";
+import Button from "../button/Button";
 
 const RootContainer = styled.div`
     display: flex;
@@ -34,7 +35,7 @@ const ModalContent = styled.div`
     /* border: ${(p) => p.theme.border.active}; */
     box-shadow: ${(p) => p.theme.boxShadow.strong};
     border-radius: ${(p) => p.theme.border.radius};
-    padding: 2.5rem;
+    padding: ${(p) => p.theme.size.lg};
     outline: none;
     width: 50vw;
     max-width: 100%;
@@ -46,9 +47,13 @@ const ModalContent = styled.div`
     animation: ${uprise} 0.3s ease-in-out;
 `;
 
-const CloseBtn = styled.button`
+const CloseBtn = styled(Button)`
     transition: ${(p) => p.theme.transition.fast};
     position: absolute;
+    right: ${(p) => p.theme.size.sm};
+    top: ${(p) => p.theme.size.sm};
+    background-color: ${(p) => p.theme.color.gray};
+    /* scale: 0.85; */
 `;
 
 interface ModalProps {
@@ -93,7 +98,7 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
                     aria-label="Closing this modal button"
                     onClick={onClickClose}
                 >
-                    {/* Close SVG ICON */}
+                    닫기
                 </CloseBtn>
                 <ModalContent tabIndex={-1}>{children}</ModalContent>
             </ModalContainer>

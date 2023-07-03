@@ -12,16 +12,10 @@ import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
 import { type FormEvent, useState } from "react";
 import Layout from "../layout";
-import {
-    Button,
-    Modal,
-    Select,
-    Input,
-    Badge,
-    Label,
-    Anchor,
-} from "@components/atoms";
+import { Button, Modal, Badge, Anchor } from "@components/atoms";
 import dynamic from "next/dynamic";
+import SelectWithLabel from "@components/molecules/selectWithLabel/SelectWithLabel";
+import TextboxWithLabel from "@components/molecules/textboxWithLabel/TextboxWithLabel";
 
 const Toast = dynamic(() => import("@components/atoms/toast/Toast"), {
     ssr: false,
@@ -94,12 +88,6 @@ const Example: NextPage<Props> = (props) => {
                 >
                     모달 열기
                 </Button>
-                <Button
-                    aria-label="Decrement value"
-                    onClick={() => dispatch(offModal())}
-                >
-                    모달 닫기
-                </Button>
             </Container>
 
             <NumSpan>
@@ -107,14 +95,12 @@ const Example: NextPage<Props> = (props) => {
             </NumSpan>
 
             <Container>
-                <Input
-                    label="아이스크림 맛"
-                    id="inputVal"
+                <TextboxWithLabel
+                    label="아이스크림 이름"
                     currentValue={inputVal}
                     onChange={(e) => {
                         setInputVal(e.currentTarget.value);
                     }}
-                    type="text"
                 />
             </Container>
 
@@ -151,7 +137,6 @@ const Example: NextPage<Props> = (props) => {
                         dispatch(offModal());
                     }}
                 >
-                    <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
                     <form
                         style={{
                             display: "flex",
@@ -167,30 +152,32 @@ const Example: NextPage<Props> = (props) => {
                             setSelectVal(options[0]);
                         }}
                     >
-                        <Container>
-                            <Input
-                                label="아이스크림 맛"
-                                id="inputVal"
-                                currentValue={inputVal}
-                                onChange={(e) => {
-                                    setInputVal(e.currentTarget.value);
-                                }}
-                                type="text"
-                            />
-                        </Container>
-                        <Container>
-                            <Label htmlFor="selectVal">아이스크림 맛</Label>
-                            <Select
-                                id="selectVal"
-                                selectedValue={selectVal}
-                                onChange={(e) => {
-                                    setSelectVal(e.target.value);
-                                }}
-                                options={options}
-                            />
-                        </Container>
-                        <Button>Submit</Button>
+                        <TextboxWithLabel
+                            label="아이스크림 이름"
+                            currentValue={inputVal}
+                            onChange={(e) => {
+                                setInputVal(e.currentTarget.value);
+                            }}
+                        />
+
+                        <SelectWithLabel
+                            label="아이스크림 맛"
+                            selectedValue={selectVal}
+                            onChange={(e) => {
+                                setSelectVal(e.target.value);
+                            }}
+                            options={options}
+                        />
+
+                        <Button type="submit">확인</Button>
                     </form>
+                    <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
+                    <Button
+                        aria-label="Decrement value"
+                        onClick={() => dispatch(offModal())}
+                    >
+                        모달 닫기
+                    </Button>
                 </Modal>
             ) : null}
         </Layout>

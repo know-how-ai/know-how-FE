@@ -5,12 +5,15 @@ const ErrorMessage_ = styled.span`
     padding: 0.25rem;
     color: ${(p) => p.theme.color.red};
     transition: ${(p) => p.theme.transition.fast};
-    animation: fadeIn 0.3s 2 ease-out;
+    animation: fadeIn 0.5s 3 ease-in-out;
     @keyframes fadeIn {
-        from {
+        0% {
+            opacity: 1;
+        }
+        50% {
             opacity: 0;
         }
-        to {
+        100% {
             opacity: 1;
         }
     }

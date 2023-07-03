@@ -7,7 +7,7 @@ import {
     Button,
     Modal,
     Select,
-    Label,
+    LabelSpan,
     Badge,
     ErrorMessage,
     Anchor,
@@ -49,7 +49,7 @@ describe("Components: atoms unit test", () => {
 
         useThemeRenderWithRedux(
             <>
-                <Label htmlFor="test">label test</Label>
+                <LabelSpan>label test</LabelSpan>
                 <Input
                     currentValue={inputVal}
                     type="text"
@@ -71,7 +71,7 @@ describe("Components: atoms unit test", () => {
         fireEvent.change(input, { target: { value: "input testing" } });
         expect(inputVal).toBe("input testing");
 
-        await user.click(label);
+        await user.click(input);
         await user.keyboard("a");
 
         expect(inputVal).toBe("a");

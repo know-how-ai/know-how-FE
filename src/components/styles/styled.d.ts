@@ -33,6 +33,14 @@ declare module "styled-components" {
             active: "2px solid #2350ce;" | string;
             inactive: "2px solid transparent;" | string;
             radius: "1rem";
+            gray: "2px solid #777777;" | string;
+        };
+        size: {
+            xs: "0.5rem";
+            sm: "1rem";
+            md: "1.5rem";
+            lg: "2rem";
+            xl: "2.5rem";
         };
     }
 }

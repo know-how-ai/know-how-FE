@@ -41,15 +41,20 @@ const Btn = styled.button<StyleProps>`
 `;
 
 interface ButtonProps extends StyleProps {
-    children?: ReactNode | string;
+    type?: "button" | "submit" | "reset";
+    children?: ReactNode | string | any;
     onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
     className?: string;
 }
 
 const Button: FC<ButtonProps> = forwardRef(
-    ({ children, disabled, onClick, className }, buttonRef) => {
+    (
+        { children, disabled, onClick, className, type = "button" },
+        buttonRef
+    ) => {
         return (
             <Btn
+                type={type}
                 ref={buttonRef as MutableRefObject<HTMLButtonElement>} // for when put the children as not a string
                 onClick={onClick}
                 disabled={disabled}

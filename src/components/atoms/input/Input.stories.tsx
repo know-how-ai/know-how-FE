@@ -12,23 +12,26 @@ type InputStory = StoryObj<typeof Input>;
 
 export const Base: InputStory = {
     args: {
-        label: "Base",
+        currentValue: "This is input atom.",
     },
 };
 
 export const Placeholder: InputStory = {
     args: {
-        label: "Placeholder",
-        placeholder: "Base Input with label",
+        placeholder: "Placeholder by input",
     },
 };
 
 export const Disabled: InputStory = {
     args: {
-        label: "Disabled",
         disabled: true,
         currentValue: "Not allowed type",
     },
 };
 
-// input, lable => input with label (input + label)
+export const Focused: InputStory = {
+    args: {
+        ...Base.args,
+        isFocused: true,
+    },
+};

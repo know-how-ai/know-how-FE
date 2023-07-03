@@ -29,9 +29,17 @@ export const lightTheme: DefaultTheme = {
         fast: "all 0.3s ease-in-out;",
     },
     border: {
-        active: "2.5px solid #2350ce;",
-        inactive: "2.5px solid transparent;",
+        active: "2px solid #2350ce;",
+        inactive: "2px solid transparent;",
         radius: "1rem",
+        gray: "2px solid #777777;",
+    },
+    size: {
+        xs: "0.5rem",
+        sm: "1rem",
+        md: "1.5rem",
+        lg: "2rem",
+        xl: "2.5rem",
     },
 };
 
@@ -64,9 +72,17 @@ export const darkTheme: DefaultTheme = {
         fast: "all 0.3s ease-in-out;",
     },
     border: {
-        active: "2.5px solid #2350ce;",
-        inactive: "2.5px solid transparent;",
+        active: "2px solid #2350ce;",
+        inactive: "2px solid transparent;",
         radius: "1rem",
+        gray: "2px solid #777777;",
+    },
+    size: {
+        xs: "0.5rem",
+        sm: "1rem",
+        md: "1.5rem",
+        lg: "2rem",
+        xl: "2.5rem",
     },
 };
 
