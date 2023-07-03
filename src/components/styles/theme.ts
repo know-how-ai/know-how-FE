@@ -2,17 +2,19 @@ import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
     color: {
-        purple: "#8661de",
-        blue: "#00bac7",
-        gray: "#f6f6f6",
-        green: "#07b495",
-        lightGreen: "#99ecdd",
-        midGreen: "#00a07f",
-        darkGray: "#54595d",
-        backgroundColor: "#f3f3f3",
+        gray: "#777777",
+        lightBlue: "#e8eaf9",
+        blue: "#2350ce",
+        darkBlue: "#002099",
+        darkGray: "#5e5d5f",
+        backgroundColor: "#fefffd",
+        componentBgColor: "fefffd",
         textColor: "#202020",
         transparent: "transparent",
         red: "#df4558",
+        light: "#fefffd",
+        orange: "#f0620c",
+        darkOrange: "#ca4e00",
     },
     boxShadow: {
         normal: "0 3px 8px 0 rgb(0 0 0 / 15%)",
@@ -27,25 +29,27 @@ export const lightTheme: DefaultTheme = {
         fast: "all 0.3s ease-in-out;",
     },
     border: {
-        active: "2px solid #99ecdd;",
-        nonActive: "2px solid transparent;",
+        active: "2.5px solid #2350ce;",
+        inactive: "2.5px solid transparent;",
         radius: "1rem",
     },
 };
 
 export const darkTheme: DefaultTheme = {
     color: {
-        purple: "#8661de",
-        blue: "#00bac7",
-        gray: "#f6f6f6",
-        green: "#07b495",
-        lightGreen: "#99ecdd",
-        midGreen: "#00a07f",
-        darkGray: "#54595d",
-        backgroundColor: "#232323",
-        textColor: "#fefefe",
+        gray: "#777777",
+        lightBlue: "#e8eaf9",
+        blue: "#2350ce",
+        darkBlue: "#002099",
+        darkGray: "#5e5d5f",
+        backgroundColor: "#202020",
+        componentBgColor: "5e5d5f",
+        textColor: "#fefffd",
         transparent: "transparent",
         red: "#df4558",
+        light: "#fefffd",
+        orange: "#f0620c",
+        darkOrange: "#ca4e00",
     },
     boxShadow: {
         normal: "0 3px 8px 0 rgb(0 0 0 / 15%)",
@@ -60,8 +64,8 @@ export const darkTheme: DefaultTheme = {
         fast: "all 0.3s ease-in-out;",
     },
     border: {
-        active: "2px solid #99ecdd;",
-        nonActive: "2px solid transparent;",
+        active: "2.5px solid #2350ce;",
+        inactive: "2.5px solid transparent;",
         radius: "1rem",
     },
 };

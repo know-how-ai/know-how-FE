@@ -9,7 +9,7 @@ import {
 import styled from "styled-components";
 
 const Select_ = styled.select`
-    border: ${(p) => p.theme.border.nonActive};
+    border: ${(p) => p.theme.border.inactive};
     transition: ${(p) => p.theme.transition.fast};
     border-radius: ${(p) => p.theme.border.radius};
     cursor: pointer;

@@ -7,11 +7,11 @@ interface Props {
 }
 
 const Badge_ = styled.span<Props>`
-    color: ${(p) =>
-        p.active ? p.theme.color.lightGreen : p.theme.color.textColor};
+    color: ${(p) => p.theme.color.textColor};
+    text-decoration: ${(p) => (p.active ? "underline 0.125rem" : "none")};
 
     border: ${(p) =>
-        p.active ? p.theme.border.active : p.theme.border.nonActive};
+        p.active ? p.theme.border.active : p.theme.border.inactive};
     border-radius: 20rem;
 
     transition: ${(p) => p.theme.transition.fast};

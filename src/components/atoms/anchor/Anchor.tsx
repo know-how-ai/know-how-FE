@@ -4,8 +4,12 @@ import type { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 // Link > a : ui DOMnesting error
-const Anchor_ = styled.div`
-    /*  */
+const Anchor_ = styled.span`
+    padding: 0;
+    margin: 0;
+    :visited {
+        color: ${(p) => p.theme.color.lightBlue};
+    }
 `;
 
 interface AnchorProps extends LinkProps {

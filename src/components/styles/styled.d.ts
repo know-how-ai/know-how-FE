@@ -3,17 +3,19 @@ import "styled-components";
 declare module "styled-components" {
     export interface DefaultTheme {
         color: {
-            purple: string;
-            blue: string;
+            light: string;
             gray: string;
-            green: string;
-            lightGreen: "#99ecdd";
-            midGreen: "#00a07f";
+            lightBlue: "#e8eaf9";
+            blue: "#2350ce";
+            darkBlue: "#002099";
             darkGray: string;
             backgroundColor: string;
             textColor: string;
             transparent: "transparent";
+            componentBgColor: string;
             red: "#df4558";
+            orange: "#f0620c";
+            darkOrange: "#ca4e00";
         };
         boxShadow: {
             normal: "0 3px 8px 0 rgb(0 0 0 / 15%)";
@@ -28,8 +30,8 @@ declare module "styled-components" {
             fast: "all 0.3s ease-in-out;";
         };
         border: {
-            active: "2px solid #99ecdd;";
-            nonActive: "2px solid transparent;" | string;
+            active: "2px solid #2350ce;" | string;
+            inactive: "2px solid transparent;" | string;
             radius: "1rem";
         };
     }

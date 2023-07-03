@@ -4,6 +4,27 @@ import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
+    a{
+        padding: 0;
+        margin: 0;
+        color: inherit;
+        text-decoration: none;
+        :link {
+            text-decoration: none;
+        }
+
+        :visited {
+            text-decoration: none;
+        }
+
+        :hover {
+            text-decoration: none;
+        }
+
+        :active {
+            text-decoration: none;
+        }
+    }
     :focus {
         outline: none;
         border: none;

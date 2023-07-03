@@ -107,9 +107,21 @@ const Example: NextPage<Props> = (props) => {
             </NumSpan>
 
             <Container>
-                <Anchor href={"/"}>
-                    <Button>홈으로 가기</Button>
-                </Anchor>
+                <Input
+                    label="아이스크림 맛"
+                    id="inputVal"
+                    currentValue={inputVal}
+                    onChange={(e) => {
+                        setInputVal(e.currentTarget.value);
+                    }}
+                    type="text"
+                />
+            </Container>
+
+            <Container>
+                <Button>
+                    <Anchor href={"/"}>홈으로 가기</Anchor>
+                </Button>
 
                 <Badge
                     active={act}
@@ -156,9 +168,8 @@ const Example: NextPage<Props> = (props) => {
                         }}
                     >
                         <Container>
-                            <Label htmlFor="inputVal">아이스크림 이름</Label>
-
                             <Input
+                                label="아이스크림 맛"
                                 id="inputVal"
                                 currentValue={inputVal}
                                 onChange={(e) => {

@@ -1,26 +1,58 @@
-import type { ChangeEvent, HTMLInputTypeAttribute } from "react";
+import { type ChangeEvent, type HTMLInputTypeAttribute, useState } from "react";
 import styled from "styled-components";
 
 interface StyleProps {
     disabled?: boolean;
+    isFocused?: boolean;
 }
 
-const Input_ = styled.input<StyleProps>`
-    color: black;
-    background-color: white;
-    border: ${(p) => p.theme.border.nonActive};
+const Container = styled.label<StyleProps>`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem;
+    border: ${(p) =>
+        p.isFocused ? p.theme.border.active : p.theme.border.inactive};
     border-radius: ${(p) => p.theme.border.radius};
     transition: ${(p) => p.theme.transition.fast};
-    padding: 1rem;
 
-    /* NEED TO: Disabled style */
+    cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
 
-    :hover {
-        opacity: 0.7;
+    :hover:not(:disabled) {
+        opacity: ${(p) => (p.disabled ? 1 : 0.7)};
+        border: ${(p) =>
+            p.disabled ? p.theme.border.inactive : p.theme.border.active};
+    }
+`;
+
+const Label = styled.span<StyleProps>`
+    display: inline-block;
+    font-size: 1.5rem;
+    color: ${(p) => p.theme.color.textColor};
+    margin: auto 1.5rem;
+    font-weight: 600;
+    cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+`;
+
+const Input_ = styled.input<StyleProps>`
+    color: ${(p) => p.theme.color.textColor};
+    border: none;
+    transition: ${(p) => p.theme.transition.fast};
+    margin-top: 0.25rem;
+    padding: 1rem 1.5rem;
+    background-color: transparent;
+    font-size: 1.25rem;
+
+    :disabled {
+        cursor: not-allowed;
+    }
+
+    ::placeholder {
+        font-style: italic;
     }
 
     :focus {
-        border: ${(p) => p.theme.border.active};
+        outline: none;
     }
 
     /* ::-webkit-inner-spin-button,
@@ -38,6 +70,7 @@ interface InputProps extends StyleProps {
     currentValue?: string;
     id?: string;
     className?: string;
+    label?: string;
 }
 
 const Input = ({
@@ -49,20 +82,26 @@ const Input = ({
     onChange,
     currentValue,
     className,
-    ...rest
+    label,
 }: InputProps) => {
+    const [isFocused, setIsFocused] = useState(false);
+
     return (
-        <Input_
-            value={currentValue}
-            onChange={onChange}
-            type={type}
-            disabled={disabled}
-            placeholder={placeholder}
-            required={required}
-            id={id}
-            className={className}
-            {...rest}
-        />
+        <Container disabled={disabled} isFocused={isFocused}>
+            <Label disabled={disabled}>{label}</Label>
+            <Input_
+                value={currentValue}
+                onChange={onChange}
+                type={type}
+                disabled={disabled}
+                placeholder={placeholder}
+                required={required}
+                id={id}
+                className={className}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+            />
+        </Container>
     );
 };
 
