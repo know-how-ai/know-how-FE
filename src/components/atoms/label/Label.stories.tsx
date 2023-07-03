@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LabelSpan from "./Labelspan";
+import Label from "./Label";
 
 const meta = {
-    component: LabelSpan,
+    component: Label,
     tags: ["autodocs"],
-} satisfies Meta<typeof LabelSpan>;
+} satisfies Meta<typeof Label>;
 
 export default meta;
 
-type LabelSpanStory = StoryObj<typeof LabelSpan>;
+type LabelStory = StoryObj<typeof Label>;
 
-export const Base: LabelSpanStory = {
+export const Base: LabelStory = {
     args: {
         children: "Base LabelSpan",
     },
 };
 
-export const Disabled: LabelSpanStory = {
+export const Disabled: LabelStory = {
     args: {
         children: "Disabled LabelSpan",
         disabled: true,

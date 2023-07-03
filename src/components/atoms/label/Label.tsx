@@ -5,7 +5,7 @@ interface StyleProps {
     disabled?: boolean;
 }
 
-const LabelSpan_ = styled.span<StyleProps>`
+const Label_ = styled.span<StyleProps>`
     display: inline-block;
     font-size: ${(p) => p.theme.size.md};
     color: ${(p) => p.theme.color.textColor};
@@ -14,17 +14,17 @@ const LabelSpan_ = styled.span<StyleProps>`
     cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
 `;
 
-interface LabelSpanProps extends StyleProps {
+interface LabelProps extends StyleProps {
     children?: ReactNode | string | any;
     className?: string;
 }
 
-const LabelSpan: FC<LabelSpanProps> = ({ children, className, disabled }) => {
+const Label: FC<LabelProps> = ({ children, className, disabled }) => {
     return (
-        <LabelSpan_ className={className} disabled={disabled}>
+        <Label_ className={className} disabled={disabled}>
             {children}
-        </LabelSpan_>
+        </Label_>
     );
 };
 
-export default LabelSpan;
+export default Label;

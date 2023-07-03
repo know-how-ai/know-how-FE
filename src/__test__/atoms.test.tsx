@@ -7,7 +7,7 @@ import {
     Button,
     Modal,
     Select,
-    LabelSpan,
+    Label,
     Badge,
     ErrorMessage,
     Anchor,
@@ -49,7 +49,7 @@ describe("Components: atoms unit test", () => {
 
         useThemeRenderWithRedux(
             <>
-                <LabelSpan>label test</LabelSpan>
+                <Label>label test</Label>
                 <Input
                     currentValue={inputVal}
                     type="text"

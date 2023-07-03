@@ -1,4 +1,4 @@
-import { Input, LabelSpan } from "@components/atoms";
+import { Input, Label } from "@components/atoms";
 import { type FC, type ChangeEvent, useState, useCallback } from "react";
 import styled from "styled-components";
 
@@ -53,7 +53,7 @@ const TextboxWithLabel: FC<TextboxWithLabelProps> = ({
 
     return (
         <Container_ disabled={disabled} isFocused={isFocused}>
-            <LabelSpan disabled={disabled}>{label}</LabelSpan>
+            <Label disabled={disabled}>{label}</Label>
             <Input
                 placeholder={placeholder}
                 isFocused={isFocused}

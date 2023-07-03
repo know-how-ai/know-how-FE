@@ -1,4 +1,4 @@
-import { LabelSpan, Select } from "@components/atoms";
+import { Label, Select } from "@components/atoms";
 import { type FC, type ChangeEvent, useState, useCallback } from "react";
 import styled from "styled-components";
 
@@ -52,7 +52,7 @@ const SelectWithLabel: FC<SelectWithLabelProps> = ({
 
     return (
         <Container_ disabled={disabled} isFocused={isFocused}>
-            <LabelSpan disabled={disabled}>{label}</LabelSpan>
+            <Label disabled={disabled}>{label}</Label>
             <Select
                 options={options}
                 disabled={disabled}
