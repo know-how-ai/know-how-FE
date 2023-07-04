@@ -93,14 +93,25 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
 
     return (
         <RootContainer>
-            <ModalContainer aria-modal ref={ref} data-testid={"modal"}>
+            <ModalContainer
+                role="dialog"
+                aria-label="Modal Container"
+                ref={ref}
+                data-testid={"modal"}
+            >
                 <CloseBtn
                     aria-label="Closing this modal button"
                     onClick={onClickClose}
                 >
                     닫기
                 </CloseBtn>
-                <ModalContent tabIndex={-1}>{children}</ModalContent>
+                <ModalContent
+                    role="dialog"
+                    aria-label="Contents in Modal"
+                    tabIndex={-1}
+                >
+                    {children}
+                </ModalContent>
             </ModalContainer>
         </RootContainer>
     );

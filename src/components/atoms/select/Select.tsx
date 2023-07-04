@@ -53,6 +53,8 @@ interface SelectProps extends StyleProps {
     required?: boolean;
     onFocus?: () => void;
     onBlur?: () => void;
+    isFocused?: boolean;
+    ariaControls?: string;
 }
 
 const Select: FC<SelectProps> = forwardRef(
@@ -67,6 +69,8 @@ const Select: FC<SelectProps> = forwardRef(
             required,
             onFocus,
             onBlur,
+            isFocused = false,
+            ariaControls,
         },
         selectRef
     ) => {
@@ -82,6 +86,8 @@ const Select: FC<SelectProps> = forwardRef(
                 role="combobox"
                 onBlur={onBlur}
                 onFocus={onFocus}
+                aria-expanded={isFocused}
+                aria-controls={ariaControls}
             >
                 {options?.map((opt, idx) => (
                     <Option_ key={`${opt}_${idx}`} value={opt}>

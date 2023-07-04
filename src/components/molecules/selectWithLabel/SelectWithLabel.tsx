@@ -32,6 +32,7 @@ interface SelectWithLabelProps extends StyleProps {
     selectedValue: string;
     className?: string;
     label?: string;
+    ariaControls?: string;
 }
 
 const SelectWithLabel: FC<SelectWithLabelProps> = ({
@@ -40,6 +41,7 @@ const SelectWithLabel: FC<SelectWithLabelProps> = ({
     selectedValue,
     disabled,
     label,
+    ariaControls,
 }) => {
     const [isFocused, setIsFocused] = useState(false);
 
@@ -54,11 +56,13 @@ const SelectWithLabel: FC<SelectWithLabelProps> = ({
         <Container_ disabled={disabled} isFocused={isFocused}>
             <Label disabled={disabled}>{label}</Label>
             <Select
+                isFocused={isFocused}
                 options={options}
                 disabled={disabled}
                 selectedValue={selectedValue}
                 onChange={onChange}
                 onFocus={onFocus}
+                ariaControls={ariaControls}
                 onBlur={onBlur}
             />
         </Container_>
