@@ -2,7 +2,7 @@ import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
     color: {
-        gray: "#777777",
+        gray: "#888888",
         lightBlue: "#e8eaf9",
         blue: "#2350ce",
         darkBlue: "#002099",
@@ -32,7 +32,7 @@ export const lightTheme: DefaultTheme = {
         active: "2px solid #2350ce;",
         inactive: "2px solid transparent;",
         radius: "1rem",
-        gray: "2px solid #777777;",
+        gray: "2px solid #888888;",
     },
     size: {
         xs: "0.5rem",
@@ -41,12 +41,18 @@ export const lightTheme: DefaultTheme = {
         lg: "2rem",
         xl: "2.5rem",
     },
+    editor: {
+        border: "1.5px solid #fefffd;",
+        activeBorder: "1.5px solid #2350e2;",
+        bgColor: "#fefffd",
+        activeColor: "#fefffd",
+    },
 };
 
 export const darkTheme: DefaultTheme = {
     color: {
-        gray: "#777777",
-        lightBlue: "#e8eaf9",
+        gray: "#888888",
+        lightBlue: "#3a3b39",
         blue: "#2350ce",
         darkBlue: "#002099",
         darkGray: "#5e5d5f",
@@ -75,7 +81,7 @@ export const darkTheme: DefaultTheme = {
         active: "2px solid #2350ce;",
         inactive: "2px solid transparent;",
         radius: "1rem",
-        gray: "2px solid #777777;",
+        gray: "2px solid #888888;",
     },
     size: {
         xs: "0.5rem",
@@ -83,6 +89,12 @@ export const darkTheme: DefaultTheme = {
         md: "1.5rem",
         lg: "2rem",
         xl: "2.5rem",
+    },
+    editor: {
+        border: "1.5px solid #8e8f8d;",
+        activeBorder: "1.5px solid #fefffd;",
+        bgColor: "#8e8f8d",
+        activeColor: "#fefffd",
     },
 };
 

@@ -14,13 +14,13 @@ const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 1rem;
     position: sticky;
     width: 100%;
     background-color: ${(props) => props.theme.color.backgroundColor};
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
+    height: 10vh;
 `;
 
 const Main = styled.main`
@@ -28,23 +28,24 @@ const Main = styled.main`
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: auto;
     background-color: ${(props) => props.theme.color.backgroundColor};
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
+    height: 80vh;
 `;
 
 const Footer = styled.footer`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem;
     width: 100%;
     background-color: ${(props) => props.theme.color.backgroundColor};
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
+    height: 10vh;
 `;
 
 const Layout: FC<Props> = ({ children, title }) => {

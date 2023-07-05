@@ -5,9 +5,9 @@ declare module "styled-components" {
         color: {
             light: string;
             gray: string;
-            lightBlue: "#e8eaf9";
+            lightBlue: "#e8eaf9" | "#3a3b39";
             blue: "#2350ce";
-            darkBlue: "#002099";
+            darkBlue: "#002099" | "#dbdcda";
             darkGray: string;
             backgroundColor: string;
             textColor: string;
@@ -41,6 +41,12 @@ declare module "styled-components" {
             md: "1.5rem";
             lg: "2rem";
             xl: "2.5rem";
+        };
+        editor: {
+            border: string;
+            activeBorder: string;
+            bgColor: string;
+            activeColor: string;
         };
     }
 }

@@ -17,6 +17,9 @@ import dynamic from "next/dynamic";
 import SelectWithLabel from "@components/molecules/selectWithLabel/SelectWithLabel";
 import TextboxWithLabel from "@components/molecules/textboxWithLabel/TextboxWithLabel";
 
+const Editor = dynamic(() => import("@components/atoms/editor"), {
+    ssr: false,
+});
 const Toast = dynamic(() => import("@components/atoms/toast/Toast"), {
     ssr: false,
 });
@@ -95,13 +98,7 @@ const Example: NextPage<Props> = (props) => {
             </NumSpan>
 
             <Container>
-                <TextboxWithLabel
-                    label="아이스크림 이름"
-                    currentValue={inputVal}
-                    onChange={(e) => {
-                        setInputVal(e.currentTarget.value);
-                    }}
-                />
+                <Editor />
             </Container>
 
             <Container>
@@ -172,12 +169,6 @@ const Example: NextPage<Props> = (props) => {
                         <Button type="submit">확인</Button>
                     </form>
                     <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
-                    <Button
-                        aria-label="Decrement value"
-                        onClick={() => dispatch(offModal())}
-                    >
-                        모달 닫기
-                    </Button>
                 </Modal>
             ) : null}
         </Layout>
