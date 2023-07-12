@@ -98,7 +98,12 @@ const Example: NextPage<Props> = (props) => {
             </NumSpan>
 
             <Container>
-                <Editor />
+                <Editor
+                    defaultState={`<pre>const editorToHtml =
+                draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>
+                <p style="text-align:center;"><strong>ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
+                </strong></p>`}
+                />
             </Container>
 
             <Container>

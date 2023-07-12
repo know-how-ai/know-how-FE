@@ -12,12 +12,31 @@ import {
     ErrorMessage,
     Anchor,
     Toast,
+    Editor,
 } from "@components/atoms";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe("Components: atoms unit test", () => {
     const user = userEvent.setup();
+
+    test("Editor", async () => {
+        let editorVal = "";
+
+        useThemeRenderWithRedux(<Editor />);
+
+        const editorContainer = await screen.findByTestId("editor");
+        expect(editorContainer).toBeInTheDocument();
+        expect(editorContainer).toBeEnabled();
+        // const editor = await screen.findBy("editor");
+
+        // await user.type(input, "input testing");
+        // fireEvent.change(editor, { target: { value: "input testing" } });
+        // expect(editorVal).toBe("input testing");
+
+        // await user.type(editor, "a");
+        // expect(editorVal).toBe("a");
+    });
 
     test("Input", async () => {
         let inputVal = "";

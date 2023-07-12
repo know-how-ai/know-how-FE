@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
-
-import { EditorState } from "draft-js";
-import type { EditorProps } from "react-draft-wysiwyg";
+import {
+    // ContentState,
+    type EditorProps,
+} from "react-draft-wysiwyg";
+import { ContentState, EditorState } from "draft-js";
+// import htmlToDraft from "html-to-draftjs";
 // import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const EditorComponent = dynamic<EditorProps>(
@@ -724,21 +727,53 @@ const EditorContainer = styled.section`
     }
 `;
 
-const Editor = () => {
+interface Props {
+    defaultState?: string;
+}
+
+const Editor = ({ defaultState }: Props) => {
     const [editing, setEditing] = useState<EditorState>(
-        EditorState.createEmpty()
+        EditorState?.createEmpty()
     );
 
     const onEditorStateChange = (editedState: EditorState) => {
         setEditing(editedState);
     };
 
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            if (defaultState) {
+                const htmlToDraft = require("html-to-draftjs").default;
+                const blocksFromHtml = htmlToDraft(defaultState);
+
+                if (blocksFromHtml) {
+                    const { contentBlocks, entityMap } = blocksFromHtml;
+
+                    // cannot works appropriately `createFromBlockArray()`
+                    /**
+                     * ContentState from 'react-draft-wysiwyg' is undefined
+                     * ContentState from 'draft-js' is valid object
+                     */
+                    const contentState = ContentState?.createFromBlockArray(
+                        contentBlocks,
+                        entityMap
+                    );
+
+                    const editingState =
+                        EditorState?.createWithContent(contentState);
+
+                    setEditing(editingState);
+                }
+            }
+        }
+    }, []);
+
     return (
-        <EditorContainer>
+        <EditorContainer data-testid="editor">
             <EditorComponent
                 editorState={editing}
                 onEditorStateChange={onEditorStateChange}
-                placeholder="글을 쓰시오."
+                placeholder="내용을 작성해주세요."
                 toolbar={{
                     options: [
                         "inline",
