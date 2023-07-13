@@ -15,3 +15,12 @@ export const Base: EditorStory = {
         //
     },
 };
+
+export const Typed: EditorStory = {
+    args: {
+        defaultState: `<pre>const editorToHtml =
+        draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>
+        <p style="text-align:center;"><strong>ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
+        </strong></p>`,
+    },
+};

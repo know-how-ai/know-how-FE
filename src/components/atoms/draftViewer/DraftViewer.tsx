@@ -1,8 +1,8 @@
-import { convertToRaw } from "draft-js";
+import { type ContentState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useEffect, useState } from "react";
-import type { ContentState } from "react-draft-wysiwyg";
 import styled from "styled-components";
+import { convertToRaw } from "draft-js";
 
 const DraftViewer_ = styled.div`
     overflow: hidden;
@@ -25,7 +25,15 @@ const DraftViewer = ({ draft }: DraftViewerProps) => {
 
     // ONLY WORKS FOR THE FIRST TIME
     useEffect(() => {
-        setHtml(draftToHtml(convertToRaw(draft)));
+        if (typeof window !== "undefined") {
+            if (draft) {
+                const editorToHtml = draftToHtml(
+                    convertToRaw(draft.getCurrentContent())
+                );
+
+                setHtml(editorToHtml);
+            }
+        }
     }, []);
 
     return <DraftViewer_ dangerouslySetInnerHTML={{ __html: html }} />;

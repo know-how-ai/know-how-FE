@@ -21,21 +21,15 @@ describe("Components: atoms unit test", () => {
     const user = userEvent.setup();
 
     test("Editor", async () => {
-        let editorVal = "";
+        let editorVal = "test editing is inputted.";
 
-        useThemeRenderWithRedux(<Editor />);
+        useThemeRenderWithRedux(<Editor defaultState={editorVal} />);
 
         const editorContainer = await screen.findByTestId("editor");
         expect(editorContainer).toBeInTheDocument();
         expect(editorContainer).toBeEnabled();
-        // const editor = await screen.findBy("editor");
 
-        // await user.type(input, "input testing");
-        // fireEvent.change(editor, { target: { value: "input testing" } });
-        // expect(editorVal).toBe("input testing");
-
-        // await user.type(editor, "a");
-        // expect(editorVal).toBe("a");
+        await screen.findByText("test", { exact: false });
     });
 
     test("Input", async () => {

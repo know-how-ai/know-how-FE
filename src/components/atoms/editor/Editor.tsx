@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
-import {
-    // ContentState,
-    type EditorProps,
-} from "react-draft-wysiwyg";
+import { type EditorProps } from "react-draft-wysiwyg";
 import { ContentState, EditorState } from "draft-js";
-// import htmlToDraft from "html-to-draftjs";
 // import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const EditorComponent = dynamic<EditorProps>(
@@ -15,6 +11,9 @@ const EditorComponent = dynamic<EditorProps>(
         ssr: false,
     }
 );
+// const DraftViewer = dynamic(() => import("@components/atoms/draftViewer"), {
+//     ssr: false,
+// });
 
 const EditorContainer = styled.section`
     display: flex;
@@ -749,11 +748,6 @@ const Editor = ({ defaultState }: Props) => {
                 if (blocksFromHtml) {
                     const { contentBlocks, entityMap } = blocksFromHtml;
 
-                    // cannot works appropriately `createFromBlockArray()`
-                    /**
-                     * ContentState from 'react-draft-wysiwyg' is undefined
-                     * ContentState from 'draft-js' is valid object
-                     */
                     const contentState = ContentState?.createFromBlockArray(
                         contentBlocks,
                         entityMap
@@ -790,6 +784,8 @@ const Editor = ({ defaultState }: Props) => {
                     locale: "ko",
                 }}
             />
+            {/* 미리보기 토글 추가하기 */}
+            {/* <DraftViewer draft={editing} /> */}
         </EditorContainer>
     );
 };
