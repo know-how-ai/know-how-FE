@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { type EditorProps } from "react-draft-wysiwyg";
-import { ContentState, EditorState } from "draft-js";
+import { EditorState } from "draft-js";
+import { getDraftByHtml } from "@libs/editor";
 // import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const EditorComponent = dynamic<EditorProps>(
@@ -11,9 +12,9 @@ const EditorComponent = dynamic<EditorProps>(
         ssr: false,
     }
 );
-// const DraftViewer = dynamic(() => import("@components/atoms/draftViewer"), {
-//     ssr: false,
-// });
+const DraftViewer = dynamic(() => import("@components/atoms/draftViewer"), {
+    ssr: false,
+});
 
 const EditorContainer = styled.section`
     display: flex;
@@ -742,51 +743,40 @@ const Editor = ({ defaultState }: Props) => {
     useEffect(() => {
         if (typeof window !== "undefined") {
             if (defaultState) {
-                const htmlToDraft = require("html-to-draftjs").default;
-                const blocksFromHtml = htmlToDraft(defaultState);
+                const editingState = getDraftByHtml(defaultState);
 
-                if (blocksFromHtml) {
-                    const { contentBlocks, entityMap } = blocksFromHtml;
-
-                    const contentState = ContentState?.createFromBlockArray(
-                        contentBlocks,
-                        entityMap
-                    );
-
-                    const editingState =
-                        EditorState?.createWithContent(contentState);
-
-                    setEditing(editingState);
-                }
+                setEditing(editingState);
             }
         }
     }, []);
 
     return (
-        <EditorContainer data-testid="editor">
-            <EditorComponent
-                editorState={editing}
-                onEditorStateChange={onEditorStateChange}
-                placeholder="내용을 작성해주세요."
-                toolbar={{
-                    options: [
-                        "inline",
-                        "fontSize",
-                        "blockType",
-                        "textAlign",
-                        "history",
-                        "list",
-                        "image",
-                        "link",
-                    ],
-                }}
-                localization={{
-                    locale: "ko",
-                }}
-            />
+        <>
+            <EditorContainer data-testid="editor">
+                <EditorComponent
+                    editorState={editing}
+                    onEditorStateChange={onEditorStateChange}
+                    placeholder="내용을 작성해주세요."
+                    toolbar={{
+                        options: [
+                            "inline",
+                            "fontSize",
+                            "blockType",
+                            "textAlign",
+                            "history",
+                            "list",
+                            "image",
+                            "link",
+                        ],
+                    }}
+                    localization={{
+                        locale: "ko",
+                    }}
+                />
+                <DraftViewer draft={editing} />
+            </EditorContainer>
             {/* 미리보기 토글 추가하기 */}
-            {/* <DraftViewer draft={editing} /> */}
-        </EditorContainer>
+        </>
     );
 };
 

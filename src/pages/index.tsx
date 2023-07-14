@@ -1,6 +1,6 @@
 import Layout from "../layout/Layout";
 import dynamic from "next/dynamic";
-import { Button } from "@components/atoms";
+import { Anchor, Button } from "@components/atoms";
 import { useRouter } from "next/router";
 
 const Editor = dynamic(() => import("@components/atoms/editor"), {
@@ -13,13 +13,15 @@ const DraftViewer = dynamic(() => import("@components/atoms/draftViewer"), {
 export default function Home() {
     const { push } = useRouter();
 
-    const onClick = () => {
-        push("/example");
-    };
+    // const onClick = () => {
+    //     push("/example");
+    // };
 
     return (
         <Layout title="HOME">
-            <Button onClick={onClick}>Example</Button>
+            <Button>
+                <Anchor href={"/example"}>Example</Anchor>
+            </Button>
             <Editor
                 defaultState={`<pre>const editorToHtml = 
         draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>

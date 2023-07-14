@@ -41,13 +41,13 @@ const NumSpan = styled.span`
 interface Props {
     // value: number;
 }
+const options = ["Chocolate", "Strawberry", "Banana"];
 
-const Example: NextPage<Props> = (props) => {
+const Example: NextPage<Props> = () => {
     const dispatch = useAppDispatch();
     const { value } = useAppSelector((state) => state.counter);
     const { isDarkmode, showModal } = useUISelector((state) => state.ui);
 
-    const options = ["Chocolate", "Strawberry", "Banana"];
     const [selectVal, setSelectVal] = useState(options[0]);
     const [inputVal, setInputVal] = useState("");
     const [act, setAct] = useState(false);
@@ -182,25 +182,23 @@ const Example: NextPage<Props> = (props) => {
 
 Example.displayName = "Example";
 
-export const getServerSideProps: GetServerSideProps =
-    wrapper.getServerSideProps((store) => async () => {
-        store.dispatch(increase());
-        store.dispatch(increase());
-        store.dispatch(increase());
+// export const getServerSideProps: GetServerSideProps =
+//     wrapper.getServerSideProps((store) => async () => {
+//         store.dispatch(increase());
+//         store.dispatch(increase());
+//         store.dispatch(increase());
 
-        // store.dispatch(onModal()); // 호출시 에러. arguments 문제?
+//         // store.dispatch(onModal()); // 호출시 에러. arguments 문제?
 
-        // props에 초기값으로 넘겨줄 수 있지만, 변하는 값이 아니라서 갱신하지 않으면 불변.
-        // 컴포넌트 내에서 useAppSelector를 통해서 사용하는 것이 좋음.
-        // const {
-        //     counter: { value },
-        // } = store.getState();
+//         // props에 초기값으로 넘겨줄 수 있지만, 변하는 값이 아니라서 갱신하지 않으면 불변.
+//         // 컴포넌트 내에서 useAppSelector를 통해서 사용하는 것이 좋음.
+//         // const {
+//         //     counter: { value },
+//         // } = await store.getState();
 
-        return {
-            props: {
-                // value,
-            },
-        };
-    });
+//         return {
+//             props: {},
+//         };
+//     });
 
 export default Example;

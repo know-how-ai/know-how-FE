@@ -1,11 +1,26 @@
 import { type ContentState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { convertToRaw } from "draft-js";
+import { getHtmlByDraft } from "@libs/editor";
 
 const DraftViewer_ = styled.div`
     overflow: hidden;
+    blockquote {
+        border-left: 5px solid ${(p) => p.theme.color.blue};
+        padding-left: 5px;
+        margin: 0.5rem initial;
+        color: ${(p) => p.theme.color.textColor};
+    }
+    pre {
+        background: ${(p) => p.theme.color.lightBlue};
+        border-radius: 1rem;
+        padding: 1rem;
+        margin: 1rem 0.5rem;
+        line-height: 160%;
+    }
+    pre span {
+        line-height: 160%;
+    }
 `;
 
 interface DraftViewerProps {
@@ -13,26 +28,13 @@ interface DraftViewerProps {
 }
 
 const DraftViewer = ({ draft }: DraftViewerProps) => {
-    /**
-     * 1. 작성된 EditorState 객체
-     * 2. convertToRaw() 함수를 이용해 원시 JS 객체로 변환
-     * 3. 원시 JS 객체를 draftToHtml() 함수를 이용해 HTML 문자열로 변환
-     * 4. dangerouslySetInnerHTML 속성을 통해 직접 렌더링
-     * => 보안적 사항에 대한 이슈 처리는 어떻게?
-     */
-
     const [html, setHtml] = useState<string>("");
 
     // ONLY WORKS FOR THE FIRST TIME
     useEffect(() => {
         if (typeof window !== "undefined") {
-            if (draft) {
-                const editorToHtml = draftToHtml(
-                    convertToRaw(draft.getCurrentContent())
-                );
-
-                setHtml(editorToHtml);
-            }
+            const converted = getHtmlByDraft(draft);
+            setHtml(converted);
         }
     }, []);
 

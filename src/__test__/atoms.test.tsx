@@ -13,12 +13,25 @@ import {
     Anchor,
     Toast,
     Editor,
+    DraftViewer,
 } from "@components/atoms";
+import { getDraftByHtml } from "@libs/editor";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe("Components: atoms unit test", () => {
     const user = userEvent.setup();
+
+    test("DraftViewer", async () => {
+        const htmlVal = "<p>test editing is inputted.</p>";
+        const draftVal = getDraftByHtml(htmlVal);
+
+        useThemeRenderWithRedux(<DraftViewer draft={draftVal} />);
+
+        const draft = await screen.findByText("test editing", { exact: false });
+        expect(draft).toBeInTheDocument();
+        expect(draft).toBeVisible();
+    });
 
     test("Editor", async () => {
         let editorVal = "test editing is inputted.";
@@ -29,7 +42,9 @@ describe("Components: atoms unit test", () => {
         expect(editorContainer).toBeInTheDocument();
         expect(editorContainer).toBeEnabled();
 
-        await screen.findByText("test", { exact: false });
+        const editing = await screen.findByText("test", { exact: false });
+        expect(editing).toBeInTheDocument();
+        expect(editing).toBeVisible();
     });
 
     test("Input", async () => {
