@@ -45,11 +45,12 @@ interface ButtonProps extends StyleProps {
     children?: ReactNode | string | any;
     onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
     className?: string;
+    ariaLabel?: string;
 }
 
 const Button: FC<ButtonProps> = forwardRef(
     (
-        { children, disabled, onClick, className, type = "button" },
+        { children, disabled, onClick, ariaLabel, className, type = "button" },
         buttonRef
     ) => {
         return (
@@ -59,6 +60,7 @@ const Button: FC<ButtonProps> = forwardRef(
                 onClick={onClick}
                 disabled={disabled}
                 className={className}
+                aria-label={ariaLabel}
             >
                 {children}
             </Btn>

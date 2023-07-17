@@ -2,7 +2,11 @@ import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import { Input } from "@components/atoms";
-import { SelectWithLabel, TextboxWithLabel } from "@components/molecules";
+import {
+    FloatingButton,
+    SelectWithLabel,
+    TextboxWithLabel,
+} from "@components/molecules";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -62,5 +66,14 @@ describe("Components: molecules unit test", () => {
 
         fireEvent.change(select, { target: { value: berry } });
         expect(selected).toBe(berry);
+    });
+
+    test("FloatingButton", async () => {
+        useThemeRenderWithRedux(<FloatingButton>Test Button</FloatingButton>);
+
+        const button = screen.getByRole("button");
+        expect(button).toBeInTheDocument();
+        expect(button).toBeEnabled();
+        expect(button).toHaveTextContent(/test button/i);
     });
 });

@@ -14,8 +14,11 @@ import { type FormEvent, useState } from "react";
 import Layout from "../layout";
 import { Button, Modal, Badge, Anchor } from "@components/atoms";
 import dynamic from "next/dynamic";
-import SelectWithLabel from "@components/molecules/selectWithLabel/SelectWithLabel";
-import TextboxWithLabel from "@components/molecules/textboxWithLabel/TextboxWithLabel";
+import {
+    FloatingButton,
+    TextboxWithLabel,
+    SelectWithLabel,
+} from "@components/molecules";
 
 const Editor = dynamic(() => import("@components/atoms/editor"), {
     ssr: false,
@@ -122,6 +125,8 @@ const Example: NextPage<Props> = () => {
 
                 <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
             </Container>
+
+            <FloatingButton>헬퍼</FloatingButton>
 
             {isShow ? (
                 <Toast
