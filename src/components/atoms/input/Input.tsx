@@ -64,6 +64,7 @@ const Input = ({
     className,
     onBlur,
     onFocus,
+    ...rest
 }: InputProps) => {
     return (
         <Input_
@@ -77,6 +78,7 @@ const Input = ({
             className={className}
             onFocus={onFocus}
             onBlur={onBlur}
+            {...rest}
         />
     );
 };

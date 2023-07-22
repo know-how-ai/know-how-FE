@@ -14,6 +14,7 @@ import {
     Toast,
     Editor,
     DraftViewer,
+    Form,
 } from "@components/atoms";
 import { getDraftByHtml } from "@libs/editor";
 
@@ -203,6 +204,18 @@ describe("Components: atoms unit test", () => {
         expect(button).toBeInTheDocument();
         expect(button).toBeEnabled();
         expect(button).toHaveTextContent(/test button/i);
+    });
+
+    test("Form", async () => {
+        useThemeRenderWithRedux(
+            <Form>
+                <input type="text" placeholder="test input for form" />
+            </Form>
+        );
+
+        const form = await screen.findByTestId("form");
+        expect(form).toBeInTheDocument();
+        expect(form).toBeEnabled();
     });
 
     test("Select", async () => {
