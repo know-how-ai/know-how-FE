@@ -6,6 +6,7 @@ import {
     FloatingButton,
     SelectWithLabel,
     TextboxWithLabel,
+    ToggleButton,
 } from "@components/molecules";
 
 jest.mock("next/router", () => require("next-router-mock"));
@@ -75,5 +76,39 @@ describe("Components: molecules unit test", () => {
         expect(button).toBeInTheDocument();
         expect(button).toBeEnabled();
         expect(button).toHaveTextContent(/test button/i);
+    });
+
+    test("ToggleButton", async () => {
+        let state = true;
+
+        const { unmount } = useThemeRenderWithRedux(
+            <ToggleButton
+                statement={state}
+                onClick={() => {
+                    state = !state;
+                }}
+            />
+        );
+
+        const toggleBtn = screen.getByRole("button");
+        expect(toggleBtn).toBeInTheDocument();
+        expect(toggleBtn).toBeEnabled();
+
+        await user.click(toggleBtn);
+
+        unmount();
+
+        // re-render
+        useThemeRenderWithRedux(
+            <ToggleButton
+                statement={state}
+                onClick={() => {
+                    state = !state;
+                }}
+            />
+        );
+
+        expect(state).toBe(false);
+        expect(screen.getByLabelText(/right/i)).toBeInTheDocument();
     });
 });
