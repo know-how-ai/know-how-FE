@@ -8,8 +8,8 @@ interface StyleProps {
 }
 
 const Container_ = styled.label<StyleProps>`
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
     padding: ${(p) => p.theme.size.xs};
     border: ${(p) =>
@@ -32,6 +32,7 @@ interface TextboxWithLabelProps extends StyleProps {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     currentValue?: string;
     label?: string;
+    type?: "text" | "email" | "password";
 }
 
 const TextboxWithLabel: FC<TextboxWithLabelProps> = ({
@@ -41,6 +42,7 @@ const TextboxWithLabel: FC<TextboxWithLabelProps> = ({
     label,
     required,
     placeholder,
+    type = "text",
 }) => {
     const [isFocused, setIsFocused] = useState(false);
 
@@ -58,7 +60,7 @@ const TextboxWithLabel: FC<TextboxWithLabelProps> = ({
                 placeholder={placeholder}
                 isFocused={isFocused}
                 disabled={disabled}
-                type="text"
+                type={type}
                 required={required}
                 currentValue={currentValue}
                 onFocus={onFocus}

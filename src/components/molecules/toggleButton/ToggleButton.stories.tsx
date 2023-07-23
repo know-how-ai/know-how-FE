@@ -10,13 +10,32 @@ export default meta;
 
 type ToggleButtonStory = StoryObj<typeof ToggleButton>;
 
-let state = true;
-
-export const Base: ToggleButtonStory = {
+export const Single: ToggleButtonStory = {
     args: {
-        statement: state,
-        onClick: () => {
-            state = !state;
-        },
+        variant: "single",
+        statement: true,
+        ariaLabel: "Login or Join toggle Button",
+        ariaDescription: `Current method is Single.`,
+    },
+};
+
+export const SingleNotSelected: ToggleButtonStory = {
+    args: {
+        ...Single.args,
+        statement: false,
+    },
+};
+
+export const Dual: ToggleButtonStory = {
+    args: {
+        variant: "dual",
+        statement: true,
+    },
+};
+
+export const DualOtherValue: ToggleButtonStory = {
+    args: {
+        ...Dual.args,
+        statement: false,
     },
 };

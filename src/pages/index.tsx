@@ -4,6 +4,7 @@ import { Anchor, Button } from "@components/atoms";
 import { useRouter } from "next/router";
 import ToggleButton from "@components/molecules/toggleButton/ToggleButton";
 import { useState } from "react";
+import { LoginOrJoinForm } from "@components/organics";
 
 const Editor = dynamic(() => import("@components/atoms/editor"), {
     ssr: false,
@@ -23,21 +24,23 @@ export default function Home() {
 
     return (
         <Layout title="HOME">
-            <ToggleButton
+            {/* <ToggleButton
                 statement={toggle}
                 onClick={() => setToggle((prev) => !prev)}
-            />
+            /> */}
 
             <Button>
-                <Anchor href={"/example"}>Example</Anchor>
+                <Anchor href={"/example"}>Go to Example</Anchor>
             </Button>
-            <Editor
+
+            <LoginOrJoinForm />
+            {/* <Editor
                 defaultState={`<pre>const editorToHtml = 
         draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>
         <p style="text-align:center;"><strong>ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
         </strong></p>`}
             />
-            <DraftViewer draft={""} />
+            <DraftViewer draft={""} /> */}
         </Layout>
     );
 }

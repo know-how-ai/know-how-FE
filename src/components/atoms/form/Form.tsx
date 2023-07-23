@@ -2,11 +2,9 @@ import type { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 const Form_ = styled.form`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* width: 100%; */
+    display: grid;
+    gap: 1rem;
     // 반응형 - 미디어 쿼리 추가 필요?
 `;
 
