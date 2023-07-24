@@ -29,11 +29,11 @@ export default function Home() {
                 onClick={() => setToggle((prev) => !prev)}
             /> */}
 
+            <LoginOrJoinForm />
+
             <Button>
                 <Anchor href={"/example"}>Go to Example</Anchor>
             </Button>
-
-            <LoginOrJoinForm />
             {/* <Editor
                 defaultState={`<pre>const editorToHtml = 
         draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>

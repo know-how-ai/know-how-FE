@@ -3,7 +3,7 @@ import Button from "../../atoms/button/Button";
 
 interface StyledInterface {
     statement?: boolean;
-    disabled?: boolean;
+    // disabled?: boolean;
     variant?: "single" | "dual";
     scale?: number;
 }
@@ -22,23 +22,26 @@ const Container_ = styled.div<StyledInterface>`
     justify-content: center;
     align-items: center;
     scale: ${(p) => (p.scale ? p.scale : "0.5")};
-    margin: 0.5rem;
+    margin: 0.5rem 0.5rem;
 
-    :hover,
-    :focus {
+    :hover {
         opacity: 0.7;
     }
 `;
 const Button_ = styled(Button)<StyledInterface>`
     aspect-ratio: 1;
-    border-radius: 100%;
+    border-radius: 100% !important;
     animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s forwards
         1 ease-in-out;
 
-    :hover:not(:disabled),
-    :focus:not(:disabled) {
+    :hover:not(:disabled) {
         opacity: 1;
     }
+
+    // 포커싱되었을때 동작하지 않음?
+    /* :focus:not(:disabled) {
+        background-color: ${(p) => p.theme.color.blue};
+    } */
 
     @keyframes moveLeft {
         from {
@@ -90,7 +93,6 @@ const ToggleButton = ({
             aria-label={ariaLabel}
             aria-description={ariaDescription}
             scale={scale}
-            role="button"
             data-testid={"toggle button"}
         >
             <Button_ statement={statement} variant={variant} />

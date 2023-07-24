@@ -1,15 +1,14 @@
-import { type ChangeEvent, type HTMLInputTypeAttribute } from "react";
+import { type HTMLInputTypeAttribute } from "react";
+import { type UseFormRegisterReturn } from "react-hook-form";
 import styled from "styled-components";
 
 interface StyleProps {
     disabled?: boolean;
-    isFocused?: boolean;
 }
 
 const Input_ = styled.input<StyleProps>`
     color: ${(p) => p.theme.color.textColor};
     border: none;
-    border-top: ${(p) => p.theme.border.inactive};
     border-bottom: ${(p) => p.theme.border.gray};
     transition: ${(p) => p.theme.transition.fast};
     margin: ${(p) => p.theme.size.xs};
@@ -26,12 +25,12 @@ const Input_ = styled.input<StyleProps>`
     }
 
     :hover {
-        border-bottom: ${(p) => p.theme.border.inactive};
+        border-bottom-color: ${(p) => p.theme.color.blue};
     }
 
     :focus {
         outline: none;
-        border-bottom: ${(p) => p.theme.border.inactive};
+        border-bottom-color: ${(p) => p.theme.color.blue};
     }
 
     /* ::-webkit-inner-spin-button,
@@ -45,12 +44,11 @@ interface InputProps extends StyleProps {
     type: HTMLInputTypeAttribute;
     required?: boolean;
     placeholder?: string;
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-    currentValue?: string;
     id?: string;
     className?: string;
-    onFocus?: () => void;
-    onBlur?: () => void;
+    register?: UseFormRegisterReturn;
+    ariaLabel?: string;
+    ariaDescription?: string;
 }
 
 const Input = ({
@@ -59,25 +57,23 @@ const Input = ({
     disabled,
     placeholder,
     required,
-    onChange,
-    currentValue,
     className,
-    onBlur,
-    onFocus,
+    register,
+    ariaDescription,
+    ariaLabel,
     ...rest
 }: InputProps) => {
     return (
         <Input_
-            value={currentValue}
-            onChange={onChange}
             type={type}
             disabled={disabled}
             placeholder={placeholder}
             required={required}
             id={id}
             className={className}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            aria-label={ariaLabel}
+            aria-description={ariaDescription}
+            {...register}
             {...rest}
         />
     );

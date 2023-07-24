@@ -16,7 +16,7 @@ import { Button, Modal, Badge, Anchor } from "@components/atoms";
 import dynamic from "next/dynamic";
 import {
     FloatingButton,
-    TextboxWithLabel,
+    LabelWrapper,
     SelectWithLabel,
 } from "@components/molecules";
 
@@ -159,7 +159,7 @@ const Example: NextPage<Props> = () => {
                             setSelectVal(options[0]);
                         }}
                     >
-                        <TextboxWithLabel
+                        <LabelWrapper
                             label="아이스크림 이름"
                             currentValue={inputVal}
                             onChange={(e) => {

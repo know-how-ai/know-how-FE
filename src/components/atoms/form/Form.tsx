@@ -5,12 +5,14 @@ const Form_ = styled.form`
     /* width: 100%; */
     display: grid;
     gap: 1rem;
+
     // 반응형 - 미디어 쿼리 추가 필요?
 `;
 
 interface FormProps {
     children?: ReactNode | any;
     className?: string;
+    ariaLabel?: string;
     ariaDescription?: string;
     onSubmit?: (e?: any) => void;
 }
@@ -18,6 +20,7 @@ interface FormProps {
 const Form: FC<FormProps> = ({
     children,
     className,
+    ariaLabel,
     ariaDescription,
     onSubmit,
     ...rest
@@ -25,6 +28,7 @@ const Form: FC<FormProps> = ({
     return (
         <Form_
             data-testid="form"
+            aria-label={ariaLabel}
             aria-description={ariaDescription}
             className={className}
             onSubmit={onSubmit}

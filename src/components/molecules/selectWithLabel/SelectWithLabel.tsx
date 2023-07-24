@@ -8,8 +8,8 @@ interface StyleProps {
 }
 
 const Container_ = styled.label<StyleProps>`
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
     padding: ${(p) => p.theme.size.xs};
     border: ${(p) =>

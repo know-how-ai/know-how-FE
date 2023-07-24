@@ -1,6 +1,7 @@
-import { Button, Form } from "@components/atoms";
-import { TextboxWithLabel, ToggleButton } from "@components/molecules";
+import { Button, Form, Input } from "@components/atoms";
+import { LabelWrapper, ToggleButton } from "@components/molecules";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 type Method = "LOGIN" | "JOIN";
@@ -8,13 +9,14 @@ interface HeadLineSpanProps {
     isSelected?: boolean;
 }
 
-const FormContainer = styled.section`
+const Container = styled.section`
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
+
 const HeadLine = styled.h3`
     width: 85%;
     display: flex;
@@ -51,11 +53,31 @@ const HeadLineSpan = styled.span<HeadLineSpanProps>`
     }
 `;
 
+interface LoginFormInterface {
+    email: string;
+    password: string;
+}
+
+interface JoinFormInterface extends LoginFormInterface {
+    passwordConfirmation: string;
+    username: string;
+    blogname: string;
+    resetQuestion: string;
+    resetAnswer: string;
+}
+
 const LoginOrJoinForm = () => {
     const [method, setMethod] = useState<Method>("LOGIN");
+    const { register, handleSubmit, setError } = useForm<
+        LoginFormInterface | JoinFormInterface
+    >({ reValidateMode: "onBlur" });
+
+    const onSubmit = (data?: any) => {
+        console.log(data);
+    };
 
     return (
-        <FormContainer>
+        <Container>
             <HeadLine>
                 <HeadLineSpan isSelected={method === "LOGIN"}>
                     접속하기
@@ -75,31 +97,148 @@ const LoginOrJoinForm = () => {
                 </HeadLineSpan>
             </HeadLine>
 
-            <Form>
-                <TextboxWithLabel
-                    type="email"
-                    placeholder="이메일"
-                    label="이메일"
-                />
-                <TextboxWithLabel
-                    type="password"
-                    placeholder="패스워드"
-                    label="패스워드"
-                />
+            <Form
+                ariaLabel={`Form for ${method.toLowerCase()} the website`}
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <LabelWrapper label="이메일">
+                    <Input
+                        type="email"
+                        placeholder="abcd@blogify.com"
+                        ariaLabel={`Email Input element for ${method.toLowerCase()}`}
+                        register={register("email", {
+                            required: true,
+                            pattern: {
+                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                                message: "올바른 이메일 주소를 입력해 주세요.",
+                            },
+                        })}
+                    />
+                </LabelWrapper>
+                <LabelWrapper label="패스워드">
+                    <Input
+                        type="password"
+                        placeholder="****"
+                        ariaLabel={`Password Input element for ${method.toLowerCase}`}
+                        register={register("password", {
+                            required: true,
+                            minLength: {
+                                message:
+                                    "4~16자 사이의 비밀번호를 입력해주세요.",
+                                value: 4,
+                            },
+                            maxLength: {
+                                message:
+                                    "4~16자 사이의 비밀번호를 입력해주세요.",
+                                value: 16,
+                            },
+                        })}
+                    />
+                </LabelWrapper>
 
                 {method === "JOIN" ? (
-                    <TextboxWithLabel
-                        type="password"
-                        placeholder="패스워드 확인"
-                        label="패스워드 확인"
-                    />
+                    <>
+                        <LabelWrapper label="패스워드 확인">
+                            <Input
+                                type="password"
+                                placeholder="****"
+                                register={register("passwordConfirmation", {
+                                    required: true,
+                                    minLength: {
+                                        message:
+                                            "4~16자 사이의 비밀번호를 입력해주세요.",
+                                        value: 4,
+                                    },
+                                    maxLength: {
+                                        message:
+                                            "4~16자 사이의 비밀번호를 입력해주세요.",
+                                        value: 16,
+                                    },
+                                    validate: {
+                                        accordance: (value, values) =>
+                                            values.password === value,
+                                    },
+                                })}
+                            />
+                        </LabelWrapper>
+                        <LabelWrapper label="닉네임">
+                            <Input
+                                type="text"
+                                placeholder="홍길동"
+                                register={register("username", {
+                                    required: true,
+                                    minLength: {
+                                        message: "2~16자 사이로 입력해 주세요.",
+                                        value: 2,
+                                    },
+                                    maxLength: {
+                                        message: "2~16자 사이로 입력해 주세요.",
+                                        value: 16,
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Zㄱ-힣0-9|s]*$/,
+                                        message:
+                                            "특수문자는 사용할 수 없습니다.",
+                                    },
+                                })}
+                            />
+                        </LabelWrapper>
+                        <LabelWrapper label="블로그명">
+                            <Input
+                                type="text"
+                                placeholder="홍길동의 블로그"
+                                register={register("blogname", {
+                                    required: true,
+                                    minLength: {
+                                        message: "2~16자 사이로 입력해 주세요.",
+                                        value: 2,
+                                    },
+                                    maxLength: {
+                                        message: "2~16자 사이로 입력해 주세요.",
+                                        value: 16,
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Zㄱ-힣0-9|s]*$/,
+                                        message:
+                                            "특수문자는 사용할 수 없습니다.",
+                                    },
+                                })}
+                            />
+                        </LabelWrapper>
+                        <LabelWrapper label="패스워드 초기화 질문">
+                            <Input
+                                type="text"
+                                placeholder="패스워드 초기화를 위한 질문을 설정해주세요."
+                                register={register("resetQuestion", {
+                                    required: true,
+                                    minLength: {
+                                        message: "2자 이상으로 입력해 주세요.",
+                                        value: 2,
+                                    },
+                                })}
+                            />
+                        </LabelWrapper>
+                        <LabelWrapper label="패스워드 초기화 답변">
+                            <Input
+                                type="text"
+                                placeholder="패스워드 초기화를 위한 질문의 답변을 설정해주세요."
+                                register={register("resetAnswer", {
+                                    required: true,
+                                    minLength: {
+                                        message: "2자 이상으로 입력해 주세요.",
+                                        value: 2,
+                                    },
+                                })}
+                            />
+                        </LabelWrapper>
+                    </>
                 ) : null}
 
-                <Button ariaLabel="submit form for login" type="submit">
-                    접속하기
+                <Button ariaLabel="submitting form for login" type="submit">
+                    {method === "LOGIN" ? "접속하기" : "가입하기"}
                 </Button>
             </Form>
-        </FormContainer>
+        </Container>
     );
 };
 

@@ -17,6 +17,7 @@ import {
     Form,
 } from "@components/atoms";
 import { getDraftByHtml } from "@libs/editor";
+import { useForm } from "react-hook-form";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -48,118 +49,70 @@ describe("Components: atoms unit test", () => {
         expect(editing).toBeVisible();
     });
 
-    test("Input", async () => {
-        let inputVal = "";
+    test("Input with Label, Form, ErrorMessage", async () => {
+        let value = "";
 
-        useThemeRenderWithRedux(
-            <Input
-                type="text"
-                currentValue={inputVal}
-                onChange={({ currentTarget: { value } }) => {
-                    inputVal = value;
-                }}
-            />
-        );
+        const Component = () => {
+            const {
+                register,
+                handleSubmit,
+                formState: { errors },
+            } = useForm<{ text: string }>();
+            const onSubmit = ({ text }: { text: string }) => {
+                value = text;
+            };
 
-        const input = await screen.findByRole("textbox");
-        expect(input).toBeInTheDocument();
-        expect(input).toBeEnabled();
-
-        // await user.type(input, "input testing");
-        fireEvent.change(input, { target: { value: "input testing" } });
-        expect(inputVal).toBe("input testing");
-
-        await user.type(input, "a");
-        expect(inputVal).toBe("a");
-    });
-
-    test("Label with Input", async () => {
-        let inputVal = "";
-
-        useThemeRenderWithRedux(
-            <>
-                <Label>label test</Label>
-                <Input
-                    currentValue={inputVal}
-                    type="text"
-                    id="test"
-                    onChange={({ currentTarget: { value } }) => {
-                        inputVal = value;
-                    }}
-                />
-            </>
-        );
-
-        const input = await screen.findByRole("textbox");
-        const label = await screen.findByText(/label test/i);
-        expect(input).toBeInTheDocument();
-        expect(label).toBeInTheDocument();
-        expect(input).toBeEnabled();
-
-        // await user.type(input, "input testing");
-        fireEvent.change(input, { target: { value: "input testing" } });
-        expect(inputVal).toBe("input testing");
-
-        await user.click(input);
-        await user.keyboard("a");
-
-        expect(inputVal).toBe("a");
-    });
-
-    test("ErrorMessage with Input", async () => {
-        let [inputVal, errStatus] = ["", false];
-        const ErrorComponent = () => {
             return (
-                <>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Label>label test</Label>
                     <Input
-                        currentValue={inputVal}
                         type="text"
                         id="test"
-                        onChange={({ currentTarget: { value } }) => {
-                            inputVal = value;
-                            errStatus = !!inputVal.match(/error/i);
-                        }}
+                        register={register("text", {
+                            minLength: {
+                                value: 2,
+                                message: "",
+                            },
+                        })}
                     />
-
-                    {errStatus ? (
+                    {errors.text ? (
                         <ErrorMessage>Ocurring Error</ErrorMessage>
                     ) : null}
-                </>
+
+                    <button>submit</button>
+                </Form>
             );
         };
 
-        const { unmount: unmount1 } = useThemeRenderWithRedux(
-            <ErrorComponent />
-        );
+        const { unmount } = useThemeRenderWithRedux(<Component />);
 
-        const input1 = await screen.findByRole("textbox");
-        const errMessage = screen.queryByText(/ocurring error/i);
-        expect(input1).toBeInTheDocument();
-        expect(input1).toBeEnabled();
-        expect(errMessage).not.toBeInTheDocument();
+        const input = await screen.findByRole("textbox");
+        const label = await screen.findByText(/label test/i);
+        const button = await screen.findByText(/submit/i);
+        const errorMessage = screen.queryByText(/ocurring error/i);
 
-        // await user.type(input, "input testing");
-        fireEvent.change(input1, { target: { value: "error testing" } });
-        expect(inputVal).toBe("error testing");
-        expect(errStatus).toBe(true);
+        expect(input).toBeInTheDocument();
+        expect(label).toBeInTheDocument();
+        expect(button).toBeInTheDocument();
+        expect(errorMessage).not.toBeInTheDocument();
+
+        expect(input).toBeEnabled();
+        expect(button).toBeEnabled();
+
+        await user.type(input, "input testing");
+        await user.click(button);
+        expect(value).toBe("input testing");
 
         // re-rendering
-        unmount1();
-        const { unmount: unmount2 } = useThemeRenderWithRedux(
-            <ErrorComponent />
-        );
+        unmount();
+        useThemeRenderWithRedux(<Component />);
 
+        await user.type(await screen.findByRole("textbox"), "1");
+        await user.click(await screen.findByText(/submit/i));
         expect(screen.getByText(/ocurring error/i)).toBeInTheDocument();
 
-        const input2 = await screen.findByRole("textbox");
-        fireEvent.change(input2, { target: { value: "a" } });
-        expect(inputVal).toBe("a");
-        expect(errStatus).toBe(false);
-
-        // re-rendering
-        unmount2();
-        useThemeRenderWithRedux(<ErrorComponent />);
-
+        await user.type(await screen.findByRole("textbox"), "1234");
+        await user.click(await screen.findByText(/submit/i));
         expect(screen.queryByText(/ocurring error/i)).not.toBeInTheDocument();
     });
 

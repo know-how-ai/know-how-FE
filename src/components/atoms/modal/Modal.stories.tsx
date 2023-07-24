@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Modal from "./Modal";
-import { TextboxWithLabel } from "@components/molecules";
+import { LabelWrapper } from "@components/molecules";
 
 const meta = {
     component: Modal,
@@ -15,11 +15,8 @@ export const Base: ModalStory = {
     args: {
         children: (
             <div style={{ padding: "4rem 0.5rem" }}>
-                <TextboxWithLabel
-                    label="Name"
-                    currentValue="Valentine Chocolate"
-                />
-                <TextboxWithLabel label="Flavor" currentValue="Chocolate" />
+                <LabelWrapper label="Name" currentValue="Valentine Chocolate" />
+                <LabelWrapper label="Flavor" currentValue="Chocolate" />
             </div>
         ),
     },

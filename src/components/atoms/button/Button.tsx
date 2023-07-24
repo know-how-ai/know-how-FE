@@ -6,9 +6,11 @@ import {
     forwardRef,
 } from "react";
 import styled from "styled-components";
+import LoadingDots from "../loadingDots/LoadingDots";
 
 interface StyleProps {
     disabled?: boolean;
+    loading?: boolean;
 }
 
 const Btn = styled.button<StyleProps>`
@@ -16,7 +18,7 @@ const Btn = styled.button<StyleProps>`
     justify-content: center;
     align-items: center;
     padding: 1.25rem 2rem;
-    margin: 1rem;
+    margin: 1rem auto;
     max-width: 20rem; // 조정 필요
     font-size: 1.25rem;
     line-height: 1.25rem;
@@ -25,11 +27,9 @@ const Btn = styled.button<StyleProps>`
     background-color: ${(p) => p.theme.color.blue};
     border-radius: ${(p) => p.theme.border.radius};
 
-    /* NEED TO: disabled style */
-
     :hover:not(:disabled),
     :focus:not(:disabled) {
-        cursor: pointer;
+        cursor: ${(p) => (p.loading ? "progress" : "pointer")};
         opacity: 0.5;
         transition: ${(p) => p.theme.transition.fast};
     }
@@ -46,11 +46,21 @@ interface ButtonProps extends StyleProps {
     onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
     className?: string;
     ariaLabel?: string;
+    tabIndex?: number;
 }
 
 const Button: FC<ButtonProps> = forwardRef(
     (
-        { children, disabled, onClick, ariaLabel, className, type = "button" },
+        {
+            children,
+            disabled,
+            onClick,
+            ariaLabel,
+            className,
+            type,
+            tabIndex = 0,
+            loading,
+        },
         buttonRef
     ) => {
         return (
@@ -61,8 +71,10 @@ const Button: FC<ButtonProps> = forwardRef(
                 disabled={disabled}
                 className={className}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
+                loading={loading}
             >
-                {children}
+                {loading ? <LoadingDots /> : children}
             </Btn>
         );
     }
