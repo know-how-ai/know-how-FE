@@ -16,6 +16,8 @@ const Wrapper = styled.label<StyleProps>`
     border-radius: ${(p) => p.theme.border.radius};
     transition: ${(p) => p.theme.transition.fast};
     cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+    word-break: keep-all;
+    line-height: 2rem;
 
     // when appear, animate 'fade in'
     opacity: 0;

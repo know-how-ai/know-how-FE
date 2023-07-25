@@ -15,24 +15,30 @@ const Container = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: auto 2rem;
+    margin: auto 2rem;
+    width: auto;
 `;
 
 const HeadLine = styled.h3`
-    width: 85%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 2rem auto;
+    gap: 1rem;
 `;
 
 const HeadLineSpan = styled.span<HeadLineSpanProps>`
     display: inline-block;
     font-weight: 600;
-    font-size: ${(p) => p.theme.size.lg};
+    font-size: ${(p) => p.theme.size.xl};
+    word-break: keep-all;
     text-align: center;
     color: ${(p) => p.theme.color.textColor};
-    animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s forwards
-        ease-in-out;
-    -webkit-animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s
+    animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 0.5s
+        forwards ease-in-out;
+    -webkit-animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 0.5s
         forwards ease-in-out;
 
     @keyframes activate {
@@ -86,7 +92,6 @@ const LoginOrJoinForm = () => {
                 </HeadLineSpan>
                 <ToggleButton
                     variant="dual"
-                    scale={0.35}
                     statement={method === "LOGIN"}
                     onClick={() => {
                         setMethod(method === "LOGIN" ? "JOIN" : "LOGIN");

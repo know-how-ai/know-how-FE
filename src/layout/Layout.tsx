@@ -13,17 +13,18 @@ interface LayoutProps {
 }
 
 const Main = styled.main`
+    padding-top: 12rem; // 8 + 4
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     flex-direction: column;
-
     width: 100%;
+    height: 85vh;
     overflow-x: auto;
     background-color: ${(props) => props.theme.color.backgroundColor};
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
-    height: 80vh;
 `;
 
 const Footer = styled.footer`
@@ -35,8 +36,9 @@ const Footer = styled.footer`
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
-    height: 10vh;
-    border-top: ${(p) => p.theme.border.active};
+    /* border-top: ${(p) => p.theme.border.active}; */
+    height: 12rem;
+    overflow: hidden;
 `;
 
 const Copyright = styled.span`

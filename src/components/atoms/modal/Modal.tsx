@@ -21,6 +21,7 @@ const RootContainer = styled.div`
     inset: 0;
     transition: ${(p) => p.theme.transition.fast};
     animation: ${fadeIn} 0.3s ease-out;
+    backdrop-filter: blur(1px);
 `;
 
 const ModalContainer = styled.div`
@@ -42,18 +43,19 @@ const ModalContent = styled.div`
     z-index: 21;
     ${media.tablet} {
         width: 80vw;
+        max-height: 80vh;
     }
     transition: ${(p) => p.theme.transition.fast};
     animation: ${uprise} 0.3s ease-in-out;
+    overflow-y: auto;
 `;
 
 const CloseBtn = styled(Button)`
     transition: ${(p) => p.theme.transition.fast};
     position: absolute;
-    right: ${(p) => p.theme.size.sm};
+    right: ${(p) => p.theme.size.xl};
     top: ${(p) => p.theme.size.sm};
     background-color: ${(p) => p.theme.color.gray};
-    /* scale: 0.85; */
 `;
 
 interface ModalProps {

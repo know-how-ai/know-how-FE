@@ -8,18 +8,21 @@ import {
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
     width: 100%;
-    background-color: ${(props) => props.theme.color.backgroundColor};
-    color: ${(props) => props.theme.color.textColor};
-    transition: ${(props) => props.theme.transition.fast};
-    filter: ${(props) => props.theme.filter.blur};
-    min-height: 10vh;
+    background-color: ${(p) => p.theme.color.backgroundColor + "aa"};
+    color: ${(p) => p.theme.color.textColor};
+    transition: ${(p) => p.theme.transition.fast};
+    z-index: 10;
+    min-height: 8rem;
     border-bottom: ${(p) => p.theme.border.active};
-    overflow: hidden;
+    backdrop-filter: blur(0.75px);
+    box-shadow: ${(p) => p.theme.boxShadow.strong};
 `;
 
 const Logo = styled.span`

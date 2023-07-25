@@ -3,24 +3,21 @@ import styled from "styled-components";
 interface ToggleButtonInterface {
     statement?: boolean;
     variant?: "single" | "dual";
-    scale?: number;
 }
 
 const Toggle_ = styled.button<ToggleButtonInterface>`
     border: ${(p) => p.theme.border.gray};
-    border-width: 0.5rem;
+    border-width: 0.25rem;
     border-radius: 100rem;
     cursor: pointer;
     transition: ${(p) => p.theme.transition.fast};
-    max-width: 15rem;
-    width: 100%;
+    width: 5rem;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    scale: ${(p) => (p.scale ? p.scale : "0.5")};
-    margin: 0.5rem 0.5rem;
+    margin: 1rem;
 
     :hover:not(:disabled),
     :focus:not(:disabled),
@@ -35,16 +32,16 @@ const Toggle_ = styled.button<ToggleButtonInterface>`
 `;
 
 const Ball_ = styled.span<ToggleButtonInterface>`
-    padding: 2rem;
-    margin: 1rem;
+    padding: 0.6rem;
+    margin: 0.3rem;
     border: none;
     display: inline-block;
     background-color: ${(p) => p.theme.color.textColor};
     aspect-ratio: 1;
     border-radius: 100%;
-    animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s forwards
+    animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.5s forwards
         1 ease-in-out;
-    -webkit-animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s
+    -webkit-animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.5s
         forwards 1 ease-in-out;
 
     @keyframes moveLeft {
@@ -82,7 +79,6 @@ const ToggleButton = ({
     variant = "single",
     ariaLabel,
     ariaDescription,
-    scale,
 }: ToggleButton) => {
     return (
         <Toggle_
@@ -90,7 +86,6 @@ const ToggleButton = ({
             onClick={onClick}
             aria-label={ariaLabel}
             aria-description={ariaDescription}
-            scale={scale}
             data-testid={"toggle button"}
         >
             <Ball_ statement={statement} variant={variant} />

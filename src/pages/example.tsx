@@ -14,11 +14,8 @@ import { type FormEvent, useState } from "react";
 import Layout from "../layout";
 import { Button, Modal, Badge, Anchor } from "@components/atoms";
 import dynamic from "next/dynamic";
-import {
-    FloatingButton,
-    LabelWrapper,
-    SelectWithLabel,
-} from "@components/molecules";
+import { FloatingButton, LabelWrapper } from "@components/molecules";
+import { LoginOrJoinForm } from "@components/organics";
 
 const Editor = dynamic(() => import("@components/atoms/editor"), {
     ssr: false,
@@ -144,33 +141,7 @@ const Example: NextPage<Props> = () => {
                         dispatch(offModal());
                     }}
                 >
-                    <form
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2rem",
-                            alignItems: "start",
-                            justifyContent: "center",
-                        }}
-                        onSubmit={(e: FormEvent) => {
-                            e.preventDefault();
-                            console.log(inputVal, selectVal);
-                            setInputVal("");
-                            setSelectVal(options[0]);
-                        }}
-                    >
-                        <SelectWithLabel
-                            label="아이스크림 맛"
-                            selectedValue={selectVal}
-                            onChange={(e) => {
-                                setSelectVal(e.target.value);
-                            }}
-                            options={options}
-                        />
-
-                        <Button type="submit">확인</Button>
-                    </form>
-                    <Button onClick={() => setIsShow(true)}>토스트 굽기</Button>
+                    <LoginOrJoinForm />
                 </Modal>
             ) : null}
         </Layout>
