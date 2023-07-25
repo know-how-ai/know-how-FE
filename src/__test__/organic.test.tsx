@@ -54,7 +54,12 @@ describe("Components: organics unit test", () => {
         await user.type(passwordInput, "abcd");
         await user.click(submitButton);
 
-        expect(screen.getByDisplayValue("id@email.com")).toBeVisible();
-        expect(screen.getByDisplayValue("abcd")).toBeVisible();
+        // need to timeout, cause fade in animation
+        setTimeout(async () => {
+            expect(
+                await screen.findByDisplayValue("id@email.com")
+            ).toBeVisible();
+            expect(await screen.findByDisplayValue("abcd")).toBeVisible();
+        }, 1000);
     });
 });

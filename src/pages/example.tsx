@@ -159,14 +159,6 @@ const Example: NextPage<Props> = () => {
                             setSelectVal(options[0]);
                         }}
                     >
-                        <LabelWrapper
-                            label="아이스크림 이름"
-                            currentValue={inputVal}
-                            onChange={(e) => {
-                                setInputVal(e.currentTarget.value);
-                            }}
-                        />
-
                         <SelectWithLabel
                             label="아이스크림 맛"
                             selectedValue={selectVal}

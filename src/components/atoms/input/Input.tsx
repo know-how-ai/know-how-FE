@@ -28,7 +28,8 @@ const Input_ = styled.input<StyleProps>`
         border-bottom-color: ${(p) => p.theme.color.blue};
     }
 
-    :focus {
+    :focus,
+    :active {
         outline: none;
         border-bottom-color: ${(p) => p.theme.color.blue};
     }
@@ -49,6 +50,8 @@ interface InputProps extends StyleProps {
     register?: UseFormRegisterReturn;
     ariaLabel?: string;
     ariaDescription?: string;
+    autoComplete?: "on" | "off";
+    autoCorrect?: "on" | "off";
 }
 
 const Input = ({
@@ -60,6 +63,8 @@ const Input = ({
     className,
     register,
     ariaDescription,
+    autoComplete,
+    autoCorrect,
     ariaLabel,
     ...rest
 }: InputProps) => {
@@ -69,6 +74,8 @@ const Input = ({
             disabled={disabled}
             placeholder={placeholder}
             required={required}
+            autoComplete={autoComplete}
+            autoCorrect={autoCorrect}
             id={id}
             className={className}
             aria-label={ariaLabel}

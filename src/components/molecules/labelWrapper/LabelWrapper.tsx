@@ -1,4 +1,5 @@
 import { Label } from "@components/atoms";
+import { fadeIn } from "@components/styles/keyframes";
 import type { FC, ReactNode } from "react";
 import styled from "styled-components";
 
@@ -15,6 +16,10 @@ const Wrapper = styled.label<StyleProps>`
     border-radius: ${(p) => p.theme.border.radius};
     transition: ${(p) => p.theme.transition.fast};
     cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+
+    // when appear, animate 'fade in'
+    opacity: 0;
+    animation: ${fadeIn} 0.5s forwards ease-in-out;
 `;
 
 interface TextboxWithLabelProps extends StyleProps {

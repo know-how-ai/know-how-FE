@@ -29,26 +29,27 @@ const HeadLineSpan = styled.span<HeadLineSpanProps>`
     font-weight: 600;
     font-size: ${(p) => p.theme.size.lg};
     text-align: center;
-    color: ${(p) =>
-        p.isSelected ? p.theme.color.textColor : p.theme.color.gray};
-    animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s 1
-        forwards ease-in-out;
-
-    @keyframes deactivate {
-        from {
-            color: ${(p) => p.theme.color.textColor};
-        }
-        to {
-            color: ${(p) => p.theme.color.gray};
-        }
-    }
+    color: ${(p) => p.theme.color.textColor} !important;
+    animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s forwards
+        ease-in-out;
+    -webkit-animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s
+        forwards ease-in-out !important;
 
     @keyframes activate {
         from {
-            color: ${(p) => p.theme.color.gray};
+            opacity: 0.3;
         }
         to {
-            color: ${(p) => p.theme.color.textColor};
+            opacity: 1;
+        }
+    }
+
+    @keyframes deactivate {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0.3;
         }
     }
 `;
@@ -106,6 +107,8 @@ const LoginOrJoinForm = () => {
                         type="email"
                         placeholder="abcd@blogify.com"
                         ariaLabel={`Email Input element for ${method.toLowerCase()}`}
+                        autoComplete="off"
+                        autoCorrect="off"
                         register={register("email", {
                             required: true,
                             pattern: {

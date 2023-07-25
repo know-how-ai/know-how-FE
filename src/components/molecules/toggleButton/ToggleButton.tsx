@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Button from "../../atoms/button/Button";
 
-interface StyledInterface {
+interface ToggleButtonInterface {
     statement?: boolean;
     // disabled?: boolean;
     variant?: "single" | "dual";
     scale?: number;
 }
 
-const Container_ = styled.div<StyledInterface>`
+const Container_ = styled.div<ToggleButtonInterface>`
     border: ${(p) => p.theme.border.gray};
     border-width: 0.5rem;
     border-radius: 100rem;
@@ -28,11 +28,15 @@ const Container_ = styled.div<StyledInterface>`
         opacity: 0.7;
     }
 `;
-const Button_ = styled(Button)<StyledInterface>`
-    aspect-ratio: 1;
+
+const Button_ = styled(Button)<ToggleButtonInterface>`
+    background-color: ${(p) => p.theme.color.textColor} !important;
+    aspect-ratio: 1 !important;
     border-radius: 100% !important;
     animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s forwards
         1 ease-in-out;
+    -webkit-animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s
+        forwards 1 ease-in-out !important;
 
     :hover:not(:disabled) {
         opacity: 1;
@@ -46,33 +50,27 @@ const Button_ = styled(Button)<StyledInterface>`
     @keyframes moveLeft {
         from {
             transform: translateX(-100%);
-            background-color: ${(p) => p.theme.color.textColor};
+            opacity: 1;
         }
         to {
             transform: translateX(100%);
-            background-color: ${(p) =>
-                p.variant === "single"
-                    ? p.theme.color.gray
-                    : p.theme.color.textColor};
+            opacity: ${(p) => (p.variant === "single" ? 0.5 : 1)};
         }
     }
 
     @keyframes moveRight {
         from {
             transform: translateX(100%);
-            background-color: ${(p) =>
-                p.variant === "single"
-                    ? p.theme.color.gray
-                    : p.theme.color.textColor};
+            opacity: ${(p) => (p.variant === "single" ? 0.5 : 1)};
         }
         to {
             transform: translateX(-100%);
-            background-color: ${(p) => p.theme.color.textColor};
+            opacity: 1;
         }
     }
 `;
 
-interface ToggleButton extends StyledInterface {
+interface ToggleButton extends ToggleButtonInterface {
     onClick?: () => void;
     ariaLabel?: string;
     ariaDescription?: string;
