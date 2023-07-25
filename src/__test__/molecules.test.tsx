@@ -1,13 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
-import { Form, Input } from "@components/atoms";
-import {
-    FloatingButton,
-    SelectWithLabel,
-    LabelWrapper,
-    ToggleButton,
-} from "@components/molecules";
+import { Form, Input, Select } from "@components/atoms";
+import { FloatingButton, LabelWrapper } from "@components/molecules";
 import { useForm } from "react-hook-form";
 
 jest.mock("next/router", () => require("next-router-mock"));
@@ -15,7 +10,7 @@ jest.mock("next/router", () => require("next-router-mock"));
 describe("Components: molecules unit test", () => {
     const user = userEvent.setup();
 
-    test("LabelWrapper", async () => {
+    test("LabelWrapper With Input", async () => {
         let value = "";
 
         const Component = () => {
@@ -65,31 +60,50 @@ describe("Components: molecules unit test", () => {
         expect(value).toBe("input testing");
     });
 
-    test("SelectWithLabel", async () => {
+    test("LabelWrapper With Select", async () => {
         const [choco, banana, berry] = ["choco", "banana", "berry"];
-        let selected = choco;
+        let value = "";
 
-        useThemeRenderWithRedux(
-            <SelectWithLabel
-                label="test label"
-                selectedValue={selected}
-                options={[choco, banana, berry]}
-                onChange={({ target: { value } }) => {
-                    selected = value;
-                }}
-            />
-        );
+        const Component = () => {
+            const {
+                register,
+                handleSubmit,
+                formState: { errors },
+            } = useForm<{ kind: string }>();
+            const onSubmit = ({ kind }: { kind: string }) => {
+                value = kind;
+            };
 
+            return (
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <LabelWrapper label="test label">
+                        <Select
+                            register={register("kind")}
+                            options={[choco, banana, berry]}
+                        />
+                    </LabelWrapper>
+                    <button>submit</button>
+                </Form>
+            );
+        };
+
+        useThemeRenderWithRedux(<Component />);
+
+        const select = await screen.findByRole("combobox");
         const label = screen.getByText(/test label/i);
-        expect(label).toBeInTheDocument();
+        const button = screen.getByText(/submit/i);
 
-        const select = screen.getByRole("combobox");
         expect(select).toBeInTheDocument();
-        expect(select).toBeEnabled();
-        expect(selected).toBe(choco);
+        expect(label).toBeInTheDocument();
+        expect(button).toBeInTheDocument();
 
-        fireEvent.change(select, { target: { value: berry } });
-        expect(selected).toBe(berry);
+        expect(select).toBeEnabled();
+        expect(button).toBeEnabled();
+
+        await user.click(select);
+        await user.click(await screen.findByDisplayValue("choco"));
+        await user.click(button);
+        expect(value).toBe("choco");
     });
 
     test("FloatingButton", async () => {
@@ -99,38 +113,5 @@ describe("Components: molecules unit test", () => {
         expect(button).toBeInTheDocument();
         expect(button).toBeEnabled();
         expect(button).toHaveTextContent(/test button/i);
-    });
-
-    test("ToggleButton", async () => {
-        let state = true;
-
-        useThemeRenderWithRedux(
-            <ToggleButton
-                statement={state}
-                onClick={() => {
-                    state = !state;
-                }}
-            />
-        );
-
-        const toggleBtn = await screen.findByTestId("toggle button");
-        expect(toggleBtn).toBeInTheDocument();
-        expect(toggleBtn).toBeEnabled();
-
-        await user.click(toggleBtn);
-
-        // unmount();
-
-        // // re-render
-        // useThemeRenderWithRedux(
-        //     <ToggleButton
-        //         statement={state}
-        //         onClick={() => {
-        //             state = !state;
-        //         }}
-        //     />
-        // );
-
-        expect(state).toBe(false);
     });
 });

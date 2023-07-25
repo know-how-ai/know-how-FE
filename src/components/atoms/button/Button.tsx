@@ -7,13 +7,9 @@ import {
 } from "react";
 import styled from "styled-components";
 import LoadingDots from "../loadingDots/LoadingDots";
+import { ButtonProps } from "../atomTypes";
 
-interface StyleProps {
-    disabled?: boolean;
-    loading?: boolean;
-}
-
-const Btn = styled.button<StyleProps>`
+const Btn = styled.button<ButtonProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,15 +35,6 @@ const Btn = styled.button<StyleProps>`
         background-color: ${(p) => p.theme.color.darkGray};
     }
 `;
-
-interface ButtonProps extends StyleProps {
-    type?: "button" | "submit" | "reset";
-    children?: ReactNode | string | any;
-    onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
-    className?: string;
-    ariaLabel?: string;
-    tabIndex?: number;
-}
 
 const Button: FC<ButtonProps> = forwardRef(
     (

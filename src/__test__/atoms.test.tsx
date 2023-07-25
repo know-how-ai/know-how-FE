@@ -15,6 +15,7 @@ import {
     Editor,
     DraftViewer,
     Form,
+    ToggleButton,
 } from "@components/atoms";
 import { getDraftByHtml } from "@libs/editor";
 import { useForm } from "react-hook-form";
@@ -302,5 +303,38 @@ describe("Components: atoms unit test", () => {
         setTimeout(() => {
             expect(screen.queryByTestId(/toast/i)).not.toBeInTheDocument();
         }, timer + 100);
+    });
+
+    test("ToggleButton", async () => {
+        let state = true;
+
+        useThemeRenderWithRedux(
+            <ToggleButton
+                statement={state}
+                onClick={() => {
+                    state = !state;
+                }}
+            />
+        );
+
+        const toggleBtn = await screen.findByTestId("toggle button");
+        expect(toggleBtn).toBeInTheDocument();
+        expect(toggleBtn).toBeEnabled();
+
+        await user.click(toggleBtn);
+
+        // unmount();
+
+        // // re-render
+        // useThemeRenderWithRedux(
+        //     <ToggleButton
+        //         statement={state}
+        //         onClick={() => {
+        //             state = !state;
+        //         }}
+        //     />
+        // );
+
+        expect(state).toBe(false);
     });
 });

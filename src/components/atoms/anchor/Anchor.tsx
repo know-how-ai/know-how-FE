@@ -1,12 +1,10 @@
 import type { LinkProps } from "next/link";
 import Link from "next/link";
-import type { FC, ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import styled from "styled-components";
 
 // Link > a : ui DOMnesting error
-const Anchor_ = styled.span`
-    padding: 0;
-    margin: 0;
+const Link_ = styled(Link)`
     color: ${(p) => p.theme.color.light};
     text-decoration: none;
 
@@ -17,31 +15,14 @@ const Anchor_ = styled.span`
 
 interface AnchorProps extends LinkProps {
     children?: ReactNode | string | any;
-    tabIndex?: number;
-    onKeyDown?: (e: any) => void;
     className?: string;
-    onClick?: (e?: any) => void;
 }
 
-const Anchor: FC<AnchorProps> = ({
-    href,
-    tabIndex,
-    children,
-    onKeyDown,
-    className,
-    onClick,
-}) => {
+const Anchor: FC<AnchorProps> = ({ href, children, className }) => {
     return (
-        <Link href={href}>
-            <Anchor_
-                onKeyDown={onKeyDown}
-                tabIndex={tabIndex}
-                className={className}
-                onClick={onClick}
-            >
-                {children}
-            </Anchor_>
-        </Link>
+        <Link_ href={href} className={className}>
+            {children}
+        </Link_>
     );
 };
 

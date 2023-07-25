@@ -1,5 +1,5 @@
 import {
-    Button,
+    CircleButton,
     LoginIcon,
     MoonIcon,
     SunIcon,
@@ -49,18 +49,6 @@ const ListItem = styled.li`
     list-style: none;
 `;
 
-const NavButton = styled(Button)`
-    text-align: center;
-    word-break: keep-all;
-    width: 100%;
-    padding: 0.5rem;
-    max-width: 5rem;
-    aspect-ratio: 1 !important;
-    border-radius: 100rem !important;
-    background-color: ${(p) => p.theme.color.lightBlue};
-    color: ${(p) => p.theme.color.textColor};
-`;
-
 interface HeaderProps {
     toggleThemeMode?: () => void;
     isDarkmode?: Boolean;
@@ -73,19 +61,19 @@ const Header = ({ isDarkmode, toggleThemeMode }: HeaderProps) => {
             <Nav>
                 <UList>
                     <ListItem>
-                        <NavButton onClick={toggleThemeMode}>
+                        <CircleButton onClick={toggleThemeMode}>
                             {isDarkmode ? <MoonIcon /> : <SunIcon />}
-                        </NavButton>
+                        </CircleButton>
                     </ListItem>
                     <ListItem>
-                        <NavButton>
+                        <CircleButton>
                             <UserIcon />
-                        </NavButton>
+                        </CircleButton>
                     </ListItem>
                     <ListItem>
-                        <NavButton>
+                        <CircleButton>
                             <LoginIcon />
-                        </NavButton>
+                        </CircleButton>
                     </ListItem>
                 </UList>
             </Nav>

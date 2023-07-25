@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useCallback, type FC, type ReactNode } from "react";
 import styled, { ThemeProvider } from "styled-components";
 
-interface Props {
+interface LayoutProps {
     children: ReactNode;
     title: string;
 }
@@ -45,7 +45,7 @@ const Copyright = styled.span`
     color: ${(p) => p.theme.color.gray};
 `;
 
-const Layout: FC<Props> = ({ children, title }) => {
+const Layout: FC<LayoutProps> = ({ children, title }) => {
     const { isDarkmode } = useUISelector((state) => state.ui);
     const dispatch = useAppDispatch();
 
@@ -56,7 +56,7 @@ const Layout: FC<Props> = ({ children, title }) => {
     return (
         <>
             <Head>
-                <title>{`'${title}' - Blogify`}</title>
+                <title>{`${title} - Blogify`}</title>
             </Head>
 
             <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>

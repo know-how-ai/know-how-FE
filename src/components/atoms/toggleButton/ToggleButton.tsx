@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import Button from "../../atoms/button/Button";
 
 interface ToggleButtonInterface {
     statement?: boolean;
-    // disabled?: boolean;
     variant?: "single" | "dual";
     scale?: number;
 }
 
-const Container_ = styled.div<ToggleButtonInterface>`
+const Toggle_ = styled.button<ToggleButtonInterface>`
     border: ${(p) => p.theme.border.gray};
     border-width: 0.5rem;
     border-radius: 100rem;
@@ -24,28 +22,30 @@ const Container_ = styled.div<ToggleButtonInterface>`
     scale: ${(p) => (p.scale ? p.scale : "0.5")};
     margin: 0.5rem 0.5rem;
 
-    :hover {
-        opacity: 0.7;
+    :hover:not(:disabled),
+    :focus:not(:disabled),
+    :active:not(:disabled) {
+        opacity: 0.5;
+    }
+
+    :disabled {
+        cursor: not-allowed;
+        background-color: ${(p) => p.theme.color.gray};
     }
 `;
 
-const Button_ = styled(Button)<ToggleButtonInterface>`
-    background-color: ${(p) => p.theme.color.textColor} !important;
-    aspect-ratio: 1 !important;
-    border-radius: 100% !important;
+const Ball_ = styled.span<ToggleButtonInterface>`
+    padding: 2rem;
+    margin: 1rem;
+    border: none;
+    display: inline-block;
+    background-color: ${(p) => p.theme.color.textColor};
+    aspect-ratio: 1;
+    border-radius: 100%;
     animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s forwards
         1 ease-in-out;
     -webkit-animation: ${(p) => (p.statement ? "moveRight" : "moveLeft")} 0.7s
-        forwards 1 ease-in-out !important;
-
-    :hover:not(:disabled) {
-        opacity: 1;
-    }
-
-    // 포커싱되었을때 동작하지 않음?
-    /* :focus:not(:disabled) {
-        background-color: ${(p) => p.theme.color.blue};
-    } */
+        forwards 1 ease-in-out;
 
     @keyframes moveLeft {
         from {
@@ -85,7 +85,7 @@ const ToggleButton = ({
     scale,
 }: ToggleButton) => {
     return (
-        <Container_
+        <Toggle_
             statement={statement}
             onClick={onClick}
             aria-label={ariaLabel}
@@ -93,8 +93,8 @@ const ToggleButton = ({
             scale={scale}
             data-testid={"toggle button"}
         >
-            <Button_ statement={statement} variant={variant} />
-        </Container_>
+            <Ball_ statement={statement} variant={variant} />
+        </Toggle_>
     );
 };
 

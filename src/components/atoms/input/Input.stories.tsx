@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Input from "./Input";
+import { LabelWrapper } from "@components/molecules";
 
 const meta = {
     component: Input,
@@ -10,28 +11,26 @@ export default meta;
 
 type InputStory = StoryObj<typeof Input>;
 
-export const Base: InputStory = {
+export const TextType: InputStory = {
     args: {
-        currentValue: "This is input atom.",
+        placeholder: "Base",
+        type: "text",
+    },
+    decorators: [(story) => <LabelWrapper>{story()}</LabelWrapper>],
+};
+
+export const PasswordType: InputStory = {
+    ...TextType,
+    args: {
+        placeholder: "Password",
+        type: "password",
     },
 };
 
-export const Placeholder: InputStory = {
+export const EmailType: InputStory = {
+    ...TextType,
     args: {
-        placeholder: "Placeholder by input",
-    },
-};
-
-export const Disabled: InputStory = {
-    args: {
-        disabled: true,
-        currentValue: "Not allowed type",
-    },
-};
-
-export const Focused: InputStory = {
-    args: {
-        ...Base.args,
-        isFocused: true,
+        placeholder: "Email",
+        type: "email",
     },
 };

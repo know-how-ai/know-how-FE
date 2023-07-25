@@ -1,26 +1,15 @@
-import {
-    type FC,
-    type MutableRefObject,
-    type ChangeEvent,
-    forwardRef,
-} from "react";
+import { type FC, type MutableRefObject, forwardRef } from "react";
+import type { UseFormRegisterReturn } from "react-hook-form";
 import styled from "styled-components";
-
-interface StyleProps {
-    disabled?: boolean;
-}
 
 const Select_ = styled.select`
     color: ${(p) => p.theme.color.textColor};
     border: none;
-    border-top: ${(p) => p.theme.border.inactive};
     border-bottom: ${(p) => p.theme.border.gray};
     transition: ${(p) => p.theme.transition.fast};
     margin: ${(p) => p.theme.size.xs};
     margin-top: 0.75rem;
     padding: ${(p) => p.theme.size.xs};
-    padding-right: 2rem;
-    background-color: transparent;
 
     ::placeholder {
         font-style: italic;
@@ -30,13 +19,14 @@ const Select_ = styled.select`
         cursor: not-allowed;
     }
 
-    :hover:not(:disabled) {
-        border-bottom: ${(p) => p.theme.border.inactive};
+    :hover {
+        border-bottom-color: ${(p) => p.theme.color.blue};
     }
 
-    :focus:not(:disabled) {
+    :focus,
+    :active {
         outline: none;
-        border-bottom: ${(p) => p.theme.border.inactive};
+        border-bottom-color: ${(p) => p.theme.color.blue};
     }
 `;
 
@@ -44,53 +34,31 @@ const Option_ = styled.option`
     font-size: 2rem;
 `;
 
-interface SelectProps extends StyleProps {
+interface SelectProps {
     options?: string[];
-    onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
-    selectedValue?: string;
     id?: string;
     className?: string;
-    required?: boolean;
-    onFocus?: () => void;
-    onBlur?: () => void;
-    isFocused?: boolean;
     ariaControls?: string;
+    register?: UseFormRegisterReturn;
 }
 
 const Select: FC<SelectProps> = forwardRef(
     (
-        {
-            options,
-            onChange,
-            className,
-            selectedValue,
-            disabled,
-            id,
-            required,
-            onFocus,
-            onBlur,
-            isFocused = false,
-            ariaControls,
-        },
+        { options, className, id, ariaControls, register, ...rest },
         selectRef
     ) => {
         return (
             <Select_
-                required={required}
-                disabled={disabled}
                 id={id}
                 ref={selectRef as MutableRefObject<HTMLSelectElement>}
-                value={selectedValue}
                 className={className}
-                onChange={onChange}
                 role="combobox"
-                onBlur={onBlur}
-                onFocus={onFocus}
-                aria-expanded={isFocused}
                 aria-controls={ariaControls}
+                {...register}
+                {...rest}
             >
                 {options?.map((opt, idx) => (
-                    <Option_ key={`${opt}_${idx}`} value={opt}>
+                    <Option_ key={`${opt}_${idx}`} value={opt} role="option">
                         {opt}
                     </Option_>
                 ))}

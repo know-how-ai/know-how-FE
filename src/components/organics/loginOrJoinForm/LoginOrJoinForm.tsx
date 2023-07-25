@@ -1,5 +1,5 @@
-import { Button, Form, Input } from "@components/atoms";
-import { LabelWrapper, ToggleButton } from "@components/molecules";
+import { Button, Form, Input, ToggleButton } from "@components/atoms";
+import { LabelWrapper } from "@components/molecules";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -29,11 +29,11 @@ const HeadLineSpan = styled.span<HeadLineSpanProps>`
     font-weight: 600;
     font-size: ${(p) => p.theme.size.lg};
     text-align: center;
-    color: ${(p) => p.theme.color.textColor} !important;
+    color: ${(p) => p.theme.color.textColor};
     animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s forwards
         ease-in-out;
     -webkit-animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 1s
-        forwards ease-in-out !important;
+        forwards ease-in-out;
 
     @keyframes activate {
         from {
@@ -73,6 +73,7 @@ const LoginOrJoinForm = () => {
         LoginFormInterface | JoinFormInterface
     >({ reValidateMode: "onBlur" });
 
+    // API 통신 추가할부분 -> 외부로부터 주입받기
     const onSubmit = (data?: any) => {
         console.log(data);
     };
