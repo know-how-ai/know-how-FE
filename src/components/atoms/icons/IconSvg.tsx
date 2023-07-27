@@ -10,5 +10,6 @@ export const Svg = styled.svg<IconProps>`
     scale: 0.75;
     stroke: ${(p) => (p.strokeColor ? p.strokeColor : p.theme.color.textColor)};
     opacity: 0;
+    transition: ${(p) => p.theme.transition.fast};
     animation: ${fadeIn} 0.5s forwards ease-in-out;
 `;

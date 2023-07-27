@@ -9,7 +9,7 @@ import {
     type ReactNode,
 } from "react";
 import styled from "styled-components";
-import Button from "../button/Button";
+import { CloseIcon } from "../icons";
 
 const RootContainer = styled.div`
     display: flex;
@@ -25,37 +25,61 @@ const RootContainer = styled.div`
 `;
 
 const ModalContainer = styled.div`
-    opacity: 1;
     position: relative;
-    margin: 4rem;
+    margin: auto;
+    margin-top: 4rem;
     box-sizing: border-box;
 `;
 
 const ModalContent = styled.div`
+    margin: 2rem auto;
     background-color: ${(p) => p.theme.color.backgroundColor};
     /* border: ${(p) => p.theme.border.active}; */
     box-shadow: ${(p) => p.theme.boxShadow.strong};
     border-radius: ${(p) => p.theme.border.radius};
-    padding: ${(p) => p.theme.size.lg};
+    padding: 6rem ${(p) => p.theme.size.lg};
     outline: none;
-    width: 50vw;
-    max-width: 100%;
+    width: auto;
+    max-width: 80vw;
+    max-height: 60vh;
     z-index: 21;
     ${media.tablet} {
-        width: 80vw;
-        max-height: 80vh;
+        max-width: 80vw;
+        max-height: 60vh;
     }
     transition: ${(p) => p.theme.transition.fast};
     animation: ${uprise} 0.3s ease-in-out;
     overflow-y: auto;
+    scroll-behavior: smooth;
 `;
 
-const CloseBtn = styled(Button)`
+const CloseBtn = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1;
+    width: 4rem;
     transition: ${(p) => p.theme.transition.fast};
     position: absolute;
-    right: ${(p) => p.theme.size.xl};
-    top: ${(p) => p.theme.size.sm};
-    background-color: ${(p) => p.theme.color.gray};
+    left: 2rem;
+    top: 4rem;
+    background-color: ${(p) => p.theme.color.lightBlue};
+    /* border: ${(p) => p.theme.border.gray}; */
+    border-radius: ${(p) => p.theme.border.radius};
+    z-index: 21;
+    animation: ${uprise} 0.3s ease-in-out;
+
+    svg {
+        scale: 0.5;
+    }
+
+    :hover,
+    :focus {
+        opacity: 0.5;
+        svg {
+            stroke: ${(p) => p.theme.color.red};
+        }
+    }
 `;
 
 interface ModalProps {
@@ -64,11 +88,11 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ handleClose, children }) => {
-    const ref = useRef() as MutableRefObject<HTMLDivElement>; // for convey ref
+    // for delivery ref
+    const ref = useRef() as MutableRefObject<HTMLDivElement>;
 
-    // call reducer & store in here, or getServerSideProps?
-
-    const onClickClose = () => handleClose(); // close modal by using button
+    // close modal by using button
+    const onClickClose = useCallback(() => handleClose(), [handleClose]);
     const handleKeydownEscape = useCallback(
         // close modal by pressing Escape key
         (e: KeyboardEvent) => {
@@ -83,13 +107,25 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
         const { current } = ref;
 
         if (current) {
-            //  lock body scrolling
-            window.addEventListener("keydown", handleKeydownEscape);
+            if (typeof window !== "undefined") {
+                window.addEventListener("keydown", handleKeydownEscape);
+
+                //  lock body scrolling
+                if (typeof document !== "undefined") {
+                    document.body.style.overflow = "hidden";
+                }
+            }
         }
 
         return () => {
-            // unlock body scrolling
-            window.removeEventListener("keydown", handleKeydownEscape);
+            if (typeof window !== "undefined") {
+                window.removeEventListener("keydown", handleKeydownEscape);
+
+                // unlock body scrolling
+                if (typeof document !== "undefined") {
+                    document.body.style.overflow = "initial";
+                }
+            }
         };
     }, [handleKeydownEscape]);
 
@@ -105,7 +141,7 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
                     aria-label="Closing this modal button"
                     onClick={onClickClose}
                 >
-                    닫기
+                    <CloseIcon strokeWidth={2.5} />
                 </CloseBtn>
                 <ModalContent
                     role="dialog"

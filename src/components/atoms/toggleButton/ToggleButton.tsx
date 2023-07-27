@@ -32,10 +32,11 @@ const Toggle_ = styled.button<ToggleButtonInterface>`
 `;
 
 const Ball_ = styled.span<ToggleButtonInterface>`
+    display: inline-block;
+    max-width: 0.1rem;
     padding: 0.6rem;
     margin: 0.3rem;
     border: none;
-    display: inline-block;
     background-color: ${(p) => p.theme.color.textColor};
     aspect-ratio: 1;
     border-radius: 100%;
