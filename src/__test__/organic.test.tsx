@@ -23,8 +23,8 @@ describe("Components: organics unit test", () => {
         expect(passwordLabel).toBeEnabled();
 
         await user.click(toggleBtn);
-        // total input is 7, but except the password & password confirmation inputs
-        expect(screen.getAllByRole("textbox").length).toBe(5);
+        // total input is 6, but except the password & password confirmation inputs
+        expect(screen.getAllByRole("textbox").length).toBe(4);
     });
 
     test("LoginOrJoinForm's Typing Test", async () => {

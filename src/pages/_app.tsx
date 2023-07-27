@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { wrapper } from "@contexts/store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const App = ({ Component, ...rest }: AppProps) => {
     const { store, props } = wrapper.useWrappedStore(rest); // for SSR(getInitialProps | getServerSideProps)
@@ -16,8 +18,10 @@ const App = ({ Component, ...rest }: AppProps) => {
                 />
             </Head>
             <Provider store={store}>
-                <GlobalStyle />
-                <Component {...props?.pageProps} />
+                <PersistGate loading={null} persistor={persistStore(store)}>
+                    <GlobalStyle />
+                    <Component {...props?.pageProps} />
+                </PersistGate>
             </Provider>
         </>
     );
