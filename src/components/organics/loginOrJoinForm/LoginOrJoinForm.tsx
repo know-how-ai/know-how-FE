@@ -68,12 +68,15 @@ interface LoginFormInterface {
 interface JoinFormInterface extends LoginFormInterface {
     passwordConfirmation: string;
     username: string;
-    blogname: string;
     resetQuestion: string;
     resetAnswer: string;
 }
 
-const LoginOrJoinForm = () => {
+interface LoginOrJoinFormProps {
+    onSuccess?: () => void;
+}
+
+const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
     const [method, setMethod] = useState<Method>("LOGIN");
     const { register, handleSubmit, setError } = useForm<
         LoginFormInterface | JoinFormInterface
@@ -82,6 +85,9 @@ const LoginOrJoinForm = () => {
     // API 통신 추가할부분 -> 외부로부터 주입받기
     const onSubmit = (data?: any) => {
         console.log(data);
+        if (onSuccess) {
+            onSuccess();
+        }
     };
 
     return (
@@ -175,28 +181,6 @@ const LoginOrJoinForm = () => {
                                 type="text"
                                 placeholder="홍길동"
                                 register={register("username", {
-                                    required: true,
-                                    minLength: {
-                                        message: "2~16자 사이로 입력해 주세요.",
-                                        value: 2,
-                                    },
-                                    maxLength: {
-                                        message: "2~16자 사이로 입력해 주세요.",
-                                        value: 16,
-                                    },
-                                    pattern: {
-                                        value: /^[a-zA-Zㄱ-힣0-9|s]*$/,
-                                        message:
-                                            "특수문자는 사용할 수 없습니다.",
-                                    },
-                                })}
-                            />
-                        </LabelWrapper>
-                        <LabelWrapper label="블로그명">
-                            <Input
-                                type="text"
-                                placeholder="홍길동의 블로그"
-                                register={register("blogname", {
                                     required: true,
                                     minLength: {
                                         message: "2~16자 사이로 입력해 주세요.",

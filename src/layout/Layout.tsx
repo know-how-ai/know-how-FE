@@ -49,11 +49,6 @@ const Copyright = styled.span`
 
 const Layout: FC<LayoutProps> = ({ children, title }) => {
     const { isDarkmode } = useUISelector((state) => state.ui);
-    const dispatch = useAppDispatch();
-
-    const toggleThemeMode = useCallback(() => {
-        dispatch(isDarkmode ? offDarkmode() : onDarkmode());
-    }, [isDarkmode]);
 
     return (
         <>
@@ -62,10 +57,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
             </Head>
 
             <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
-                <Header
-                    isDarkmode={isDarkmode}
-                    toggleThemeMode={toggleThemeMode}
-                />
+                <Header />
 
                 <Main>{children}</Main>
 
