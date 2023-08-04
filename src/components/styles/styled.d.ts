@@ -18,10 +18,10 @@ declare module "styled-components" {
             darkOrange: "#ca4e00";
         };
         boxShadow: {
-            normal: "0 3px 8px 0 rgb(0 0 0 / 15%)";
-            strong: "0 3px 24px 0 rgb(0 0 0 / 30%)";
-            purple: "0 3px 8px 0 #d6c9ff";
-            blue: "0 3px 8px 0 #b3e2e6";
+            normal: "0 3px 10px 0 rgb(0 0 0 / 20%)";
+            strong: "0 3px 24px 0 rgb(0 0 0 / 35%)";
+            purple: "0 3px 10px 0 #d6c9ff";
+            blue: "0 3px 10px 0 #b3e2e6";
         };
         filter: {
             blur: "blur(70%);";

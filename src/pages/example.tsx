@@ -10,12 +10,12 @@ import { wrapper } from "../contexts/store";
 import { useAppDispatch, useAppSelector } from "../contexts/contextHooks";
 import type { GetServerSideProps, NextPage } from "next";
 import styled from "styled-components";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect } from "react";
 import Layout from "../layout";
 import { Button, Modal, Badge, Anchor } from "@components/atoms";
 import dynamic from "next/dynamic";
 import { FloatingButton, LabelWrapper } from "@components/molecules";
-import { LoginOrJoinForm } from "@components/organics";
+import { LoginOrJoinForm } from "@components/molecules";
 
 const Editor = dynamic(() => import("@components/atoms/editor"), {
     ssr: false,
@@ -52,6 +52,17 @@ const Example: NextPage<Props> = () => {
     const [inputVal, setInputVal] = useState("");
     const [act, setAct] = useState(false);
     const [isShow, setIsShow] = useState(false);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const res = await fetch("http://localhost:4000/");
+    //         const json = await res.json();
+
+    //         console.log(json);
+    //     };
+
+    //     fetchData();
+    // }, []);
 
     return (
         <Layout title="테스트">

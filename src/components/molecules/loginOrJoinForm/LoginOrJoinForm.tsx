@@ -74,9 +74,10 @@ interface JoinFormInterface extends LoginFormInterface {
 
 interface LoginOrJoinFormProps {
     onSuccess?: () => void;
+    onError?: () => void;
 }
 
-const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
+const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
     const [method, setMethod] = useState<Method>("LOGIN");
     const { register, handleSubmit, setError } = useForm<
         LoginFormInterface | JoinFormInterface
