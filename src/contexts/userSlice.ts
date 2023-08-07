@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useAppSelector } from "./contextHooks";
 
 interface User {
     id: string | number;
     username: string;
-    blogname: string;
-    avatarUrl: null | string;
+    point: number;
     [key: string]: any;
 }
 
@@ -35,14 +35,12 @@ const userSlice = createSlice({
             state.isLoggedIn = false;
             state.data = null;
         },
-        editProfile: (state, action: UserAction) => {
-            state.data = { ...state, ...action.payload };
-        },
     },
 });
 
 const { actions, reducer: userReducer } = userSlice;
 
-export const { loggedOut, loggedIn, editProfile } = actions;
+export const { loggedOut, loggedIn } = actions;
+export const useUserSelector = useAppSelector<UserState>;
 
 export default userReducer;
