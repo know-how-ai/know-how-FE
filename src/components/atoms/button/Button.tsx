@@ -63,6 +63,7 @@ const Button: FC<ButtonProps> = forwardRef(
             color,
             shape,
             size,
+            onKeyDown,
         },
         buttonRef
     ) => {
@@ -79,6 +80,7 @@ const Button: FC<ButtonProps> = forwardRef(
                 color={color}
                 shape={shape}
                 size={size}
+                onKeyDown={onKeyDown}
             >
                 {loading ? <LoadingDots /> : children}
             </Button_>

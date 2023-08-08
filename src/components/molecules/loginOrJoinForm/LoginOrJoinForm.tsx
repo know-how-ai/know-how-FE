@@ -73,8 +73,8 @@ interface JoinFormInterface extends LoginFormInterface {
 }
 
 interface LoginOrJoinFormProps {
-    onSuccess?: () => void;
-    onError?: () => void;
+    onSuccess: Function;
+    onError: Function;
 }
 
 const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {

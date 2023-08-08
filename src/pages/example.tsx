@@ -140,7 +140,7 @@ const Example: NextPage<Props> = () => {
                         dispatch(offModal());
                     }}
                 >
-                    <LoginOrJoinForm />
+                    <LoginOrJoinForm onError={() => {}} onSuccess={() => {}} />
                 </Modal>
             ) : null}
         </Layout>

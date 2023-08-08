@@ -84,7 +84,7 @@ const CloseBtn = styled.button`
 
 interface ModalProps {
     children?: ReactNode;
-    handleClose: () => void;
+    handleClose: Function;
 }
 
 const Modal: FC<ModalProps> = ({ handleClose, children }) => {

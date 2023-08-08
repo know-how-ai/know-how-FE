@@ -8,24 +8,23 @@ interface Props {
 
 const Badge_ = styled.span<Props>`
     color: ${(p) => p.theme.color.textColor};
-    text-decoration: ${(p) => (p.active ? "underline 0.125rem" : "none")};
-
     border: ${(p) =>
         p.active ? p.theme.border.active : p.theme.border.inactive};
     border-radius: 20rem;
+    word-break: keep-all;
 
     transition: ${(p) => p.theme.transition.fast};
     padding: 1rem;
     font-size: 2rem;
     cursor: pointer;
-    display: flex; // inline-block
+    display: inline-flex;
     max-width: 15rem; // 조정 필요
     font-size: 1.5rem;
     justify-content: center;
     align-items: center;
 
     :hover {
-        opacity: 0.7;
+        opacity: 0.5;
         border: ${(p) => p.theme.border.active};
     }
 `;
@@ -45,7 +44,7 @@ const Badge: FC<BadgeProps> = ({
 }) => {
     return (
         <Badge_ onClick={onClick} active={active} className={className}>
-            # {children}
+            {children}
         </Badge_>
     );
 };

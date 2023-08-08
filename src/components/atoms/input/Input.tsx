@@ -1,4 +1,8 @@
-import { type HTMLInputTypeAttribute } from "react";
+import {
+    forwardRef,
+    type MutableRefObject,
+    type HTMLInputTypeAttribute,
+} from "react";
 import { type UseFormRegisterReturn } from "react-hook-form";
 import styled from "styled-components";
 
@@ -52,38 +56,45 @@ interface InputProps extends StyleProps {
     ariaDescription?: string;
     autoComplete?: "on" | "off";
     autoCorrect?: "on" | "off";
+    [key: string]: any;
 }
 
-const Input = ({
-    type,
-    id,
-    disabled,
-    placeholder,
-    required,
-    className,
-    register,
-    ariaDescription,
-    autoComplete,
-    autoCorrect,
-    ariaLabel,
-    ...rest
-}: InputProps) => {
-    return (
-        <Input_
-            type={type}
-            disabled={disabled}
-            placeholder={placeholder}
-            required={required}
-            autoComplete={autoComplete}
-            autoCorrect={autoCorrect}
-            id={id}
-            className={className}
-            aria-label={ariaLabel}
-            aria-description={ariaDescription}
-            {...register}
-            {...rest}
-        />
-    );
-};
+const Input = forwardRef(
+    (
+        {
+            type,
+            id,
+            disabled,
+            placeholder,
+            required,
+            className,
+            register,
+            ariaDescription,
+            autoComplete,
+            autoCorrect,
+            ariaLabel,
+            ...rest
+        }: InputProps,
+        ref
+    ) => {
+        return (
+            <Input_
+                type={type}
+                disabled={disabled}
+                placeholder={placeholder}
+                required={required}
+                autoComplete={autoComplete}
+                autoCorrect={autoCorrect}
+                id={id}
+                className={className}
+                aria-label={ariaLabel}
+                aria-description={ariaDescription}
+                ref={ref as MutableRefObject<HTMLInputElement>}
+                {...register}
+                {...rest}
+            />
+        );
+    }
+);
 
 export default Input;

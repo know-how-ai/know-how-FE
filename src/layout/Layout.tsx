@@ -1,13 +1,11 @@
 import {
-    Button,
     CircleButton,
     LoginIcon,
-    Modal,
     MoonIcon,
     SunIcon,
     Toast,
 } from "@components/atoms";
-import { LoginOrJoinForm } from "@components/molecules";
+import { AuthModal, ProfileModal } from "@components/organics";
 import { darkTheme, lightTheme } from "@components/styles/theme";
 import { useAppDispatch } from "@contexts/contextHooks";
 import {
@@ -45,90 +43,6 @@ const LOGS = [
     { createdAt: Date.now() - 2000000, comment: "면접 코칭 봇", amount: -1 },
     { createdAt: Date.now() - 3500000, comment: "면접 코칭 봇", amount: -1 },
 ];
-
-const Container = styled.section`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem 1rem;
-`;
-
-const Title = styled.h3`
-    font-size: 2rem;
-`;
-
-const Sub = styled.h5`
-    font-size: 1.5rem;
-`;
-
-const Colored = styled.span`
-    font-weight: 600;
-    /* color: ${(p) => p.theme.color.blue}; */
-`;
-
-const Table = styled.table`
-    display: block;
-    justify-content: center;
-    align-items: center;
-`;
-
-const Tr = styled.tr`
-    gap: 1rem;
-    margin: 0.25rem auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-`;
-
-const Th = styled.th`
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: ${(p) => p.theme.color.lightBlue};
-    text-align: center;
-    font-weight: 600;
-`;
-
-const Td = styled.td`
-    padding: 1rem;
-    text-align: center;
-`;
-
-const formatDate = (date: number) => {
-    let diff = Date.now() - date; // 차이(ms)
-
-    if (diff < 1000) {
-        // 차이가 1초 미만이라면
-        return "현재";
-    }
-
-    let sec = Math.floor(diff / 1000); // 차이를 초로 변환
-
-    if (sec < 60) {
-        return sec + "초 전";
-    }
-
-    let min = Math.floor(diff / 60000); // 차이를 분으로 변환
-    if (min < 60) {
-        return min + "분 전";
-    }
-
-    // 날짜의 포맷을 변경
-    // 일, 월, 시, 분이 숫자 하나로 구성되어있는 경우, 앞에 0을 추가해줌
-    let d = new Date(date);
-    // @ts-ignore
-    d = [
-        "0" + d.getDate(),
-        "0" + (d.getMonth() + 1),
-        "" + d.getFullYear(),
-        "0" + d.getHours(),
-        "0" + d.getMinutes(),
-    ].map((component) => component.slice(-2)); // 모든 컴포넌트의 마지막 숫자 2개를 가져옴
-
-    // 컴포넌트를 조합
-    // @ts-ignore
-    return d.slice(0, 3).join(".") + " " + d.slice(3).join(":");
-};
 
 const Logo = styled.span`
     display: inline-block;
@@ -264,54 +178,23 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
 
                     {showModal ? (
                         !isLoggedIn ? (
-                            <Modal
-                                handleClose={() => {
-                                    dispatch(offModal());
+                            <ProfileModal
+                                handleLogout={() => {
+                                    setToast(true);
                                 }}
-                            >
-                                <Container>
-                                    <Title>
-                                        <Colored>{USER.username}</Colored>님
-                                        반가워요!
-                                    </Title>
-                                    <Sub>
-                                        잔여 포인트 :{" "}
-                                        <Colored>{USER.points}</Colored>
-                                    </Sub>
-
-                                    <Table>
-                                        <thead>
-                                            <Tr>
-                                                <Th>일시</Th>
-                                                <Th>내용</Th>
-                                                <Th>변화</Th>
-                                            </Tr>
-                                        </thead>
-                                        <tbody>
-                                            {LOGS.map((log, idx) => (
-                                                <Tr key={idx}>
-                                                    <Td>
-                                                        {formatDate(
-                                                            log.createdAt
-                                                        )}
-                                                    </Td>
-                                                    <Td>{log.comment}</Td>
-                                                    <Td>{log.amount}</Td>
-                                                </Tr>
-                                            ))}
-                                        </tbody>
-                                    </Table>
-                                    <Button>로그아웃</Button>
-                                </Container>
-                            </Modal>
+                                handleClose={memorizedOffModal}
+                                logs={LOGS}
+                                point={USER.points}
+                                username={USER.username}
+                            />
                         ) : (
-                            <Modal handleClose={memorizedOffModal}>
-                                <LoginOrJoinForm
-                                    onSuccess={() => {
-                                        setToast(true);
-                                    }}
-                                />
-                            </Modal>
+                            <AuthModal
+                                handleClose={memorizedOffModal}
+                                onError={() => {}}
+                                onSuccess={() => {
+                                    setToast(true);
+                                }}
+                            />
                         )
                     ) : null}
 
@@ -321,9 +204,11 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                             duration={3000}
                             handleClose={() => {
                                 setToast(false);
+                                // memorizedOffModal();
+                                // {n}초 뒤에 자동으로 로그아웃 됩니다. ?
                             }}
                         >
-                            로그인 성공!
+                            {!isLoggedIn ? "로그아웃 성공!" : "로그인 성공!"}
                         </Toast>
                     ) : null}
                 </Main>

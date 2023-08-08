@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import { Form, Input, Select } from "@components/atoms";
-import { FloatingButton, LabelWrapper } from "@components/molecules";
+import { FloatingButton, LabelWrapper, LogTable } from "@components/molecules";
 import { useForm } from "react-hook-form";
 import { LoginOrJoinForm } from "@components/molecules";
 
@@ -117,7 +117,9 @@ describe("Components: molecules unit test", () => {
     });
 
     test("LoginOrJoinForm's Toggling method", async () => {
-        useThemeRenderWithRedux(<LoginOrJoinForm />);
+        useThemeRenderWithRedux(
+            <LoginOrJoinForm onError={() => {}} onSuccess={() => {}} />
+        );
 
         const toggleBtn = screen.getByTestId(/toggle button/i);
         expect(toggleBtn).toBeInTheDocument();
@@ -136,7 +138,9 @@ describe("Components: molecules unit test", () => {
     });
 
     test("LoginOrJoinForm's Typing Test", async () => {
-        useThemeRenderWithRedux(<LoginOrJoinForm />);
+        useThemeRenderWithRedux(
+            <LoginOrJoinForm onError={() => {}} onSuccess={() => {}} />
+        );
 
         const submitButton = screen.getByLabelText(
             /submitting form for login/i
@@ -169,5 +173,21 @@ describe("Components: molecules unit test", () => {
             ).toBeVisible();
             expect(await screen.findByDisplayValue("abcd")).toBeVisible();
         }, 1000);
+    });
+
+    test("LogTable", async () => {
+        const logs = [
+            { createdAt: Date.now() - 20000, comment: "logged in", amount: 10 },
+            { createdAt: Date.now() - 400000, comment: "apple", amount: -1 },
+            { createdAt: Date.now() - 6000000, comment: "apple", amount: -1 },
+        ];
+
+        useThemeRenderWithRedux(<LogTable logs={logs} />);
+
+        const firstLog = screen.getByText(/초 전/, { exact: false });
+        expect(firstLog).toBeInTheDocument();
+
+        const secondLog = screen.getByText(/분 전/, { exact: false });
+        expect(secondLog).toBeInTheDocument();
     });
 });

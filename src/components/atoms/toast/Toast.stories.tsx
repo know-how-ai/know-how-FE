@@ -3,7 +3,7 @@ import Toast from "./Toast";
 
 const meta = {
     component: Toast,
-    // tags: ["autodocs"],
+    tags: ["autodocs"],
 } satisfies Meta<typeof Toast>;
 
 export default meta;

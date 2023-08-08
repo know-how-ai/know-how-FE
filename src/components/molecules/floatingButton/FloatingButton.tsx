@@ -21,7 +21,7 @@ const FloatingButton_ = styled(Button)`
 
 interface FloatingButtonProps {
     children?: ReactNode | string | any;
-    onClick?: () => void;
+    onClick?: Function;
     ariaLabel?: string;
 }
 

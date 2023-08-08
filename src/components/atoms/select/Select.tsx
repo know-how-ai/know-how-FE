@@ -40,6 +40,7 @@ interface SelectProps {
     className?: string;
     ariaControls?: string;
     register?: UseFormRegisterReturn;
+    [key: string]: any;
 }
 
 const Select: FC<SelectProps> = forwardRef(

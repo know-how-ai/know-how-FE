@@ -14,6 +14,7 @@ import {
     Toast,
     Form,
     ToggleButton,
+    Table,
 } from "@components/atoms";
 import { useForm } from "react-hook-form";
 
@@ -151,6 +152,7 @@ describe("Components: atoms unit test", () => {
         useThemeRenderWithRedux(
             <Select
                 options={[choco, banana, berry]}
+                // @ts-ignore
                 onChange={({ target: { value } }) => {
                     selected = value;
                 }}
@@ -307,5 +309,26 @@ describe("Components: atoms unit test", () => {
         // );
 
         expect(state).toBe(false);
+    });
+
+    test("Table", async () => {
+        const titleRow = ["name", "kind", "price"];
+        const contentRows = [
+            ["apple", "fruit", "4000"],
+            ["banana", "fruit", "5000"],
+            ["chocolate", "snack", "2000"],
+        ];
+
+        useThemeRenderWithRedux(
+            <Table titleRow={titleRow} contentRows={contentRows} />
+        );
+
+        const table = screen.getByRole("table");
+        expect(table).toBeInTheDocument();
+
+        contentRows.map((row) => {
+            const item = screen.getByText(row[0]);
+            expect(item).toBeInTheDocument();
+        });
     });
 });
