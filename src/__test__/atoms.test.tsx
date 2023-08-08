@@ -12,43 +12,15 @@ import {
     ErrorMessage,
     Anchor,
     Toast,
-    Editor,
-    DraftViewer,
     Form,
     ToggleButton,
 } from "@components/atoms";
-import { getDraftByHtml } from "@libs/editor";
 import { useForm } from "react-hook-form";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe("Components: atoms unit test", () => {
     const user = userEvent.setup();
-
-    test("DraftViewer", async () => {
-        const htmlVal = "<p>test editing is inputted.</p>";
-        const draftVal = getDraftByHtml(htmlVal);
-
-        useThemeRenderWithRedux(<DraftViewer draft={draftVal} />);
-
-        const draft = await screen.findByText("test editing", { exact: false });
-        expect(draft).toBeInTheDocument();
-        expect(draft).toBeVisible();
-    });
-
-    test("Editor", async () => {
-        let editorVal = "test editing is inputted.";
-
-        useThemeRenderWithRedux(<Editor defaultState={editorVal} />);
-
-        const editorContainer = await screen.findByTestId("editor");
-        expect(editorContainer).toBeInTheDocument();
-        expect(editorContainer).toBeEnabled();
-
-        const editing = await screen.findByText("test", { exact: false });
-        expect(editing).toBeInTheDocument();
-        expect(editing).toBeVisible();
-    });
 
     test("Input with Label, Form, ErrorMessage", async () => {
         let value = "";
@@ -178,7 +150,6 @@ describe("Components: atoms unit test", () => {
 
         useThemeRenderWithRedux(
             <Select
-                selectedValue={selected}
                 options={[choco, banana, berry]}
                 onChange={({ target: { value } }) => {
                     selected = value;

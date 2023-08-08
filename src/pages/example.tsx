@@ -17,9 +17,6 @@ import dynamic from "next/dynamic";
 import { FloatingButton, LabelWrapper } from "@components/molecules";
 import { LoginOrJoinForm } from "@components/molecules";
 
-const Editor = dynamic(() => import("@components/atoms/editor"), {
-    ssr: false,
-});
 const Toast = dynamic(() => import("@components/atoms/toast/Toast"), {
     ssr: false,
 });
@@ -107,15 +104,6 @@ const Example: NextPage<Props> = () => {
             <NumSpan>
                 다크 모드가 {isDarkmode ? "켜졌어요!" : "꺼졌어요!"}
             </NumSpan>
-
-            <Container>
-                <Editor
-                    defaultState={`<pre>const editorToHtml =
-                draftToHtml(convertToRaw(editorState.getCurrentContent()));</pre>
-                <p style="text-align:center;"><strong>ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
-                </strong></p>`}
-                />
-            </Container>
 
             <Container>
                 <Button>
