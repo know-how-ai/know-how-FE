@@ -12,6 +12,7 @@ type FormStory = StoryObj<typeof Form>;
 
 export const Base: FormStory = {
     args: {
+        display: "flex",
         onSubmit: () => {
             console.log("clicked!");
         },

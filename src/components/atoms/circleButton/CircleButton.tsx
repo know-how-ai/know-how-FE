@@ -37,6 +37,7 @@ const CircleButton: FC<ButtonProps> = ({
     className,
     onClick,
     type,
+    ...rest
 }) => {
     return (
         <CircleButton_
@@ -44,6 +45,7 @@ const CircleButton: FC<ButtonProps> = ({
             className={className}
             aria-label={ariaLabel}
             type={type}
+            {...rest}
         >
             {children}
         </CircleButton_>

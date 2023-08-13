@@ -112,6 +112,10 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
             </HeadLine>
 
             <Form
+                display="flex"
+                flexDirection="column"
+                gap={2}
+                // alignItems="center"
                 ariaLabel={`Form for ${method.toLowerCase()} the website`}
                 onSubmit={handleSubmit(onSubmit)}
             >

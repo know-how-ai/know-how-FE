@@ -25,7 +25,11 @@ const Badge_ = styled.span<Props>`
 
     :hover {
         opacity: 0.5;
-        border: ${(p) => p.theme.border.active};
+        filter: grayscale(100%);
+    }
+    :active {
+        opacity: 0.5;
+        filter: grayscale(100%) blur(2px);
     }
 `;
 

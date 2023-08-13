@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Modal from "./Modal";
 import { LabelWrapper } from "@components/molecules";
+import Input from "../input/Input";
 
 const meta = {
     component: Modal,
@@ -15,8 +16,9 @@ export const Base: ModalStory = {
     args: {
         children: (
             <div style={{ padding: "4rem 0.5rem" }}>
-                <LabelWrapper label="Name" currentValue="Valentine Chocolate" />
-                <LabelWrapper label="Flavor" currentValue="Chocolate" />
+                <LabelWrapper label="Name">
+                    <Input />
+                </LabelWrapper>
             </div>
         ),
     },

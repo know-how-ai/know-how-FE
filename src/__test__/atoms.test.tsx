@@ -37,7 +37,7 @@ describe("Components: atoms unit test", () => {
             };
 
             return (
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form display="flex" onSubmit={handleSubmit(onSubmit)}>
                     <Label>label test</Label>
                     <Input
                         type="text"
@@ -135,7 +135,7 @@ describe("Components: atoms unit test", () => {
 
     test("Form", async () => {
         useThemeRenderWithRedux(
-            <Form>
+            <Form display="flex">
                 <input type="text" placeholder="test input for form" />
             </Form>
         );

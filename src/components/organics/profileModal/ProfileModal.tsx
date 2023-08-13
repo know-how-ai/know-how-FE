@@ -38,6 +38,9 @@ interface ProfileModalInterface {
     logs?: LogInterface[];
 }
 
+const greeting = <span>님 반가워요!</span>;
+const restPoint = <span>잔여 포인트 :</span>;
+
 const ProfileModal = ({
     handleClose,
     point,
@@ -50,10 +53,10 @@ const ProfileModal = ({
             <Container>
                 <Title>
                     <Colored>{username}</Colored>
-                    <span>님 반가워요!</span>
+                    {greeting}
                 </Title>
                 <Sub>
-                    <span>잔여 포인트 :</span>
+                    {restPoint}
                     <Colored>{point}</Colored>
                 </Sub>
 

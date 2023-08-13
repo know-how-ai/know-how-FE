@@ -1,15 +1,25 @@
 import type { FC, ReactNode } from "react";
 import styled from "styled-components";
 
-const Form_ = styled.form`
-    /* width: 100%; */
-    display: grid;
-    gap: 1rem;
+interface FormStyleProps {
+    display: "grid" | "flex";
+    gap?: number;
+    flexDirection?: "row" | "column";
+    justifyContent?: "center" | "start" | "end" | string;
+    alignItems?: "center" | "start" | "end" | string;
+}
 
-    // 반응형 - 미디어 쿼리 추가 필요?
+const Form_ = styled.form<FormStyleProps>`
+    /* width: 100%; */
+    display: ${(p) => p.display};
+    gap: ${(p) => p.gap + "rem" || "initial"};
+    flex-direction: ${(p) =>
+        p.display === "grid" ? "initial" : p.flexDirection || "row"};
+    justify-content: ${(p) => p.justifyContent || "initial"};
+    align-items: ${(p) => p.alignItems || "initial"};
 `;
 
-interface FormProps {
+interface FormProps extends FormStyleProps {
     children?: ReactNode | any;
     className?: string;
     ariaLabel?: string;
@@ -23,10 +33,20 @@ const Form: FC<FormProps> = ({
     ariaLabel,
     ariaDescription,
     onSubmit,
+    display,
+    flexDirection,
+    alignItems,
+    justifyContent,
+    gap,
     ...rest
 }) => {
     return (
         <Form_
+            display={display}
+            flexDirection={flexDirection}
+            gap={gap}
+            alignItems={alignItems}
+            justifyContent={justifyContent}
             data-testid="form"
             aria-label={ariaLabel}
             aria-description={ariaDescription}
