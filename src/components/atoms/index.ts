@@ -11,4 +11,6 @@ export { default as Form } from "./form";
 export { default as ToggleButton } from "./toggleButton";
 export { default as CircleButton } from "./circleButton";
 export { default as Table } from "./table";
+export { default as ToolTip } from "./toolTip";
+export { default as Textarea } from "./textarea";
 export * from "./icons";

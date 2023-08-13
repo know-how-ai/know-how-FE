@@ -15,6 +15,8 @@ import {
     Form,
     ToggleButton,
     Table,
+    Textarea,
+    ToolTip,
 } from "@components/atoms";
 import { useForm } from "react-hook-form";
 
@@ -22,6 +24,73 @@ jest.mock("next/router", () => require("next-router-mock"));
 
 describe("Components: atoms unit test", () => {
     const user = userEvent.setup();
+
+    test("Textarea with Label, Form, ErrorMessage", async () => {
+        let value = "";
+
+        const Component = () => {
+            const {
+                register,
+                handleSubmit,
+                formState: { errors },
+            } = useForm<{ text: string }>();
+            const onSubmit = ({ text }: { text: string }) => {
+                value = text;
+            };
+
+            return (
+                <Form display="flex" onSubmit={handleSubmit(onSubmit)}>
+                    <Label>label test</Label>
+                    <Textarea
+                        type="text"
+                        id="test"
+                        register={register("text", {
+                            minLength: {
+                                value: 2,
+                                message: "",
+                            },
+                        })}
+                    />
+                    {errors.text ? (
+                        <ErrorMessage>Ocurring Error</ErrorMessage>
+                    ) : null}
+
+                    <button>submit</button>
+                </Form>
+            );
+        };
+
+        const { unmount } = useThemeRenderWithRedux(<Component />);
+
+        const textarea = await screen.findByRole("textbox");
+        const label = await screen.findByText(/label test/i);
+        const button = await screen.findByText(/submit/i);
+        const errorMessage = screen.queryByText(/ocurring error/i);
+
+        expect(textarea).toBeInTheDocument();
+        expect(label).toBeInTheDocument();
+        expect(button).toBeInTheDocument();
+        expect(errorMessage).not.toBeInTheDocument();
+
+        expect(textarea).toBeEnabled();
+        expect(button).toBeEnabled();
+
+        await user.type(textarea, "input testing");
+        await user.click(button);
+        expect(value).toBe("input testing");
+
+        // re-rendering
+        unmount();
+        useThemeRenderWithRedux(<Component />);
+
+        await user.type(await screen.findByRole("textbox"), "1");
+        await user.click(await screen.findByText(/submit/i));
+        expect(screen.getByText(/ocurring error/i)).toBeInTheDocument();
+
+        await user.type(await screen.findByRole("textbox"), "1234");
+        await user.click(await screen.findByText(/submit/i));
+        expect(screen.queryByText(/ocurring error/i)).not.toBeInTheDocument();
+    });
 
     test("Input with Label, Form, ErrorMessage", async () => {
         let value = "";
@@ -309,6 +378,39 @@ describe("Components: atoms unit test", () => {
         // );
 
         expect(state).toBe(false);
+    });
+
+    test("ToolTip", async () => {
+        const contents: string[] = ["테스트 툴팁이 나타났어요."];
+
+        useThemeRenderWithRedux(
+            <>
+                <ToolTip contents={contents} />
+                <div>other element</div>
+            </>
+        );
+
+        // 툴팁 버튼의 존재 유무
+        const toolTipBtn = screen.getByText("?");
+        expect(toolTipBtn).toBeInTheDocument();
+        expect(toolTipBtn).toBeEnabled();
+
+        // 툴팁 버튼 호버 이벤트 발생
+        await user.hover(toolTipBtn);
+
+        // 툴팁 박스 표시 체크
+        const toolTipBox = screen.getByText("테스트", { exact: false });
+        expect(toolTipBox).toBeInTheDocument();
+        expect(toolTipBox).toBeEnabled();
+
+        // 다른 엘리먼트 클릭 이벤트 발생
+        const otherElem = screen.getByText(/other/, { exact: false });
+        await user.click(otherElem);
+
+        // 툴팁 박스 사라짐 체크
+        expect(
+            screen.queryByText("테스트", { exact: false })
+        ).not.toBeInTheDocument();
     });
 
     test("Table", async () => {

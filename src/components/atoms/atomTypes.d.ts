@@ -1,4 +1,5 @@
 import type { MouseEventHandler, ReactNode } from "react";
+import type { UseFormRegisterReturn } from "react-hook-form";
 
 export interface ButtonProps {
     type?: "button" | "submit" | "reset";
@@ -13,4 +14,17 @@ export interface ButtonProps {
     color?: "blue" | "transparent";
     shape?: "rect" | "square";
     size?: "initial" | "infinite";
+}
+
+export interface CommonInputProps {
+    required?: boolean;
+    placeholder?: string;
+    id?: string;
+    className?: string;
+    register?: UseFormRegisterReturn;
+    ariaLabel?: string;
+    ariaDescription?: string;
+    autoComplete?: "on" | "off";
+    autoCorrect?: "on" | "off";
+    [key: string]: any;
 }

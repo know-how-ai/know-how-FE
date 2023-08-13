@@ -3,14 +3,10 @@ import {
     type MutableRefObject,
     type HTMLInputTypeAttribute,
 } from "react";
-import { type UseFormRegisterReturn } from "react-hook-form";
 import styled from "styled-components";
+import type { CommonInputProps } from "../atomTypes";
 
-interface StyleProps {
-    disabled?: boolean;
-}
-
-const Input_ = styled.input<StyleProps>`
+const Input_ = styled.input`
     color: ${(p) => p.theme.color.textColor};
     border: none;
     border-bottom: ${(p) => p.theme.border.gray};
@@ -45,21 +41,11 @@ const Input_ = styled.input<StyleProps>`
     } */
 `;
 
-interface InputProps extends StyleProps {
+interface InputProps extends CommonInputProps {
     type: HTMLInputTypeAttribute;
-    required?: boolean;
-    placeholder?: string;
-    id?: string;
-    className?: string;
-    register?: UseFormRegisterReturn;
-    ariaLabel?: string;
-    ariaDescription?: string;
-    autoComplete?: "on" | "off";
-    autoCorrect?: "on" | "off";
-    [key: string]: any;
 }
 
-const Input = forwardRef(
+const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {
             type,
@@ -74,7 +60,7 @@ const Input = forwardRef(
             autoCorrect,
             ariaLabel,
             ...rest
-        }: InputProps,
+        },
         ref
     ) => {
         return (
