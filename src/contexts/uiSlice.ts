@@ -1,23 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { ReactNode } from "react";
 import { useAppSelector } from "./contextHooks";
 
 interface UIState {
     isDarkmode: Boolean;
     showModal: Boolean;
-    modalView: null | ReactNode | any;
 }
 
 const initialState: UIState = {
     isDarkmode: false,
     showModal: false,
-    modalView: null,
 };
 
 interface UIAction {
     type: string;
     payload?: {
-        modal: null | ReactNode | any;
+        // modal: null | any;
     };
 }
 
@@ -31,13 +28,13 @@ const uiSlice = createSlice({
         offDarkmode: (state) => {
             state.isDarkmode = false;
         },
-        onModal: (state, action: UIAction) => {
+        onModal: (state, action?: UIAction) => {
             state.showModal = true;
-            state.modalView = action.payload?.modal;
+            // state.modalView = action.payload?.modal;
         },
         offModal: (state) => {
             state.showModal = false;
-            state.modalView = null;
+            // state.modalView = null;
         },
     },
 });
