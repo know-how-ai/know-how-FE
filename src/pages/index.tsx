@@ -1,7 +1,24 @@
 import styled from "styled-components";
-import Layout from "../layout/Layout";
-import { Anchor, Button } from "@components/atoms";
+// import Layout from "../layout";
+// import { Anchor, Button } from "@components/atoms";
 import { media } from "@components/styles/theme";
+import dynamic from "next/dynamic";
+import type { NextPage } from "next";
+
+const Layout = dynamic(() => import("../layout/Layout"), {
+    ssr: true,
+    loading: () => <div>로딩 중</div>,
+});
+
+const Anchor = dynamic(() => import("@components/atoms/anchor/Anchor"), {
+    ssr: true,
+    loading: () => <div>로딩 중</div>,
+});
+
+const Button = dynamic(() => import("@components/atoms/button/Button"), {
+    ssr: true,
+    loading: () => <div>로딩 중</div>,
+});
 
 const UList = styled.ul`
     display: flex;
@@ -35,24 +52,36 @@ const ButtonTitle = styled.span`
     line-height: 3rem;
 `;
 
-export default function Home() {
+const Home: NextPage = () => {
     return (
         <Layout title="Home">
             <UList>
-                <Li>
-                    <Button size="infinite" shape="square" color="transparent">
-                        <ButtonTitle>자소서 첨삭 봇</ButtonTitle>
-                    </Button>
-                </Li>
                 <Li>
                     <Button size="infinite" shape="square" color="transparent">
                         <ButtonTitle>면접 도우미 봇</ButtonTitle>
                     </Button>
                 </Li>
                 <Li>
-                    <Button size="infinite" shape="square" color="transparent">
-                        <ButtonTitle>직업 추천 봇</ButtonTitle>
-                    </Button>
+                    <Anchor href={"/interview"}>
+                        <Button
+                            size="infinite"
+                            shape="square"
+                            color="transparent"
+                        >
+                            <ButtonTitle>자소서 첨삭 봇</ButtonTitle>
+                        </Button>
+                    </Anchor>
+                </Li>
+                <Li>
+                    <Anchor href={"/job"}>
+                        <Button
+                            size="infinite"
+                            shape="square"
+                            color="transparent"
+                        >
+                            <ButtonTitle>직업 추천 봇</ButtonTitle>
+                        </Button>
+                    </Anchor>
                 </Li>
             </UList>
 
@@ -61,4 +90,8 @@ export default function Home() {
             </Anchor>
         </Layout>
     );
-}
+};
+
+Home.displayName = "Home";
+
+export default Home;
