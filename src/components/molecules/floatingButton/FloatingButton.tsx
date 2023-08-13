@@ -10,7 +10,7 @@ const FloatingButton_ = styled(Button)`
     aspect-ratio: 1;
     bottom: 2rem;
     right: 2rem;
-    border-radius: 45%;
+    border-radius: ${(p) => p.theme.border.radius};
     z-index: 1;
     box-shadow: ${(p) => p.theme.boxShadow.normal};
     // max-width:

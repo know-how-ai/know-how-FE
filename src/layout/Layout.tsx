@@ -1,3 +1,4 @@
+import Head from "next/head";
 import {
     CircleButton,
     LoginIcon,
@@ -16,11 +17,10 @@ import {
     useUISelector,
 } from "@contexts/uiSlice";
 import { useUserSelector } from "@contexts/userSlice";
-import Head from "next/head";
 import {
-    useCallback,
     type FC,
     type ReactNode,
+    useCallback,
     useEffect,
     useState,
 } from "react";
@@ -137,10 +137,10 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
 
     const memorizedOnModal = useCallback(() => {
         dispatch(onModal());
-    }, [onModal]);
+    }, []);
     const memorizedOffModal = useCallback(() => {
         dispatch(offModal());
-    }, [offModal]);
+    }, []);
 
     // 페이지 이동 시, 모달은 OFF 상태에서 시작
     useEffect(() => {
@@ -150,7 +150,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
     return (
         <>
             <Head>
-                <title>{`${title} - Blogify`}</title>
+                <title>{`${title} - Know How`}</title>
             </Head>
 
             <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
@@ -159,13 +159,19 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                     <Nav>
                         <UList>
                             <ListItem>
-                                <CircleButton onClick={toggleThemeMode}>
+                                <CircleButton
+                                    data-testid={"theme toggle button"}
+                                    onClick={toggleThemeMode}
+                                >
                                     {isDarkmode ? <MoonIcon /> : <SunIcon />}
                                 </CircleButton>
                             </ListItem>
 
                             <ListItem>
-                                <CircleButton onClick={memorizedOnModal}>
+                                <CircleButton
+                                    data-testid={"sign button"}
+                                    onClick={memorizedOnModal}
+                                >
                                     <LoginIcon />
                                 </CircleButton>
                             </ListItem>
@@ -177,7 +183,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                     {children}
 
                     {showModal ? (
-                        !isLoggedIn ? (
+                        isLoggedIn ? (
                             <ProfileModal
                                 handleLogout={() => {
                                     setToast(true);
@@ -208,17 +214,19 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                                 // {n}초 뒤에 자동으로 로그아웃 됩니다. ?
                             }}
                         >
-                            {!isLoggedIn ? "로그아웃 성공!" : "로그인 성공!"}
+                            {isLoggedIn ? "로그아웃 성공!" : "로그인 성공!"}
                         </Toast>
                     ) : null}
                 </Main>
 
                 <Footer>
-                    <Copyright>{`Copyright 2023. Blogify. All rights reserved.`}</Copyright>
+                    <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
                 </Footer>
             </ThemeProvider>
         </>
     );
 };
+
+Layout.displayName = "Layout";
 
 export default Layout;
