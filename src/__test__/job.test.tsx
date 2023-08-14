@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import Job from "../pages/job";
@@ -10,9 +10,11 @@ describe("/job 페이지 테스트", () => {
     // const user = userEvent.setup();
 
     test("컴포넌트 단위 테스트: 레이아웃 컴포넌트", async () => {
-        await mockRouter.push("/interview");
-
         useThemeRenderWithRedux(<Job />);
+
+        await act(async () => {
+            await mockRouter.push("/job");
+        });
 
         const themeToggleBtn = screen.getByTestId(/theme toggle button/i);
         expect(themeToggleBtn).toBeInTheDocument();
@@ -24,15 +26,17 @@ describe("/job 페이지 테스트", () => {
     });
 
     test("컴포넌트 단위 테스트: 페이지 내 컴포넌트", async () => {
-        await mockRouter.push("/job");
-
         useThemeRenderWithRedux(<Job />);
 
-        const addBtn = screen.getByText("추가");
+        await act(async () => {
+            await mockRouter.push("/job");
+        });
+
+        const addBtn = screen.getByRole("button", { name: /추가/ });
         expect(addBtn).toBeInTheDocument();
         expect(addBtn).toBeEnabled();
 
-        const recommendBtn = screen.getByText("추천", { exact: false });
+        const recommendBtn = screen.getByRole("button", { name: /추천+/ });
         expect(recommendBtn).toBeInTheDocument();
         expect(recommendBtn).toBeEnabled();
 
