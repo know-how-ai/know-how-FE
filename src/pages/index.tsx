@@ -1,9 +1,13 @@
 import styled from "styled-components";
-// import Layout from "../layout";
-// import { Anchor, Button } from "@components/atoms";
 import { media } from "@components/styles/theme";
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";
+import {
+    BriefcaseIcon,
+    DocumentIcon,
+    Heading,
+    PeopleIcon,
+} from "@components/atoms";
 
 const Layout = dynamic(() => import("../layout/Layout"), {
     ssr: true,
@@ -43,23 +47,21 @@ const Li = styled.li`
     }
 `;
 
-const ButtonTitle = styled.span`
-    display: inline-block;
-    text-align: center;
-    font-size: 2rem;
-    color: ${(p) => p.theme.color.textColor};
-    font-weight: 500;
-    line-height: 3rem;
-`;
-
 const Home: NextPage = () => {
     return (
         <Layout title="Home">
             <UList>
                 <Li>
-                    <Button size="infinite" shape="square" color="transparent">
-                        <ButtonTitle>면접 도우미 봇</ButtonTitle>
-                    </Button>
+                    <Anchor href={"/coverletter"}>
+                        <Button
+                            size="infinite"
+                            shape="square"
+                            color="transparent"
+                        >
+                            <DocumentIcon strokeWidth={1} />
+                            <Heading fontSize={2}>자소서 첨삭 봇</Heading>
+                        </Button>
+                    </Anchor>
                 </Li>
                 <Li>
                     <Anchor href={"/interview"}>
@@ -68,7 +70,8 @@ const Home: NextPage = () => {
                             shape="square"
                             color="transparent"
                         >
-                            <ButtonTitle>자소서 첨삭 봇</ButtonTitle>
+                            <PeopleIcon strokeWidth={1} />
+                            <Heading fontSize={2}>면접 도우미 봇</Heading>
                         </Button>
                     </Anchor>
                 </Li>
@@ -79,15 +82,12 @@ const Home: NextPage = () => {
                             shape="square"
                             color="transparent"
                         >
-                            <ButtonTitle>직업 추천 봇</ButtonTitle>
+                            <BriefcaseIcon strokeWidth={1} />
+                            <Heading fontSize={2}>직업 추천 봇</Heading>
                         </Button>
                     </Anchor>
                 </Li>
             </UList>
-
-            <Anchor href={"/example"}>
-                <Button>Go to Example</Button>
-            </Anchor>
         </Layout>
     );
 };
