@@ -138,16 +138,13 @@ const Modal: FC<ModalProps> = ({ handleClose, children }) => {
                 data-testid={"modal"}
             >
                 <CloseBtn
+                    data-testid="close button"
                     aria-label="Closing this modal button"
                     onClick={onClickClose}
                 >
                     <CloseIcon strokeWidth={2.5} />
                 </CloseBtn>
-                <ModalContent
-                    role="dialog"
-                    aria-label="Contents in Modal"
-                    tabIndex={-1}
-                >
+                <ModalContent aria-label="Contents in Modal" tabIndex={-1}>
                     {children}
                 </ModalContent>
             </ModalContainer>

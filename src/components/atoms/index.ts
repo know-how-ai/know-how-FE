@@ -13,4 +13,5 @@ export { default as CircleButton } from "./circleButton";
 export { default as Table } from "./table";
 export { default as ToolTip } from "./toolTip";
 export { default as Textarea } from "./textarea";
+export { default as Heading } from "./heading";
 export * from "./icons";

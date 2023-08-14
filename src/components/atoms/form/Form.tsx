@@ -17,6 +17,7 @@ const Form_ = styled.form<FormStyleProps>`
         p.display === "grid" ? "initial" : p.flexDirection || "row"};
     justify-content: ${(p) => p.justifyContent || "initial"};
     align-items: ${(p) => p.alignItems || "initial"};
+    padding: 1rem;
 `;
 
 interface FormProps extends FormStyleProps {

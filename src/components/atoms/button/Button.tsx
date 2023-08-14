@@ -5,6 +5,7 @@ import { ButtonProps } from "../atomTypes";
 
 const Button_ = styled.button<ButtonProps>`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1.25rem 2rem;

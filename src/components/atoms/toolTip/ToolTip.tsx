@@ -53,7 +53,7 @@ const ToolTipBox = styled.article`
 `;
 
 const ToolTipButton = styled.span`
-    margin: auto;
+    margin: 1rem auto;
     cursor: pointer;
     display: flex;
     justify-content: center;

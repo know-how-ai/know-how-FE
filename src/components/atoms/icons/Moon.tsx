@@ -1,13 +1,13 @@
 import { Svg } from "./IconSvg";
 import { IconProps } from "./iconTypes";
 
-const MoonIcon = ({ strokeColor, strokeWidth: strokeWitdh }: IconProps) => {
+const MoonIcon = ({ strokeColor, strokeWidth }: IconProps) => {
     return (
         <Svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={strokeWitdh}
+            strokeWidth={strokeWidth}
             strokeColor={strokeColor}
         >
             <path

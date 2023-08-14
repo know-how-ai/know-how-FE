@@ -4,7 +4,7 @@ import { fadeIn } from "@components/styles/keyframes";
 
 export const Svg = styled.svg<IconProps>`
     min-height: 2.5rem;
-    width: 100%;
+    max-width: 8rem;
     aspect-ratio: 1;
     stroke-width: ${(p) => (p.strokeWidth ? p.strokeWidth : 1.5)};
     scale: 0.75;

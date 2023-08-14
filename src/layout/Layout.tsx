@@ -1,10 +1,10 @@
 import Head from "next/head";
 import {
     CircleButton,
-    LoginIcon,
     MoonIcon,
     SunIcon,
     Toast,
+    UserIcon,
 } from "@components/atoms";
 import { AuthModal, ProfileModal } from "@components/organics";
 import { darkTheme, lightTheme } from "@components/styles/theme";
@@ -27,7 +27,7 @@ import {
 import styled, { ThemeProvider } from "styled-components";
 
 interface LayoutProps {
-    children: ReactNode;
+    children?: ReactNode | string | any;
     title: string;
 }
 
@@ -44,7 +44,7 @@ const LOGS = [
     { createdAt: Date.now() - 3500000, comment: "면접 코칭 봇", amount: -1 },
 ];
 
-const Logo = styled.span`
+const Logo = styled.h3`
     display: inline-block;
     font-weight: 600;
     /* font-style: italic; */
@@ -83,20 +83,21 @@ const Header = styled.header`
     color: ${(p) => p.theme.color.textColor};
     transition: ${(p) => p.theme.transition.fast};
     z-index: 10;
-    min-height: 8rem;
+    min-height: 8vh;
     border-bottom: ${(p) => p.theme.border.active};
     backdrop-filter: blur(1px);
     box-shadow: ${(p) => p.theme.boxShadow.strong};
 `;
 
 const Main = styled.main`
-    padding-top: 12rem; // 8 + 4
+    padding-top: 12vh; // 8 + 4
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 85vh;
+    height: 100%;
+    min-height: 92vh;
     overflow-x: auto;
     background-color: ${(props) => props.theme.color.backgroundColor};
     color: ${(props) => props.theme.color.textColor};
@@ -105,6 +106,8 @@ const Main = styled.main`
 `;
 
 const Footer = styled.footer`
+    margin: 12rem auto;
+    margin-bottom: 6rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -114,7 +117,6 @@ const Footer = styled.footer`
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
     /* border-top: ${(p) => p.theme.border.active}; */
-    height: 12rem;
     overflow: hidden;
 `;
 
@@ -172,7 +174,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                                     data-testid={"sign button"}
                                     onClick={memorizedOnModal}
                                 >
-                                    <LoginIcon />
+                                    <UserIcon />
                                 </CircleButton>
                             </ListItem>
                         </UList>
@@ -217,11 +219,11 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                             {isLoggedIn ? "로그아웃 성공!" : "로그인 성공!"}
                         </Toast>
                     ) : null}
-                </Main>
 
-                <Footer>
-                    <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
-                </Footer>
+                    <Footer>
+                        <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
+                    </Footer>
+                </Main>
             </ThemeProvider>
         </>
     );

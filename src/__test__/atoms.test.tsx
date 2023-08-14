@@ -365,18 +365,6 @@ describe("Components: atoms unit test", () => {
 
         await user.click(toggleBtn);
 
-        // unmount();
-
-        // // re-render
-        // useThemeRenderWithRedux(
-        //     <ToggleButton
-        //         statement={state}
-        //         onClick={() => {
-        //             state = !state;
-        //         }}
-        //     />
-        // );
-
         expect(state).toBe(false);
     });
 

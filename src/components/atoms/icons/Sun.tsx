@@ -1,13 +1,13 @@
 import type { IconProps } from "./iconTypes";
 import { Svg } from "./IconSvg";
 
-const SunIcon = ({ strokeWidth: strokeWitdh, strokeColor }: IconProps) => {
+const SunIcon = ({ strokeWidth, strokeColor }: IconProps) => {
     return (
         <Svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={strokeWitdh}
+            strokeWidth={strokeWidth}
             strokeColor={strokeColor}
         >
             <path

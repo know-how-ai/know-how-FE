@@ -25,7 +25,7 @@ describe("Components: molecules unit test", () => {
             };
 
             return (
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form display="flex" onSubmit={handleSubmit(onSubmit)}>
                     <LabelWrapper label="test label">
                         <Input
                             type="text"
@@ -76,7 +76,7 @@ describe("Components: molecules unit test", () => {
             };
 
             return (
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form display="flex" onSubmit={handleSubmit(onSubmit)}>
                     <LabelWrapper label="test label">
                         <Select
                             register={register("kind")}
