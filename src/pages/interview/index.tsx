@@ -39,7 +39,7 @@ const interview: NextPage = () => {
     };
 
     return (
-        <Layout title={InterviewTitle}>
+        <Layout title={InterviewTitle} widgets={{ profile: true, theme: true }}>
             <Heading>{InterviewTitle}</Heading>
 
             <ToolTip contents={ToolTipContents} />

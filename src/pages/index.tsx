@@ -22,7 +22,7 @@ const UList = styled.ul`
     display: flex;
     list-style: none;
     justify-content: center;
-    gap: 4rem;
+    gap: 6rem;
     align-items: center;
     margin: 4rem auto;
     width: 100%;
@@ -84,7 +84,7 @@ const ListItem = ({
                         variants={variants}
                         initial="initial"
                         animate={hovering ? "visible" : "initial"}
-                        fontSize={2}
+                        fontSize={2.5}
                         style={{
                             position: "relative",
                             top: "-4rem",
@@ -101,7 +101,7 @@ const ListItem = ({
 
 const Home: NextPage = () => {
     return (
-        <Layout title="Home">
+        <Layout title="Home" widgets={{ profile: true, theme: true }}>
             <UList>
                 <ListItem
                     Child={DocumentIcon}

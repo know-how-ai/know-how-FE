@@ -8,7 +8,9 @@ jest.mock("next/router", () => require("next-router-mock"));
 
 describe("레이아웃 컴포넌트 유닛 테스트", () => {
     test("테마 토글 버튼", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         const themeToggleBtn = screen.getByTestId(/theme toggle button/i);
         expect(themeToggleBtn).toBeInTheDocument();
@@ -16,7 +18,9 @@ describe("레이아웃 컴포넌트 유닛 테스트", () => {
     });
 
     test("로그인/프로필 버튼", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         const signBtn = screen.getByTestId(/sign button/i);
         expect(signBtn).toBeInTheDocument();
@@ -24,7 +28,9 @@ describe("레이아웃 컴포넌트 유닛 테스트", () => {
     });
 
     test("헤딩", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         const heading = screen.getByRole("heading");
         expect(heading).toBeInTheDocument();
@@ -32,7 +38,9 @@ describe("레이아웃 컴포넌트 유닛 테스트", () => {
     });
 
     test("푸터", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         const copyright = screen.getByText(/copyright+/i);
         expect(copyright).toBeInTheDocument();
@@ -44,7 +52,9 @@ describe("레이아웃 컴포넌트 기능 테스트", () => {
     const user = userEvent.setup();
 
     test("테마 토글", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         expect(screen.getByTestId(/theme toggle button/i)).toHaveStyle(
             `background-color: ${lightTheme.color.lightBlue}`
@@ -64,7 +74,9 @@ describe("레이아웃 컴포넌트 기능 테스트", () => {
     });
 
     test("로그인/프로파일 모달 온/오프: 클로즈 버튼", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         expect(screen.getByTestId(/sign button/i)).toBeEnabled();
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -80,7 +92,9 @@ describe("레이아웃 컴포넌트 기능 테스트", () => {
     });
 
     test("로그인/프로파일 모달 온/오프: Escape Key", async () => {
-        useThemeRenderWithRedux(<Layout title="test" />);
+        useThemeRenderWithRedux(
+            <Layout title="test" widgets={{ profile: true, theme: true }} />
+        );
 
         expect(screen.getByTestId(/sign button/i)).toBeEnabled();
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

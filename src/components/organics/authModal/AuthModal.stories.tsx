@@ -14,6 +14,7 @@ export const Base: AuthModalStory = {
     args: {
         handleClose: () => {},
         onError: () => {},
-        onSuccess: () => {},
+        onSuccessFound: () => {},
+        onSuccessJoin: () => {},
     },
 };

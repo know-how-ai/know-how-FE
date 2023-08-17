@@ -13,7 +13,7 @@ const Button_ = styled.button<ButtonProps>`
     margin: 1rem auto;
     width: ${(p) => (p.size === "infinite" ? "100%" : null)}; // 조정 필요
     max-width: ${(p) =>
-        p.size === "infinite" ? "100%" : "20rem"}; // 조정 필요
+        p.size === "infinite" ? "40rem" : "20rem"}; // 조정 필요
     ${media.mobile} {
         max-height: 15rem; // 조정 필요
         max-width: 40rem; // 조정 필요
@@ -21,8 +21,9 @@ const Button_ = styled.button<ButtonProps>`
     font-size: 1.25rem;
     line-height: 1.25rem;
     border: none;
+    word-break: keep-all;
 
-    aspect-ratio: ${(p) => (p.shape === "square" ? 1 : null)};
+    aspect-ratio: ${(p) => (p.shape === "square" ? 1 : "initial")};
     color: ${(p) =>
         p.color === "transparent"
             ? p.theme.color.textColor

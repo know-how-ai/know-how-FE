@@ -1,12 +1,6 @@
 import Head from "next/head";
-import {
-    CircleButton,
-    MoonIcon,
-    SunIcon,
-    Toast,
-    UserIcon,
-} from "@components/atoms";
-import { AuthModal, ProfileModal } from "@components/organics";
+import { Toast } from "@components/atoms";
+import { AuthModal, ProfileModal, HeaderWidgets } from "@components/organics";
 import { darkTheme, lightTheme } from "@components/styles/theme";
 import { useAppDispatch } from "@contexts/contextHooks";
 import {
@@ -29,6 +23,10 @@ import styled, { ThemeProvider } from "styled-components";
 interface LayoutProps {
     children?: ReactNode | string | any;
     title: string;
+    widgets?: {
+        theme?: boolean;
+        profile?: boolean;
+    };
 }
 
 const USER = {
@@ -52,23 +50,6 @@ const Logo = styled.h3`
     margin: auto ${(p) => p.theme.size.xl};
     color: ${(p) => p.theme.color.textColor};
     user-select: none;
-`;
-
-const Nav = styled.nav`
-    margin: auto ${(p) => p.theme.size.xl};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-const UList = styled.ul`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-`;
-
-const ListItem = styled.li`
-    list-style: none;
 `;
 
 const Header = styled.header`
@@ -128,7 +109,7 @@ const Copyright = styled.span`
     color: ${(p) => p.theme.color.gray};
 `;
 
-const Layout: FC<LayoutProps> = ({ children, title }) => {
+const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     const dispatch = useAppDispatch();
     const { isDarkmode, showModal } = useUISelector((state) => state.ui);
     const { isLoggedIn } = useUserSelector((state) => state.user);
@@ -149,6 +130,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
     // 페이지 이동 시, 모달은 OFF 상태에서 시작
     useEffect(() => {
         memorizedOffModal();
+        // dispatch(offModal());
     }, []);
 
     return (
@@ -160,27 +142,13 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
             <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
                 <Header>
                     <Logo>Know How</Logo>
-                    <Nav>
-                        <UList>
-                            <ListItem>
-                                <CircleButton
-                                    data-testid={"theme toggle button"}
-                                    onClick={toggleThemeMode}
-                                >
-                                    {isDarkmode ? <MoonIcon /> : <SunIcon />}
-                                </CircleButton>
-                            </ListItem>
-
-                            <ListItem>
-                                <CircleButton
-                                    data-testid={"sign button"}
-                                    onClick={memorizedOnModal}
-                                >
-                                    <UserIcon />
-                                </CircleButton>
-                            </ListItem>
-                        </UList>
-                    </Nav>
+                    <HeaderWidgets
+                        isDarkmode={isDarkmode}
+                        onModal={memorizedOnModal}
+                        toggleThemeMode={toggleThemeMode}
+                        profileWidget={widgets?.profile}
+                        themeWidget={widgets?.theme}
+                    />
                 </Header>
 
                 <Main>
@@ -193,7 +161,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                                     setToast(true);
                                 }}
                                 handleClose={memorizedOffModal}
-                                logs={LOGS}
+                                // logs={LOGS}
                                 point={USER.points}
                                 username={USER.username}
                             />
@@ -201,8 +169,11 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
                             <AuthModal
                                 handleClose={memorizedOffModal}
                                 onError={() => {}}
-                                onSuccess={() => {
+                                onSuccessJoin={() => {
                                     setToast(true);
+                                }}
+                                onSuccessFound={() => {
+                                    console.log("found");
                                 }}
                             />
                         )
@@ -224,6 +195,7 @@ const Layout: FC<LayoutProps> = ({ children, title }) => {
 
                     <Footer>
                         <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
+                        <Copyright>{`Wanna message to Developer?`}</Copyright>
                     </Footer>
                 </Main>
             </ThemeProvider>

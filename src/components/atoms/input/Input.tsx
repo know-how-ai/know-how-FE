@@ -1,8 +1,4 @@
-import {
-    forwardRef,
-    type MutableRefObject,
-    type HTMLInputTypeAttribute,
-} from "react";
+import { forwardRef, type HTMLInputTypeAttribute } from "react";
 import styled from "styled-components";
 import type { CommonInputProps } from "../atomTypes";
 
@@ -20,18 +16,18 @@ const Input_ = styled.input`
         font-style: italic;
     }
 
-    :disabled {
-        cursor: not-allowed;
-    }
-
-    :hover {
-        border-bottom-color: ${(p) => p.theme.color.blue};
-    }
-
-    :focus,
-    :active {
+    :hover:not(:disabled),
+    :focus:not(:disabled),
+    :active:not(:disabled) {
         outline: none;
         border-bottom-color: ${(p) => p.theme.color.blue};
+    }
+
+    :disabled {
+        font-style: italic;
+        color: ${(p) => p.theme.color.gray};
+        cursor: not-allowed;
+        border-bottom-color: transparent;
     }
 
     /* ::-webkit-inner-spin-button,
@@ -75,7 +71,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 className={className}
                 aria-label={ariaLabel}
                 aria-description={ariaDescription}
-                ref={ref as MutableRefObject<HTMLInputElement>}
+                ref={ref}
                 {...register}
                 {...rest}
             />

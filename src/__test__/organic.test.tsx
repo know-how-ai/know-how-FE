@@ -5,15 +5,16 @@ import { AuthModal, ProfileModal } from "@components/organics";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
-describe("Components: molecules unit test", () => {
+describe("Components: Organics unit test", () => {
     const user = userEvent.setup();
 
-    test("AuthModal's Toggling method", async () => {
+    test("AuthModal: 컴포넌트 메서드 토글", async () => {
         useThemeRenderWithRedux(
             <AuthModal
                 handleClose={() => {}}
                 onError={() => {}}
-                onSuccess={() => {}}
+                onSuccessJoin={() => {}}
+                onSuccessFound={() => {}}
             />
         );
 
@@ -33,12 +34,13 @@ describe("Components: molecules unit test", () => {
         expect(screen.getAllByRole("textbox").length).toBe(4);
     });
 
-    test("AuthModal's Typing Test", async () => {
+    test("AuthModal: 컴포넌트 입력 테스트", async () => {
         useThemeRenderWithRedux(
             <AuthModal
                 handleClose={() => {}}
                 onError={() => {}}
-                onSuccess={() => {}}
+                onSuccessJoin={() => {}}
+                onSuccessFound={() => {}}
             />
         );
 
@@ -75,7 +77,7 @@ describe("Components: molecules unit test", () => {
         }, 1000);
     });
 
-    test("ProfileModal", async () => {
+    test("프로필 모달: 컴포넌트 유닛 테스트", async () => {
         const logs = [
             { createdAt: Date.now() - 20000, comment: "logged in", amount: 10 },
             { createdAt: Date.now() - 400000, comment: "apple", amount: -1 },

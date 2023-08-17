@@ -60,7 +60,7 @@ const ProfileModal = ({
                     <Colored>{point}</Colored>
                 </Sub>
 
-                {logs.length ? (
+                {logs?.length ? (
                     <LogTable logs={logs} />
                 ) : (
                     <Button color="transparent" loading={true} />

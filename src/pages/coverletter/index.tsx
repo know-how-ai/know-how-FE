@@ -35,7 +35,10 @@ const Coverletter: NextPage = () => {
     };
 
     return (
-        <Layout title={CoverletterTitle}>
+        <Layout
+            title={CoverletterTitle}
+            widgets={{ profile: true, theme: true }}
+        >
             <Heading>{CoverletterTitle}</Heading>
 
             <ToolTip contents={ToolTipContents} />

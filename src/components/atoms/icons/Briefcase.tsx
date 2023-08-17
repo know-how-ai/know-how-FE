@@ -24,7 +24,7 @@ const BriefcaseIcon = ({ strokeColor, strokeWidth, act }: IconProps) => {
             visible: {
                 pathLength: 1,
                 stroke: currentTheme.color.textColor,
-                transition: { type: "spring", duration: 1.5 },
+                transition: { type: "spring", duration: 2 },
                 transform: "translateY(-0.1rem)",
             },
         }),

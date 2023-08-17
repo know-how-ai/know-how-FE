@@ -9,7 +9,7 @@ interface StyleProps {
 
 const Wrapper = styled.label<StyleProps>`
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 2.5fr;
     align-items: center;
     padding: ${(p) => p.theme.size.xs};
     border: ${(p) => p.theme.border.inactive};
@@ -18,6 +18,7 @@ const Wrapper = styled.label<StyleProps>`
     cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
     word-break: keep-all;
     line-height: 2rem;
+    width: 100%;
 
     // when appear, animate 'fade in'
     opacity: 0;

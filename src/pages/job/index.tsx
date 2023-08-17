@@ -69,7 +69,7 @@ const Job: NextPage = () => {
     );
 
     return (
-        <Layout title={JobTitle}>
+        <Layout title={JobTitle} widgets={{ profile: true, theme: true }}>
             <Heading>{JobTitle}</Heading>
 
             <ToolTip contents={ToolTipContents} />
