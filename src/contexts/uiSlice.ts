@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useAppSelector } from "./contextHooks";
 
 interface UIState {
-    isDarkmode: Boolean;
-    showModal: Boolean;
+    isDarkmode: boolean;
+    showModal: boolean;
 }
 
 const initialState: UIState = {
