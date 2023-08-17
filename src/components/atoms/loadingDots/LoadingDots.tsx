@@ -10,7 +10,7 @@ const Wrapper = styled.span`
         height: 0.5rem;
         aspect-ratio: 1;
         border-radius: 100%;
-        background-color: ${(p) => p.theme.color.light};
+        background-color: ${(p) => p.theme.color.textColor};
         margin: 0 0.25rem;
         animation: blink 1.5s infinite ease-in-out;
     }

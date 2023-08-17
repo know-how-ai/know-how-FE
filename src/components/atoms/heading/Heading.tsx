@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import { type ReactNode, forwardRef } from "react";
 import styled from "styled-components";
 
 interface HeadingStyleProps {
@@ -7,7 +7,7 @@ interface HeadingStyleProps {
 
 const Heading3 = styled.h3<HeadingStyleProps>`
     font-weight: 600;
-    margin: 2rem auto;
+    margin: 2.5rem auto;
     text-align: center;
     font-size: ${(p) => (p.fontSize || 2.5) + "rem"};
     line-height: ${(p) => (p.fontSize || 3) + 0.5 + "rem"};
@@ -17,10 +17,17 @@ const Heading3 = styled.h3<HeadingStyleProps>`
 
 interface HeadingProps extends HeadingStyleProps {
     children?: string | ReactNode | any;
+    [key: string]: any;
 }
 
-const Heading: FC<HeadingProps> = ({ children, fontSize }) => {
-    return <Heading3 fontSize={fontSize}>{children}</Heading3>;
-};
+const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
+    ({ children, fontSize, ...rest }, ref) => {
+        return (
+            <Heading3 ref={ref} fontSize={fontSize} {...rest}>
+                {children}
+            </Heading3>
+        );
+    }
+);
 
 export default Heading;

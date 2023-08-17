@@ -6,13 +6,12 @@ const CircleButton_ = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
     border: none;
     text-align: center;
     word-break: keep-all;
-    width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     max-width: 4rem;
+    width: 100%;
     aspect-ratio: 1;
     border-radius: 100rem;
     background-color: ${(p) => p.theme.color.lightBlue};

@@ -60,7 +60,11 @@ const ProfileModal = ({
                     <Colored>{point}</Colored>
                 </Sub>
 
-                <LogTable logs={logs} />
+                {logs.length ? (
+                    <LogTable logs={logs} />
+                ) : (
+                    <Button color="transparent" loading={true} />
+                )}
                 <Button onClick={handleLogout}>로그아웃</Button>
             </Container>
         </Modal>

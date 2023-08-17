@@ -1,7 +1,8 @@
-import { type FC, type MutableRefObject, forwardRef } from "react";
+import { forwardRef } from "react";
 import styled from "styled-components";
 import LoadingDots from "../loadingDots/LoadingDots";
 import { ButtonProps } from "../atomTypes";
+import { media } from "@components/styles/theme";
 
 const Button_ = styled.button<ButtonProps>`
     display: flex;
@@ -13,6 +14,10 @@ const Button_ = styled.button<ButtonProps>`
     width: ${(p) => (p.size === "infinite" ? "100%" : null)}; // 조정 필요
     max-width: ${(p) =>
         p.size === "infinite" ? "100%" : "20rem"}; // 조정 필요
+    ${media.mobile} {
+        max-height: 15rem; // 조정 필요
+        max-width: 40rem; // 조정 필요
+    }
     font-size: 1.25rem;
     line-height: 1.25rem;
     border: none;
@@ -26,21 +31,21 @@ const Button_ = styled.button<ButtonProps>`
         p.color === "transparent"
             ? p.theme.color.transparent
             : p.theme.color.blue};
-    box-shadow: ${(p) =>
-        p.color === "transparent" ? p.theme.boxShadow.normal : null};
+    box-shadow: ${(p) => (p.boxShadow ? p.theme.boxShadow.normal : null)};
     border-radius: ${(p) => p.theme.border.radius};
     cursor: ${(p) => (p.loading ? "progress" : "pointer")};
     transition: ${(p) => p.theme.transition.fast};
 
     :hover:not(:disabled),
     :focus:not(:disabled) {
-        opacity: 0.5;
+        opacity: ${(p) => (p.loading ? null : 0.7)};
     }
 
     :active:not(:disabled) {
-        opacity: 0.7;
         box-shadow: ${(p) =>
-            p.color === "transparent" ? p.theme.boxShadow.strong : null};
+            !p.loading && p.color === "transparent"
+                ? p.theme.boxShadow.strong
+                : null};
     }
 
     :disabled {
@@ -50,7 +55,7 @@ const Button_ = styled.button<ButtonProps>`
     }
 `;
 
-const Button: FC<ButtonProps> = forwardRef(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     (
         {
             children,
@@ -65,13 +70,14 @@ const Button: FC<ButtonProps> = forwardRef(
             shape,
             size,
             onKeyDown,
+            boxShadow,
         },
         buttonRef
     ) => {
         return (
             <Button_
                 type={type}
-                ref={buttonRef as MutableRefObject<HTMLButtonElement>} // for when put the children as not a string
+                ref={buttonRef} // for when put the children as not a string
                 onClick={onClick}
                 disabled={disabled}
                 className={className}
@@ -82,6 +88,7 @@ const Button: FC<ButtonProps> = forwardRef(
                 shape={shape}
                 size={size}
                 onKeyDown={onKeyDown}
+                boxShadow={boxShadow}
             >
                 {loading ? <LoadingDots /> : children}
             </Button_>

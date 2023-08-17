@@ -43,7 +43,7 @@ const Table = ({ contentRows, titleRow }: TableProps) => {
     if (
         !titleRow ||
         !contentRows ||
-        titleRow.length !== contentRows[0].length
+        titleRow.length !== contentRows[0]?.length
     ) {
         console.warn(
             "title row's length must be equal to content row's length."

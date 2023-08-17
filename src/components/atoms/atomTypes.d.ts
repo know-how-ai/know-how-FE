@@ -14,6 +14,7 @@ export interface ButtonProps {
     color?: "blue" | "transparent";
     shape?: "rect" | "square";
     size?: "initial" | "infinite";
+    boxShadow?: boolean;
 }
 
 export interface CommonInputProps {

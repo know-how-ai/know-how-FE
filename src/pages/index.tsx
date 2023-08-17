@@ -7,19 +7,11 @@ import {
     DocumentIcon,
     Heading,
     PeopleIcon,
+    Anchor,
+    Button,
 } from "@components/atoms";
 
 const Layout = dynamic(() => import("../layout/Layout"), {
-    ssr: true,
-    loading: () => <div>로딩 중</div>,
-});
-
-const Anchor = dynamic(() => import("@components/atoms/anchor/Anchor"), {
-    ssr: true,
-    loading: () => <div>로딩 중</div>,
-});
-
-const Button = dynamic(() => import("@components/atoms/button/Button"), {
     ssr: true,
     loading: () => <div>로딩 중</div>,
 });
