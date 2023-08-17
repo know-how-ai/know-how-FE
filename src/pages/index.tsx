@@ -10,6 +10,8 @@ import {
     Anchor,
     Button,
 } from "@components/atoms";
+import { useCallback, useState } from "react";
+import { type Variants, motion } from "framer-motion";
 
 const Layout = dynamic(() => import("../layout/Layout"), {
     ssr: true,
@@ -39,46 +41,83 @@ const Li = styled.li`
     }
 `;
 
+const SinkingHeading = motion(Heading);
+
+const variants: Variants = {
+    hidden: {
+        transform: "translateY(-4rem)",
+    },
+    visible: {
+        transition: { type: "spring", duration: 0.5 },
+        transform: "translateY(4rem)",
+    },
+};
+
+const ListItem = ({
+    heading,
+    href,
+    Child,
+}: {
+    heading: string;
+    href: string;
+    Child: ({ ...rest }) => JSX.Element;
+}) => {
+    const [hovering, setHovering] = useState(false);
+    const onMouseEnter = useCallback(() => {
+        setHovering(true);
+    }, []);
+    const onMouseLeave = useCallback(() => {
+        setHovering(false);
+    }, []);
+
+    return (
+        <Li onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <Anchor href={href}>
+                <Button
+                    size="infinite"
+                    boxShadow
+                    shape="square"
+                    color="transparent"
+                >
+                    <Child act={hovering} strokeWidth={1} />
+                    <SinkingHeading
+                        variants={variants}
+                        initial="initial"
+                        animate={hovering ? "visible" : "initial"}
+                        fontSize={2}
+                        style={{
+                            position: "relative",
+                            top: "-4rem",
+                            margin: "1rem auto",
+                        }}
+                    >
+                        {heading}
+                    </SinkingHeading>
+                </Button>
+            </Anchor>
+        </Li>
+    );
+};
+
 const Home: NextPage = () => {
     return (
         <Layout title="Home">
             <UList>
-                <Li>
-                    <Anchor href={"/coverletter"}>
-                        <Button
-                            size="infinite"
-                            shape="square"
-                            color="transparent"
-                        >
-                            <DocumentIcon strokeWidth={1} />
-                            <Heading fontSize={2}>자소서 첨삭 봇</Heading>
-                        </Button>
-                    </Anchor>
-                </Li>
-                <Li>
-                    <Anchor href={"/interview"}>
-                        <Button
-                            size="infinite"
-                            shape="square"
-                            color="transparent"
-                        >
-                            <PeopleIcon strokeWidth={1} />
-                            <Heading fontSize={2}>면접 도우미 봇</Heading>
-                        </Button>
-                    </Anchor>
-                </Li>
-                <Li>
-                    <Anchor href={"/job"}>
-                        <Button
-                            size="infinite"
-                            shape="square"
-                            color="transparent"
-                        >
-                            <BriefcaseIcon strokeWidth={1} />
-                            <Heading fontSize={2}>직업 추천 봇</Heading>
-                        </Button>
-                    </Anchor>
-                </Li>
+                <ListItem
+                    Child={DocumentIcon}
+                    heading="자소서 첨삭 봇"
+                    href="/coverletter"
+                />
+                <ListItem
+                    Child={PeopleIcon}
+                    heading="면접 도우미 봇"
+                    href="/interview"
+                />
+                <ListItem
+                    Child={BriefcaseIcon}
+                    heading="직업 추천 봇"
+                    href="/job"
+                />
             </UList>
         </Layout>
     );
