@@ -55,6 +55,9 @@ const Job: NextPage = () => {
 
             // then reset field
             inputRef.current.value = "";
+        } else {
+            // Focus if empty the 'my personality' input
+            inputRef.current?.focus();
         }
     }, [personalities, inputRef]);
 
