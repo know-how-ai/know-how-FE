@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { media } from "@components/styles/theme";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import {
     BriefcaseIcon,
@@ -12,11 +12,13 @@ import {
 } from "@components/atoms";
 import { useCallback, useState } from "react";
 import { type Variants, motion } from "framer-motion";
+import { useUISelector } from "@contexts/uiSlice";
+import Layout from "../layout";
 
-const Layout = dynamic(() => import("../layout/Layout"), {
-    ssr: true,
-    loading: () => <div>로딩 중</div>,
-});
+// const Layout = dynamic(() => import("../layout/Layout"), {
+//     ssr: true,
+//     loading: () => <div>로딩 중</div>,
+// });
 
 const UList = styled.ul`
     display: flex;
@@ -62,6 +64,7 @@ const ListItem = ({
     href: string;
     Child: ({ ...rest }) => JSX.Element;
 }) => {
+    const { isDarkmode } = useUISelector((state) => state.ui);
     const [hovering, setHovering] = useState(false);
     const onMouseEnter = useCallback(() => {
         setHovering(true);
@@ -73,13 +76,12 @@ const ListItem = ({
     return (
         <Li onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <Anchor href={href}>
-                <Button
-                    size="infinite"
-                    boxShadow
-                    shape="square"
-                    color="transparent"
-                >
-                    <Child act={hovering} strokeWidth={1} />
+                <Button size="infinite" shape="square" color="transparent">
+                    <Child
+                        act={hovering}
+                        strokeWidth={1}
+                        isDarkmode={isDarkmode}
+                    />
                     <SinkingHeading
                         variants={variants}
                         initial="initial"

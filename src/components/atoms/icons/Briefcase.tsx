@@ -1,35 +1,29 @@
 import { type Variants, motion } from "framer-motion";
 import { Svg } from "./IconSvg";
 import type { IconProps } from "./iconTypes";
-import { useUISelector } from "@contexts/uiSlice";
 import { darkTheme, lightTheme } from "@components/styles/theme";
-import { useMemo } from "react";
-import type { DefaultTheme } from "styled-components";
 
-const BriefcaseIcon = ({ strokeColor, strokeWidth, act }: IconProps) => {
-    const { isDarkmode } = useUISelector((state) => state.ui);
-
-    const currentTheme = useMemo<DefaultTheme>(
-        () => (isDarkmode ? darkTheme : lightTheme),
-        [isDarkmode]
-    );
-
-    const variants = useMemo<Variants>(
-        () => ({
-            hidden: {
-                pathLength: 0,
-                stroke: currentTheme.color.textColor + "00",
-                transform: "translateY(0.6rem)",
-            },
-            visible: {
-                pathLength: 1,
-                stroke: currentTheme.color.textColor,
-                transition: { type: "spring", duration: 2 },
-                transform: "translateY(-0.1rem)",
-            },
-        }),
-        [currentTheme]
-    );
+const BriefcaseIcon = ({
+    strokeColor,
+    strokeWidth,
+    act,
+    isDarkmode,
+}: IconProps) => {
+    const variants: Variants = {
+        hidden: {
+            pathLength: 0,
+            stroke: (isDarkmode ? darkTheme : lightTheme).color.textColor,
+            transform: "translateY(0.6rem)",
+            opacity: 0,
+        },
+        visible: {
+            pathLength: 1,
+            stroke: (isDarkmode ? darkTheme : lightTheme).color.textColor,
+            transition: { type: "spring", duration: 2 },
+            transform: "translateY(-0.1rem)",
+            opacity: 1,
+        },
+    };
 
     return (
         <Svg
