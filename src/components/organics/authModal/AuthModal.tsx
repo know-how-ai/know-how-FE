@@ -8,7 +8,7 @@ import { useMemo, useState } from "react";
 
 interface AuthModalInterface {
     onSuccessJoin: Function;
-    onSuccessFound: Function;
+    onSuccessFound: (email: string, resetQuestion: string) => void;
     onError: Function;
     handleClose: Function;
 }

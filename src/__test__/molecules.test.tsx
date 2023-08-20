@@ -15,11 +15,7 @@ describe("Components: molecules unit test", () => {
         let value = "";
 
         const Component = () => {
-            const {
-                register,
-                handleSubmit,
-                formState: { errors },
-            } = useForm<{ text: string }>();
+            const { register, handleSubmit } = useForm<{ text: string }>();
             const onSubmit = ({ text }: { text: string }) => {
                 value = text;
             };
@@ -116,9 +112,9 @@ describe("Components: molecules unit test", () => {
         expect(button).toHaveTextContent(/test button/i);
     });
 
-    test("LoginOrJoinForm's Toggling method", async () => {
+    test("LoginOrJoinForm 메서드 토글", async () => {
         useThemeRenderWithRedux(
-            <LoginOrJoinForm onError={() => {}} onSuccess={() => {}} />
+            <LoginOrJoinForm onError={jest.fn()} onSuccess={jest.fn()} />
         );
 
         const toggleBtn = screen.getByTestId(/toggle button/i);
@@ -137,9 +133,9 @@ describe("Components: molecules unit test", () => {
         expect(screen.getAllByRole("textbox").length).toBe(4);
     });
 
-    test("LoginOrJoinForm's Typing Test", async () => {
+    test("LoginOrJoinForm 타이핑 테스트", async () => {
         useThemeRenderWithRedux(
-            <LoginOrJoinForm onError={() => {}} onSuccess={() => {}} />
+            <LoginOrJoinForm onError={jest.fn()} onSuccess={jest.fn()} />
         );
 
         const submitButton = screen.getByLabelText(
@@ -164,7 +160,6 @@ describe("Components: molecules unit test", () => {
 
         await user.type(emailInput, "id@email.com");
         await user.type(passwordInput, "abcd");
-        await user.click(submitButton);
 
         // need to timeout, cause fade in animation
         setTimeout(async () => {
@@ -177,9 +172,13 @@ describe("Components: molecules unit test", () => {
 
     test("LogTable", async () => {
         const logs = [
-            { createdAt: Date.now() - 20000, comment: "logged in", amount: 10 },
-            { createdAt: Date.now() - 400000, comment: "apple", amount: -1 },
-            { createdAt: Date.now() - 6000000, comment: "apple", amount: -1 },
+            {
+                created_at: Date.now() - 20000,
+                comment: "logged in",
+                amount: 10,
+            },
+            { created_at: Date.now() - 400000, comment: "apple", amount: -1 },
+            { created_at: Date.now() - 6000000, comment: "apple", amount: -1 },
         ];
 
         useThemeRenderWithRedux(<LogTable logs={logs} />);

@@ -1,11 +1,16 @@
-import { Button, Form, Input, ToggleButton } from "@components/atoms";
+import { Button, Form, Heading, Input, ToggleButton } from "@components/atoms";
 import { LabelWrapper } from "@components/molecules";
+import { useAppDispatch } from "@contexts/contextHooks";
+import { setToast } from "@contexts/uiSlice";
+import { loggedIn } from "@contexts/userSlice";
+import useFetch from "@libs/useFetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 type Method = "LOGIN" | "JOIN";
-interface HeadLineSpanProps {
+
+interface HeadLineProps {
     isSelected?: boolean;
 }
 
@@ -20,7 +25,7 @@ const Container = styled.section`
     width: auto;
 `;
 
-const HeadLine = styled.h3`
+const TitleContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
@@ -29,13 +34,7 @@ const HeadLine = styled.h3`
     gap: 1rem;
 `;
 
-const HeadLineSpan = styled.span<HeadLineSpanProps>`
-    display: inline-block;
-    font-weight: 600;
-    font-size: ${(p) => p.theme.size.xl};
-    word-break: keep-all;
-    text-align: center;
-    color: ${(p) => p.theme.color.textColor};
+const HeadLine = styled(Heading)<HeadLineProps>`
     animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 0.5s
         forwards ease-in-out;
     -webkit-animation: ${(p) => (p.isSelected ? "activate" : "deactivate")} 0.5s
@@ -60,16 +59,26 @@ const HeadLineSpan = styled.span<HeadLineSpanProps>`
     }
 `;
 
-interface LoginFormInterface {
+interface ILoginForm {
     email: string;
     password: string;
 }
 
-interface JoinFormInterface extends LoginFormInterface {
+interface IJoinForm extends ILoginForm {
     passwordConfirmation: string;
     username: string;
     resetQuestion: string;
     resetAnswer: string;
+}
+
+interface ResponseReturn {
+    status: boolean;
+    error?: string;
+    data?: {
+        id: number;
+        username: string;
+        point: number;
+    };
 }
 
 interface LoginOrJoinFormProps {
@@ -78,25 +87,63 @@ interface LoginOrJoinFormProps {
 }
 
 const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
+    const dispatch = useAppDispatch();
     const [method, setMethod] = useState<Method>("LOGIN");
     const { register, handleSubmit, setError } = useForm<
-        LoginFormInterface | JoinFormInterface
-    >({ reValidateMode: "onBlur" });
+        ILoginForm | IJoinForm
+    >({
+        reValidateMode: "onBlur",
+    });
 
-    // API 통신 추가할부분 -> 외부로부터 주입받기
-    const onSubmit = (data?: any) => {
-        console.log(data);
-        if (onSuccess) {
-            onSuccess();
+    const onSubmit = async (formData: ILoginForm | IJoinForm) => {
+        /**
+         * 패스워드 && 패스워드 확인란 일치 여부 => validate 옵션이 해결
+         * 메서드에 따른 인터페이스 일치 여부 => useForm의 register에서 해결
+         */
+
+        const url = method === "LOGIN" ? "/user/in" : "/user/new";
+
+        try {
+            const { data, status, error } = await useFetch<
+                ILoginForm | IJoinForm,
+                ResponseReturn
+            >(url, "POST", formData);
+
+            // 로그인(조인) 성공 && 별다른 에러 없음
+            if (data && !error) {
+                const { id, point, username } = data;
+
+                dispatch(
+                    loggedIn({
+                        id,
+                        point,
+                        username,
+                    })
+                );
+
+                dispatch(setToast({ toast: `${username}님 환영합니다!` }));
+
+                if (onSuccess) {
+                    onSuccess();
+                }
+            }
+            // 통신은 성공 && 요청에 오류 존재
+            else if (error) {
+                dispatch(setToast({ toast: error }));
+
+                if (onError) {
+                    onError();
+                }
+            }
+        } catch (err) {
+            console.error(err);
         }
     };
 
     return (
         <Container>
-            <HeadLine>
-                <HeadLineSpan isSelected={method === "LOGIN"}>
-                    접속하기
-                </HeadLineSpan>
+            <TitleContainer>
+                <HeadLine isSelected={method === "LOGIN"}>접속하기</HeadLine>
                 <ToggleButton
                     variant="dual"
                     statement={method === "LOGIN"}
@@ -106,10 +153,8 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                     ariaLabel={"Login or Join toggle Button"}
                     ariaDescription={`Current method is ${method}.`}
                 />
-                <HeadLineSpan isSelected={method === "JOIN"}>
-                    가입하기
-                </HeadLineSpan>
-            </HeadLine>
+                <HeadLine isSelected={method === "JOIN"}>가입하기</HeadLine>
+            </TitleContainer>
 
             <Form
                 display="flex"
@@ -121,10 +166,11 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
             >
                 <LabelWrapper label="이메일">
                     <Input
+                        required
                         type="email"
                         placeholder="abcd@blogify.com"
                         ariaLabel={`Email Input element for ${method.toLowerCase()}`}
-                        autoComplete="off"
+                        autoComplete="on"
                         autoCorrect="off"
                         register={register("email", {
                             required: true,
@@ -137,6 +183,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                 </LabelWrapper>
                 <LabelWrapper label="패스워드">
                     <Input
+                        required
                         type="password"
                         placeholder="****"
                         ariaLabel={`Password Input element for ${method.toLowerCase}`}
@@ -160,6 +207,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                     <>
                         <LabelWrapper label="패스워드 확인">
                             <Input
+                                required
                                 type="password"
                                 placeholder="****"
                                 register={register("passwordConfirmation", {
@@ -183,6 +231,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                         </LabelWrapper>
                         <LabelWrapper label="닉네임">
                             <Input
+                                required
                                 type="text"
                                 placeholder="홍길동"
                                 register={register("username", {
@@ -205,6 +254,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                         </LabelWrapper>
                         <LabelWrapper label="패스워드 초기화 질문">
                             <Input
+                                required
                                 type="text"
                                 placeholder="패스워드 초기화를 위한 질문을 설정해주세요."
                                 register={register("resetQuestion", {
@@ -218,6 +268,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                         </LabelWrapper>
                         <LabelWrapper label="패스워드 초기화 답변">
                             <Input
+                                required
                                 type="text"
                                 placeholder="패스워드 초기화를 위한 질문의 답변을 설정해주세요."
                                 register={register("resetAnswer", {

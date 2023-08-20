@@ -8,12 +8,14 @@ interface CheckEmailFormInterface {
 }
 
 interface CheckEmailFormReturn {
-    //
+    status: boolean;
+    error?: string;
+    data?: { resetQuestion: string };
 }
 
 interface CheckEmailFormProps {
-    onSuccess?: Function;
-    onError?: Function;
+    onSuccess: (email: string, resetQuestion: string) => void;
+    onError: Function;
 }
 
 const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
@@ -22,16 +24,21 @@ const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
             mode: "onBlur",
         });
 
-    const onSubmit = async (data: CheckEmailFormInterface) => {
-        console.log(data);
-
-        const result = await useFetch<
-            CheckEmailFormInterface,
-            CheckEmailFormReturn
-        >("http://localhost:8080/user/reset", "PUT", data);
-
-        if (onSuccess && result) {
-            onSuccess(result);
+    const onSubmit = (formData: CheckEmailFormInterface) => {
+        try {
+            useFetch<CheckEmailFormInterface, CheckEmailFormReturn>(
+                "http://localhost:8080/user/reset",
+                "PUT",
+                formData
+            ).then(({ data, error }) => {
+                if (data) {
+                    onSuccess(formData.email, data.resetQuestion);
+                } else {
+                    onError(error);
+                }
+            });
+        } catch (err) {
+            onError(err);
         }
     };
 

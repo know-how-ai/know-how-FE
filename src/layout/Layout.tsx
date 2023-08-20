@@ -8,17 +8,15 @@ import {
     offModal,
     onDarkmode,
     onModal,
+    setToast,
+    unsetToast,
     useUISelector,
 } from "@contexts/uiSlice";
-import { useUserSelector } from "@contexts/userSlice";
-import {
-    type FC,
-    type ReactNode,
-    useCallback,
-    useEffect,
-    useState,
-} from "react";
+import { loggedOut, useUserSelector } from "@contexts/userSlice";
+import { type FC, type ReactNode, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
+import useFetch from "@libs/useFetch";
+import { useRouter } from "next/router";
 
 interface LayoutProps {
     children?: ReactNode | string | any;
@@ -28,19 +26,6 @@ interface LayoutProps {
         profile?: boolean;
     };
 }
-
-const USER = {
-    username: "익명",
-    points: 10,
-};
-
-const LOGS = [
-    { createdAt: Date.now() - 2000, comment: "최초 로그인", amount: 10 },
-    { createdAt: Date.now() - 20000, comment: "자소서 첨삭 봇", amount: -1 },
-    { createdAt: Date.now() - 200000, comment: "면접 코칭 봇", amount: -1 },
-    { createdAt: Date.now() - 2000000, comment: "면접 코칭 봇", amount: -1 },
-    { createdAt: Date.now() - 3500000, comment: "면접 코칭 봇", amount: -1 },
-];
 
 const Logo = styled.h3`
     display: inline-block;
@@ -110,11 +95,10 @@ const Copyright = styled.span`
 `;
 
 const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
+    const { push } = useRouter();
     const dispatch = useAppDispatch();
-    const { isDarkmode, showModal } = useUISelector((state) => state.ui);
-    const { isLoggedIn } = useUserSelector((state) => state.user);
-
-    const [toast, setToast] = useState(false);
+    const { isDarkmode, showModal, toast } = useUISelector((state) => state.ui);
+    const { isLoggedIn, data } = useUserSelector((state) => state.user);
 
     const toggleThemeMode = useCallback(() => {
         dispatch(isDarkmode ? offDarkmode() : onDarkmode());
@@ -126,12 +110,48 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     const memorizedOffModal = useCallback(() => {
         dispatch(offModal());
     }, []);
+    const memorizedLoggedOut = useCallback(() => {
+        dispatch(loggedOut());
+    }, []);
+
+    const handleLoggedOut = useCallback(() => {
+        useFetch<any, { status: boolean }>("/user/out", "GET").then(
+            (response) => {
+                if (response.status) {
+                    memorizedLoggedOut();
+
+                    dispatch(
+                        setToast({
+                            toast: "안전하게 로그아웃 되었습니다.",
+                        })
+                    );
+
+                    memorizedOffModal();
+                }
+            }
+        );
+    }, []);
+
+    const onError = (message: string) => {
+        dispatch(setToast({ toast: message }));
+    };
+
+    const onSuccessFound = (email: string, resetQuestion: string) => {
+        push(`/reset?email=${email}&resetQuestion=${resetQuestion}`);
+    };
 
     // 페이지 이동 시, 모달은 OFF 상태에서 시작
     useEffect(() => {
         memorizedOffModal();
-        // dispatch(offModal());
     }, []);
+
+    // 렌더 시, 세션쿠키 체크 필요 - How to?
+    useEffect(() => {
+        if (toast === "로그인이 필요합니다.") {
+            memorizedOffModal();
+            memorizedLoggedOut();
+        }
+    }, [toast]);
 
     return (
         <>
@@ -157,38 +177,30 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
                     {showModal ? (
                         isLoggedIn ? (
                             <ProfileModal
-                                handleLogout={() => {
-                                    setToast(true);
-                                }}
+                                handleLogout={handleLoggedOut}
                                 handleClose={memorizedOffModal}
-                                // logs={LOGS}
-                                point={USER.points}
-                                username={USER.username}
+                                point={data?.point}
+                                username={data?.username}
                             />
                         ) : (
                             <AuthModal
                                 handleClose={memorizedOffModal}
-                                onError={() => {}}
-                                onSuccessJoin={() => {
-                                    setToast(true);
-                                }}
-                                onSuccessFound={() => {
-                                }}
+                                onError={onError}
+                                onSuccessJoin={memorizedOffModal}
+                                onSuccessFound={onSuccessFound}
                             />
                         )
                     ) : null}
 
                     {toast ? (
                         <Toast
-                            isShow={toast}
+                            isShow={!!toast}
                             duration={3000}
                             handleClose={() => {
-                                setToast(false);
-                                // memorizedOffModal();
-                                // {n}초 뒤에 자동으로 로그아웃 됩니다. ?
+                                dispatch(unsetToast());
                             }}
                         >
-                            {isLoggedIn ? "로그아웃 성공!" : "로그인 성공!"}
+                            {toast}
                         </Toast>
                     ) : null}
 

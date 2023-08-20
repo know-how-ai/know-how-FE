@@ -2,7 +2,7 @@ import { Table } from "@components/atoms";
 import formatDate from "@libs/formatDate";
 
 interface LogInterface {
-    createdAt: number;
+    created_at: number;
     comment: string;
     amount: number;
 }
@@ -18,7 +18,7 @@ const LogTable = ({ logs }: LogTableProps) => {
         <Table
             titleRow={titleRow}
             contentRows={logs?.map((log) => [
-                formatDate(log.createdAt),
+                formatDate(log.created_at),
                 log.comment,
                 log.amount,
             ])}

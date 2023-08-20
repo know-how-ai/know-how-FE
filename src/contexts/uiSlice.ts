@@ -4,17 +4,19 @@ import { useAppSelector } from "./contextHooks";
 interface UIState {
     isDarkmode: boolean;
     showModal: boolean;
+    toast?: string | false | "로그인이 필요합니다.";
 }
 
 const initialState: UIState = {
     isDarkmode: false,
     showModal: false,
+    toast: false,
 };
 
 interface UIAction {
     type: string;
-    payload?: {
-        // modal: null | any;
+    payload: {
+        toast: string;
     };
 }
 
@@ -28,20 +30,31 @@ const uiSlice = createSlice({
         offDarkmode: (state) => {
             state.isDarkmode = false;
         },
-        onModal: (state, action?: UIAction) => {
+        setToast: (state, action: UIAction) => {
+            state.toast = action.payload.toast;
+        },
+        unsetToast: (state) => {
+            state.toast = false;
+        },
+        onModal: (state) => {
             state.showModal = true;
-            // state.modalView = action.payload?.modal;
         },
         offModal: (state) => {
             state.showModal = false;
-            // state.modalView = null;
         },
     },
 });
 
 const { actions, reducer: uiReducer } = uiSlice;
 
-export const { offDarkmode, offModal, onDarkmode, onModal } = actions;
+export const {
+    offDarkmode,
+    offModal,
+    onDarkmode,
+    onModal,
+    setToast,
+    unsetToast,
+} = actions;
 export const useUISelector = useAppSelector<UIState>;
 
 export default uiReducer;
