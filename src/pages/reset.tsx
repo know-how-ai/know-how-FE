@@ -15,6 +15,7 @@ interface ResetFormInterface {
 }
 
 const Reset: NextPage = () => {
+    const { replace } = useRouter();
     const {
         query: { email, resetQuestion },
     } = useRouter();
