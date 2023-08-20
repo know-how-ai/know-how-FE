@@ -6,13 +6,14 @@ interface HeadingStyleProps {
 }
 
 const Heading3 = styled.h3<HeadingStyleProps>`
-    font-weight: 600;
+    font-weight: 500;
     margin: 2.5rem auto;
     text-align: center;
     font-size: ${(p) => (p.fontSize || 2.5) + "rem"};
     line-height: ${(p) => (p.fontSize || 3) + 0.5 + "rem"};
     word-break: keep-all;
     white-space: nowrap;
+    color: ${(p) => p.theme.color.textColor};
 `;
 
 interface HeadingProps extends HeadingStyleProps {

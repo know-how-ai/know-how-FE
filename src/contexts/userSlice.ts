@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useAppSelector } from "./contextHooks";
 
 interface User {
-    id: string | number;
+    id: number;
     username: string;
     point: number;
     [key: string]: any;

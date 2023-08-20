@@ -24,9 +24,8 @@ const Sub = styled.h5`
     font-size: 1.5rem;
 `;
 
-const Colored = styled.span`
+const Colored = styled.b`
     font-weight: 600;
-    /* color: ${(p) => p.theme.color.blue}; */
 `;
 
 const Span = styled.span`

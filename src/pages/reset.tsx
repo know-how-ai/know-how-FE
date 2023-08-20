@@ -23,8 +23,8 @@ const Reset: NextPage = () => {
             mode: "onBlur",
         });
 
-    const onSubmit = (data: ResetFormInterface) => {
-        console.log(data);
+    const onSubmit = (formData: ResetFormInterface) => {
+        console.log(formData);
     };
 
     useEffect(() => {

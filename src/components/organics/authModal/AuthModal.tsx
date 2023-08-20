@@ -1,10 +1,6 @@
-import { Button, Form, Heading, Input, Modal } from "@components/atoms";
-import {
-    CheckEmailForm,
-    LabelWrapper,
-    LoginOrJoinForm,
-} from "@components/molecules";
-import { useMemo, useState } from "react";
+import { Button, Modal } from "@components/atoms";
+import { CheckEmailForm, LoginOrJoinForm } from "@components/molecules";
+import { useState } from "react";
 
 interface AuthModalInterface {
     onSuccessJoin: Function;
@@ -20,10 +16,6 @@ const AuthModal = ({
     onSuccessFound,
 }: AuthModalInterface) => {
     const [isResetMode, setIsResetMode] = useState<boolean>(false);
-    const modeButtonValue = useMemo(
-        () => (!isResetMode ? "비밀번호를 잊으셨나요?" : "돌아가기"),
-        [isResetMode]
-    );
 
     return (
         <Modal handleClose={handleClose}>
@@ -37,7 +29,7 @@ const AuthModal = ({
                 color="transparent"
                 onClick={() => setIsResetMode(!isResetMode)}
             >
-                {modeButtonValue}
+                {!isResetMode ? "비밀번호를 잊으셨나요?" : "돌아가기"}
             </Button>
         </Modal>
     );

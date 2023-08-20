@@ -1,14 +1,14 @@
 import { Table } from "@components/atoms";
 import formatDate from "@libs/formatDate";
 
-interface LogInterface {
+interface ILog {
     created_at: number;
     comment: string;
     amount: number;
 }
 
 interface LogTableProps {
-    logs?: LogInterface[];
+    logs?: ILog[];
 }
 
 const titleRow = ["일시", "내용", "변화"];

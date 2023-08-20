@@ -40,29 +40,17 @@ interface TableProps {
 }
 
 const Table = ({ contentRows, titleRow }: TableProps) => {
-    if (
-        !titleRow ||
-        !contentRows ||
-        titleRow.length !== contentRows[0]?.length
-    ) {
-        console.warn(
-            "title row's length must be equal to content row's length."
-        );
-
-        return null;
-    }
-
     return (
         <Table_>
             <thead>
                 <Tr>
-                    {titleRow.map((cell, idx) => (
+                    {titleRow?.map((cell, idx) => (
                         <Th key={`${cell}__${idx}`}>{cell}</Th>
                     ))}
                 </Tr>
             </thead>
             <tbody>
-                {contentRows.map((row, rowIdx) => (
+                {contentRows?.map((row, rowIdx) => (
                     <Tr key={`${row}__${rowIdx}`}>
                         {row.map((cell, cellIdx) => (
                             <Td key={`${row}__${cell}__${cellIdx}`}>{cell}</Td>
