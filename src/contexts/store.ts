@@ -5,7 +5,6 @@ import {
     configureStore,
     getDefaultMiddleware,
 } from "@reduxjs/toolkit";
-import counterReducer from "./counterSlice";
 import uiReducer from "./uiSlice";
 import userReducer from "./userSlice";
 import { type PersistConfig, persistReducer } from "redux-persist";
@@ -33,7 +32,6 @@ const rootReducer = (
         return { ...state, ...action.payload };
     } else {
         const combinedReducer = combineReducers({
-            counter: counterReducer,
             [UI]: uiReducer,
             [USER]: userReducer,
         }); // input reducers in object
