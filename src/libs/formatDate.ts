@@ -22,11 +22,11 @@ const formatDate = (date: number) => {
     // 일, 월, 시, 분이 한 자릿수인 경우, 앞에 0을 추가
     const newDate = new Date(date);
     const d = [
-        "0" + newDate.getDate(),
-        "0" + (newDate.getMonth() + 1),
-        "" + newDate.getFullYear(),
-        "0" + newDate.getHours(),
-        "0" + newDate.getMinutes(),
+        `${newDate.getFullYear()}`,
+        `0${newDate.getMonth() + 1}`,
+        `0${newDate.getDate()}`,
+        `0${newDate.getHours()}`,
+        `0${newDate.getMinutes()}`,
     ].map((component) => component.slice(-2)); // 모든 컴포넌트의 마지막 숫자 2개를 가져옴
 
     // 컴포넌트를 조합
