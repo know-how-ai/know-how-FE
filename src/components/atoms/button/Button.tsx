@@ -32,21 +32,21 @@ const Button_ = styled.button<ButtonProps>`
         p.color === "transparent"
             ? p.theme.color.transparent
             : p.theme.color.blue};
-    box-shadow: ${(p) => (p.boxShadow ? p.theme.boxShadow.normal : null)};
+    box-shadow: ${(p) => (p.boxShadow ? p.theme.boxShadow.normal : "initial")};
     border-radius: ${(p) => p.theme.border.radius};
-    cursor: ${(p) => (p.loading ? "progress" : "pointer")};
+    cursor: ${(p) => (p.isLoading ? "progress" : "pointer")};
     transition: ${(p) => p.theme.transition.fast};
 
     :hover:not(:disabled),
     :focus:not(:disabled) {
-        opacity: ${(p) => (p.loading ? null : 0.7)};
+        opacity: ${(p) => (p.isLoading ? "initial" : 0.7)};
     }
 
     :active:not(:disabled) {
         box-shadow: ${(p) =>
-            !p.loading && p.color === "transparent"
+            !p.isLoading && p.color === "transparent"
                 ? p.theme.boxShadow.strong
-                : null};
+                : "initial"};
     }
 
     :disabled {
@@ -66,7 +66,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className,
             type,
             tabIndex = 0,
-            loading,
+            isLoading = false,
             color,
             shape,
             size,
@@ -84,14 +84,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 className={className}
                 aria-label={ariaLabel}
                 tabIndex={tabIndex}
-                loading={loading}
+                isLoading={isLoading}
                 color={color}
                 shape={shape}
                 size={size}
                 onKeyDown={onKeyDown}
                 boxShadow={boxShadow}
             >
-                {loading ? <LoadingDots /> : children}
+                {isLoading ? <LoadingDots /> : children}
             </Button_>
         );
     }

@@ -10,7 +10,7 @@ export interface ButtonProps {
     ariaLabel?: string;
     tabIndex?: number;
     disabled?: boolean;
-    loading?: boolean;
+    isLoading?: boolean;
     color?: "blue" | "transparent";
     shape?: "rect" | "square";
     size?: "initial" | "infinite";

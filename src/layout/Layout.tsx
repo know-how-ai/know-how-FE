@@ -173,7 +173,6 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
                                     setToast(true);
                                 }}
                                 onSuccessFound={() => {
-                                    console.log("found");
                                 }}
                             />
                         )

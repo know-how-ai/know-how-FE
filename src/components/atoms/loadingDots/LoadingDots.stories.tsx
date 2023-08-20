@@ -13,5 +13,5 @@ type LoadingDotsStory = StoryObj<typeof LoadingDots>;
 
 export const Base: LoadingDotsStory = {
     args: {},
-    decorators: [(story) => <Button loading={true}>{story()}</Button>],
+    decorators: [(story) => <Button isLoading={true}>{story()}</Button>],
 };
