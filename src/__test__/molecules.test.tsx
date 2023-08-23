@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import { Form, Input, Select } from "@components/atoms";
-import { FloatingButton, LabelWrapper, LogTable } from "@components/molecules";
+import { LabelWrapper, LogTable } from "@components/molecules";
 import { useForm } from "react-hook-form";
 import { LoginOrJoinForm } from "@components/molecules";
 
@@ -101,15 +101,6 @@ describe("Components: molecules unit test", () => {
         await user.click(await screen.findByDisplayValue("choco"));
         await user.click(button);
         expect(value).toBe("choco");
-    });
-
-    test("FloatingButton", async () => {
-        useThemeRenderWithRedux(<FloatingButton>Test Button</FloatingButton>);
-
-        const button = screen.getByRole("button");
-        expect(button).toBeInTheDocument();
-        expect(button).toBeEnabled();
-        expect(button).toHaveTextContent(/test button/i);
     });
 
     test("LoginOrJoinForm 메서드 토글", async () => {

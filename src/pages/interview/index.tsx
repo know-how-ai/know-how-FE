@@ -11,7 +11,7 @@ import {
 import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 
-interface InterviewFormInterface {
+interface IInterviewForm {
     job: string;
     domain: string;
     project: string;
@@ -24,17 +24,17 @@ const ToolTipContents: string[] = [
     "How to use?",
     "원하는 직업과 업계를 입력하고, 수행한 업무나\n프로젝트의 내용과 특징, 사용한 기술 등을 입력해보세요.",
     "인공지능이 분석을 통해 면접에서 받을 수 있는 질문을 나열해드릴게요.\n이를 통해 면접 합격의 성공률을 높여보세요.",
-    "입력한 내용은 분석을 위해서만 사용되며, 저장되지 않아요.",
+    "입력한 내용은 분석을 위해서만 사용되며, 저장되지 않아요.\n서비스 이용시 1 point가 차감됩니다. ",
 ];
 
-const InterviewTitle: string = "면접 도우미 봇";
+const InterviewTitle: string = "면접 코칭 봇";
 
 const interview: NextPage = () => {
-    const { register, handleSubmit } = useForm<InterviewFormInterface>({
+    const { register, handleSubmit } = useForm<IInterviewForm>({
         mode: "onBlur",
     });
 
-    const onSubmit = (data: InterviewFormInterface) => {
+    const onSubmit = (data: IInterviewForm) => {
         console.log(data);
     };
 

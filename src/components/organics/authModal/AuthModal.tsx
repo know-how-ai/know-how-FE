@@ -2,7 +2,7 @@ import { Button, Modal } from "@components/atoms";
 import { CheckEmailForm, LoginOrJoinForm } from "@components/molecules";
 import { useState } from "react";
 
-interface AuthModalInterface {
+interface AuthModalProps {
     onSuccessJoin: Function;
     onSuccessFound: (email: string, resetQuestion: string) => void;
     onError: Function;
@@ -14,7 +14,7 @@ const AuthModal = ({
     onSuccessJoin,
     onError,
     onSuccessFound,
-}: AuthModalInterface) => {
+}: AuthModalProps) => {
     const [isResetMode, setIsResetMode] = useState<boolean>(false);
 
     return (

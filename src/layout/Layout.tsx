@@ -94,11 +94,13 @@ const Copyright = styled.span`
     color: ${(p) => p.theme.color.gray};
 `;
 
+const LOGOUT_URL = `/user/out`;
+
 const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
-    const { isDarkmode, showModal, toast } = useUISelector((state) => state.ui);
-    const { isLoggedIn, data } = useUserSelector((state) => state.user);
+    const { isDarkmode, showModal, toast } = useUISelector(({ ui }) => ui);
+    const { isLoggedIn, data } = useUserSelector(({ user }) => user);
 
     const toggleThemeMode = useCallback(() => {
         dispatch(isDarkmode ? offDarkmode() : onDarkmode());
@@ -115,7 +117,7 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     }, []);
 
     const handleLoggedOut = useCallback(() => {
-        useFetch<any, { status: boolean }>("/user/out", "GET").then(
+        useFetch<any, { status: boolean }>(LOGOUT_URL, "POST").then(
             (response) => {
                 if (response.status) {
                     memorizedLoggedOut();
@@ -142,7 +144,9 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
 
     // 페이지 이동 시, 모달은 OFF 상태에서 시작
     useEffect(() => {
-        memorizedOffModal();
+        if (showModal) {
+            memorizedOffModal();
+        }
     }, []);
 
     // 렌더 시, 세션쿠키 체크 필요 - How to?
@@ -206,7 +210,13 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
 
                     <Footer>
                         <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
-                        <Copyright>{`Wanna message to Developer?`}</Copyright>
+                        <Copyright>
+                            <a
+                                href={`mailto:${process.env.NEXT_PUBLIC_CONTACT}`}
+                            >
+                                Message to Developer &rarr;
+                            </a>
+                        </Copyright>
                     </Footer>
                 </Main>
             </ThemeProvider>

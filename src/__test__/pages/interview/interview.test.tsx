@@ -2,7 +2,7 @@ import { act, screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import userEvent from "@testing-library/user-event";
-import Interview from "../pages/interview";
+import Interview from "../../../pages/interview";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -32,7 +32,7 @@ describe("/interview 페이지 테스트", () => {
             await mockRouter.push("/interview");
         });
 
-        const heading = screen.getByText("면접 도우미 봇");
+        const heading = screen.getByText("면접 코칭 봇");
         expect(heading).toBeInTheDocument();
 
         const submitBtn = screen.getByRole("button", { name: /제출+/ });

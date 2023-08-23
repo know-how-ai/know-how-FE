@@ -16,7 +16,7 @@ const initialState: UIState = {
 interface UIAction {
     type: string;
     payload: {
-        toast: string;
+        toast: string | "로그인이 필요합니다.";
     };
 }
 

@@ -104,7 +104,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
         const url = method === "LOGIN" ? "/user/in" : "/user/new";
 
         try {
-            const { data, status, error } = await useFetch<
+            const { data, error } = await useFetch<
                 ILoginForm | IJoinForm,
                 ResponseReturn
             >(url, "POST", formData);

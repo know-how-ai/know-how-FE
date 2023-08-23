@@ -2,7 +2,7 @@ import { act, screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import userEvent from "@testing-library/user-event";
-import Coverletter from "../pages/coverletter";
+import Coverletter from "../../../pages/coverletter";
 
 jest.mock("next/router", () => require("next-router-mock"));
 

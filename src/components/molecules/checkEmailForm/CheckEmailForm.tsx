@@ -3,11 +3,11 @@ import LabelWrapper from "../labelWrapper/LabelWrapper";
 import { useForm } from "react-hook-form";
 import useFetch from "@libs/useFetch";
 
-interface CheckEmailFormInterface {
+interface ICheckEmailForm {
     email: string;
 }
 
-interface CheckEmailFormReturn {
+interface ResponseReturn {
     status: boolean;
     error?: string;
     data?: { resetQuestion: string };
@@ -18,17 +18,18 @@ interface CheckEmailFormProps {
     onError: Function;
 }
 
-const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
-    const { register, setError, handleSubmit } =
-        useForm<CheckEmailFormInterface>({
-            mode: "onBlur",
-        });
+const CHECK_EMAIL_URL = `/user/reset`;
 
-    const onSubmit = (formData: CheckEmailFormInterface) => {
+const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
+    const { register, handleSubmit } = useForm<ICheckEmailForm>({
+        mode: "onBlur",
+    });
+
+    const onSubmit = (formData: ICheckEmailForm) => {
         try {
-            useFetch<CheckEmailFormInterface, CheckEmailFormReturn>(
-                "http://localhost:8080/user/reset",
-                "PUT",
+            useFetch<ICheckEmailForm, ResponseReturn>(
+                CHECK_EMAIL_URL,
+                "POST",
                 formData
             ).then(({ data, error }) => {
                 if (data) {
