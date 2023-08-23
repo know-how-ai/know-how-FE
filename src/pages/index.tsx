@@ -2,23 +2,9 @@ import styled from "styled-components";
 import { media } from "@components/styles/theme";
 // import dynamic from "next/dynamic";
 import type { NextPage } from "next";
-import {
-    BriefcaseIcon,
-    DocumentIcon,
-    Heading,
-    PeopleIcon,
-    Anchor,
-    Button,
-} from "@components/atoms";
-import { useCallback, useState } from "react";
-import { type Variants, motion } from "framer-motion";
-import { useUISelector } from "@contexts/uiSlice";
+import { BriefcaseIcon, DocumentIcon, PeopleIcon } from "@components/atoms";
 import Layout from "../layout";
-
-// const Layout = dynamic(() => import("../layout/Layout"), {
-//     ssr: true,
-//     loading: () => <div>로딩 중</div>,
-// });
+import { MainListItem } from "@components/molecules";
 
 const UList = styled.ul`
     display: flex;
@@ -35,87 +21,21 @@ const UList = styled.ul`
     }
 `;
 
-const Li = styled.li`
-    width: 100%;
-    max-width: 25%;
-    ${media.mobile} {
-        max-width: 75%;
-    }
-`;
-
-const SinkingHeading = motion(Heading);
-
-const variants: Variants = {
-    hidden: {
-        transform: "translateY(-4rem)",
-    },
-    visible: {
-        transition: { type: "spring", duration: 0.5 },
-        transform: "translateY(4rem)",
-    },
-};
-
-const ListItem = ({
-    heading,
-    href,
-    Child,
-}: {
-    heading: string;
-    href: string;
-    Child: ({ ...rest }) => JSX.Element;
-}) => {
-    const { isDarkmode } = useUISelector((state) => state.ui);
-    const [hovering, setHovering] = useState(false);
-    const onMouseEnter = useCallback(() => {
-        setHovering(true);
-    }, []);
-    const onMouseLeave = useCallback(() => {
-        setHovering(false);
-    }, []);
-
-    return (
-        <Li onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            <Anchor href={href}>
-                <Button size="infinite" shape="square" color="transparent">
-                    <Child
-                        act={hovering}
-                        strokeWidth={1}
-                        isDarkmode={isDarkmode}
-                    />
-                    <SinkingHeading
-                        variants={variants}
-                        initial="initial"
-                        animate={hovering ? "visible" : "initial"}
-                        fontSize={2.5}
-                        style={{
-                            position: "relative",
-                            top: "-4rem",
-                            margin: "1rem auto",
-                        }}
-                    >
-                        {heading}
-                    </SinkingHeading>
-                </Button>
-            </Anchor>
-        </Li>
-    );
-};
-
 const Home: NextPage = () => {
     return (
         <Layout title="Home" widgets={{ profile: true, theme: true }}>
             <UList>
-                <ListItem
+                <MainListItem
                     Child={DocumentIcon}
-                    heading="자소서 첨삭 봇"
+                    heading="자소서 코칭 봇"
                     href="/coverletter"
                 />
-                <ListItem
+                <MainListItem
                     Child={PeopleIcon}
-                    heading="면접 도우미 봇"
+                    heading="면접 코칭 봇"
                     href="/interview"
                 />
-                <ListItem
+                <MainListItem
                     Child={BriefcaseIcon}
                     heading="직업 추천 봇"
                     href="/job"
