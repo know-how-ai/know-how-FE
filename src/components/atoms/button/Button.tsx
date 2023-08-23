@@ -11,9 +11,10 @@ const Button_ = styled.button<ButtonProps>`
     align-items: center;
     padding: 1.25rem 2rem;
     margin: 1rem auto;
-    width: ${(p) => (p.size === "infinite" ? "100%" : null)}; // 조정 필요
+    width: ${(p) => (p.size === "infinite" ? "100%" : "initial")}; // 조정 필요
     max-width: ${(p) =>
         p.size === "infinite" ? "40rem" : "20rem"}; // 조정 필요
+
     ${media.mobile} {
         max-height: 15rem; // 조정 필요
         max-width: 40rem; // 조정 필요
@@ -77,9 +78,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ) => {
         return (
             <Button_
-                type={type}
+                type={isLoading ? "button" : type}
                 ref={buttonRef} // for when put the children as not a string
-                onClick={onClick}
+                onClick={isLoading ? null : onClick}
                 disabled={disabled}
                 className={className}
                 aria-label={ariaLabel}

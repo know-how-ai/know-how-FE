@@ -3,7 +3,8 @@ import styled from "styled-components";
 import type { CommonInputProps } from "../atomTypes";
 
 const TextArea_ = styled.textarea`
-    color: ${(p) => p.theme.color.textColor};
+    line-height: 1.75rem;
+    color: ${(p) => p.theme.color.gray};
     border: none;
     border-bottom: ${(p) => p.theme.border.gray};
     transition: ${(p) => p.theme.transition.fast};

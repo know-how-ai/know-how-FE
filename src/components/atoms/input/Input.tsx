@@ -3,7 +3,7 @@ import styled from "styled-components";
 import type { CommonInputProps } from "../atomTypes";
 
 const Input_ = styled.input`
-    color: ${(p) => p.theme.color.textColor};
+    color: ${(p) => p.theme.color.gray};
     border: none;
     border-bottom: ${(p) => p.theme.border.gray};
     transition: ${(p) => p.theme.transition.fast};

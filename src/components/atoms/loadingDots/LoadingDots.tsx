@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
-const Wrapper = styled.span`
-    display: inline-flex;
+const Wrapper = styled.div`
+    display: flex;
     text-align: center;
     align-items: center;
+    margin: 0.4rem 0.6rem;
 
     span {
         width: 0.5rem;
         height: 0.5rem;
         aspect-ratio: 1;
         border-radius: 100%;
-        background-color: ${(p) => p.theme.color.textColor};
-        margin: 0 0.25rem;
+        background-color: ${(p) => p.theme.color.light};
+        margin: auto 0.25rem;
         animation: blink 1.5s infinite ease-in-out;
     }
 

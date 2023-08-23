@@ -17,7 +17,7 @@ const ToastContainer = styled.div<StyleProps>`
         ${fadeOut} 0.5s ${(p) => p.duration - 0.4}s ease-in-out forwards;
     box-shadow: ${(p) => p.theme.boxShadow.strong};
     position: absolute;
-    bottom: 4rem;
+    bottom: 2.5rem;
     right: 2rem;
     display: flex;
     justify-content: center;
@@ -27,15 +27,12 @@ const ToastContainer = styled.div<StyleProps>`
     background-color: ${(p) => p.theme.color.backgroundColor};
     border-radius: ${(p) => p.theme.border.radius};
     padding: 1.5rem 2rem;
-    margin: 1.5rem 1rem;
     width: 100%;
     max-width: 20rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    word-break: keep-all;
 `;
-
-// const ToastContent = styled.div`
-//     /*  */
-// `
 
 interface ToastProps {
     children?: ReactNode | string | any;
