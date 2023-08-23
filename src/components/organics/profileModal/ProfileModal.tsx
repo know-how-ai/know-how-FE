@@ -1,7 +1,7 @@
-import { Button, Modal } from "@components/atoms";
+import { Anchor, Button, Modal } from "@components/atoms";
 import { LogTable } from "@components/molecules";
 import { useAppDispatch } from "@contexts/contextHooks";
-import { offModal, setToast } from "@contexts/uiSlice";
+import { setToast } from "@contexts/uiSlice";
 import { useUserSelector } from "@contexts/userSlice";
 import useFetch from "@libs/useFetch";
 import { useCallback, useEffect, useState } from "react";
@@ -57,6 +57,8 @@ interface IProfileModal {
 const greeting = <span>님 반가워요!</span>;
 const restPoint = <span>잔여 포인트 : </span>;
 
+const LOGS_URL = `/user/log`;
+
 const ProfileModal = ({
     handleClose,
     point,
@@ -69,28 +71,27 @@ const ProfileModal = ({
     const [logs, setLogs] = useState<ILog[]>([]);
     const [index, setIndex] = useState<number>(0);
 
-    const useGetLogs = useCallback(() => {
-        useFetch<any, ILogResponse>(
-            `/user/log?skip=${logs.length}`,
+    const useGetLogs = useCallback(async () => {
+        const { data, error } = await useFetch<any, ILogResponse>(
+            `${LOGS_URL}?skip=${logs.length}`,
             "GET"
-        ).then((response) => {
-            if (response.data) {
-                setLogs([...logs, ...(response?.data?.logs || [])]);
-                setIndex(index + 1);
-            } else if (response.error) {
-                dispatch(setToast({ toast: response.error }));
-            }
-        });
+        );
+
+        if (data) {
+            setLogs([...logs, ...(data?.logs || [])]);
+            setIndex(index + 1);
+        } else if (error) {
+            dispatch(setToast({ toast: error }));
+        }
     }, [index, logs.length]);
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            dispatch(setToast({ toast: "로그인이 필요합니다." }));
-            dispatch(offModal());
-        } else {
+        if (isLoggedIn) {
             useGetLogs();
+        } else {
+            dispatch(setToast({ toast: "로그인이 필요합니다." }));
         }
-    }, []);
+    }, [isLoggedIn]);
 
     return (
         <Modal handleClose={handleClose}>
@@ -159,9 +160,12 @@ const ProfileModal = ({
                 </nav>
 
                 <Button onClick={handleLogout}>로그아웃</Button>
-                <button onClick={() => {}}>
-                    <Span>서비스를 그만 이용하고 싶어요.</Span>
-                </button>
+
+                <Anchor href={"/delete"}>
+                    <button>
+                        <Span>서비스를 그만 이용하고 싶어요.</Span>
+                    </button>
+                </Anchor>
             </Container>
         </Modal>
     );
