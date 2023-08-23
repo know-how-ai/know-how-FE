@@ -7,6 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import uiReducer from "./uiSlice";
 import userReducer from "./userSlice";
+import resultReducer from "./resultSlice";
 import { type PersistConfig, persistReducer } from "redux-persist";
 // using the local storage
 import storage from "redux-persist/lib/storage";
@@ -23,6 +24,7 @@ interface AnyObject {
 
 const UI = "ui";
 const USER = "user";
+const RESULT = "result";
 
 const rootReducer = (
     state: any,
@@ -34,6 +36,7 @@ const rootReducer = (
         const combinedReducer = combineReducers({
             [UI]: uiReducer,
             [USER]: userReducer,
+            [RESULT]: resultReducer,
         }); // input reducers in object
         return combinedReducer(state, action);
     }
@@ -43,7 +46,7 @@ const persistConfig: PersistConfig<any> = {
     key: "root",
     storage,
     // 로컬/세션스토리지에 저정할 리듀서
-    whitelist: [UI, USER],
+    whitelist: [UI, USER, RESULT],
     // blacklist: 제외할 리듀서
 };
 
