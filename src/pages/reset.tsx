@@ -5,8 +5,11 @@ import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import useFetch from "@libs/useFetch";
+import { useAppDispatch } from "@contexts/contextHooks";
+import { setToast } from "@contexts/uiSlice";
 
-interface ResetFormInterface {
+interface IResetForm {
     email: string;
     resetQuestion: string;
     resetAnswer: string;
@@ -14,18 +17,39 @@ interface ResetFormInterface {
     newPasswordConfirmation: string;
 }
 
+interface ResponseReturn {
+    status: boolean;
+    error?: string;
+}
+
+const RESET_URL = `/user/reset`;
+
 const Reset: NextPage = () => {
-    const { replace } = useRouter();
     const {
         query: { email, resetQuestion },
+        replace,
     } = useRouter();
-    const { register, handleSubmit, setError, setValue } =
-        useForm<ResetFormInterface>({
-            mode: "onBlur",
-        });
+    const { register, handleSubmit, setError, setValue } = useForm<IResetForm>({
+        mode: "onBlur",
+    });
+    const dispatch = useAppDispatch();
 
-    const onSubmit = (formData: ResetFormInterface) => {
-        console.log(formData);
+    const onSubmit = async (formData: IResetForm) => {
+        try {
+            const { status, error } = await useFetch<
+                IResetForm,
+                ResponseReturn
+            >(RESET_URL, "PUT", formData);
+
+            if (status) {
+                replace("/");
+                dispatch(setToast({ toast: "성공적으로 변경되었습니다." }));
+            } else if (error) {
+                dispatch(setToast({ toast: error }));
+            }
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     useEffect(() => {
