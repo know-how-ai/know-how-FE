@@ -4,7 +4,12 @@ import { useAppSelector } from "./contextHooks";
 interface UIState {
     isDarkmode: boolean;
     showModal: boolean;
-    toast?: string | false | "로그인이 필요합니다.";
+    toast?:
+        | string
+        | false
+        | "로그인이 필요합니다."
+        | "인공지능이 결과를 분석하고 있어요.\n잠시만 기다려주세요."
+        | "포인트가 부족합니다.";
 }
 
 const initialState: UIState = {
@@ -16,7 +21,11 @@ const initialState: UIState = {
 interface UIAction {
     type: string;
     payload: {
-        toast: string | "로그인이 필요합니다.";
+        toast:
+            | "로그인이 필요합니다."
+            | "인공지능이 결과를 분석하고 있어요.\n잠시만 기다려주세요."
+            | "포인트가 부족합니다."
+            | string;
     };
 }
 
