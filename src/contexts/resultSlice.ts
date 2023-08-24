@@ -1,29 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useAppSelector } from "./contextHooks";
 
+const COVERLETTER = "coverletter";
+const JOB = "job";
+const INTERVIEW = "interview";
+
+interface IResult {
+    [COVERLETTER]?: any;
+    [JOB]?: any;
+    [INTERVIEW]?: any;
+    [key: string]: any;
+}
+
 interface ResultState {
     isLoading: boolean;
-    request: { [key: string]: any } | null;
-    response: { [key: string]: any } | null;
+    request: IResult;
+    response: IResult;
 }
 
 const initialState: ResultState = {
     isLoading: false,
-    request: null,
-    response: null,
+    request: {},
+    response: {},
 };
 
-interface IResponse {
-    response: { [key: string]: any };
-}
-
-interface IRequest {
-    request: { [key: string]: any };
-}
-
-interface ResultAction<T> {
+interface ResultAction {
     type: string;
-    payload: T;
+    payload: {
+        data?: any;
+        target: "coverletter" | "interview" | "job";
+    };
 }
 
 const resultSlice = createSlice({
@@ -36,16 +42,16 @@ const resultSlice = createSlice({
         unsetLoading: (state) => {
             state.isLoading = false;
         },
-        setResponse: (state, action: ResultAction<IResponse>) => {
-            state.response = action.payload.response;
+        setResponse: (state, action: ResultAction) => {
+            state.response[action.payload.target] = action.payload.data;
         },
-        setRequest: (state, action: ResultAction<IRequest>) => {
-            state.request = action.payload.request;
+        setRequest: (state, action: ResultAction) => {
+            state.request[action.payload.target] = action.payload.data;
         },
-        setInit: (state) => {
+        setInit: (state, action: ResultAction) => {
             state.isLoading = false;
-            state.response = null;
-            state.request = null;
+            state.response[action.payload.target] = null;
+            state.request[action.payload.target] = null;
         },
     },
 });
