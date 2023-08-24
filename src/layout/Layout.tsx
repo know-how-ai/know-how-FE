@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Toast } from "@components/atoms";
+import { Anchor, Toast } from "@components/atoms";
 import { AuthModal, ProfileModal, HeaderWidgets } from "@components/organics";
 import { darkTheme, lightTheme } from "@components/styles/theme";
 import { useAppDispatch } from "@contexts/contextHooks";
@@ -90,6 +90,7 @@ const Footer = styled.footer`
 const Copyright = styled.span`
     font-style: italic;
     padding: 0.5rem;
+    margin: 0.5rem;
     font-size: 1rem;
     color: ${(p) => p.theme.color.gray};
 `;
@@ -210,13 +211,13 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
 
                     <Footer>
                         <Copyright>{`Copyright 2023. Know How. All rights reserved.`}</Copyright>
-                        <Copyright>
-                            <a
-                                href={`mailto:${process.env.NEXT_PUBLIC_CONTACT}`}
-                            >
-                                Message to Developer &rarr;
-                            </a>
-                        </Copyright>
+                        <Anchor
+                            href={`mailto:${process.env.NEXT_PUBLIC_CONTACT}`}
+                        >
+                            <Copyright>
+                                Do you wanna mail to developer? :D
+                            </Copyright>
+                        </Anchor>
                     </Footer>
                 </Main>
             </ThemeProvider>

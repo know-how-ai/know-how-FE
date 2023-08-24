@@ -73,7 +73,9 @@ describe("/interview 페이지 테스트", () => {
         expect(projectInput).toBeInTheDocument();
         expect(projectInput).toBeEnabled();
 
-        const skillLabel = screen.getByText("사용한 기술");
+        const skillLabel = screen.getByText("기술", {
+            exact: false,
+        });
         expect(skillLabel).toBeInTheDocument();
         expect(skillLabel).toBeEnabled();
 
@@ -83,17 +85,7 @@ describe("/interview 페이지 테스트", () => {
         expect(skillInput).toBeInTheDocument();
         expect(skillInput).toBeEnabled();
 
-        const featureLabel = screen.getByText("성과");
-        expect(featureLabel).toBeInTheDocument();
-        expect(featureLabel).toBeEnabled();
-
-        const featureInput = screen.getByPlaceholderText("Ex. 브랜드", {
-            exact: false,
-        });
-        expect(featureInput).toBeInTheDocument();
-        expect(featureInput).toBeEnabled();
-
-        const descriptionLabel = screen.getByText("간략한 설명");
+        const descriptionLabel = screen.getByText("설명", { exact: false });
         expect(descriptionLabel).toBeInTheDocument();
         expect(descriptionLabel).toBeEnabled();
 

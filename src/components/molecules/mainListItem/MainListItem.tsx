@@ -25,16 +25,19 @@ const variants: Variants = {
     },
 };
 
+interface MainListItemProps {
+    heading: string;
+    href: string;
+    Child: ({ ...rest }) => JSX.Element;
+    isDarkmode: boolean;
+}
+
 const MainListItem = ({
     heading,
     href,
     Child,
-}: {
-    heading: string;
-    href: string;
-    Child: ({ ...rest }) => JSX.Element;
-}) => {
-    const { isDarkmode } = useUISelector((state) => state.ui);
+    isDarkmode,
+}: MainListItemProps) => {
     const [hovering, setHovering] = useState(false);
 
     return (

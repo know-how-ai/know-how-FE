@@ -25,19 +25,18 @@ const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
         mode: "onBlur",
     });
 
-    const onSubmit = (formData: ICheckEmailForm) => {
+    const onSubmit = async (formData: ICheckEmailForm) => {
         try {
-            useFetch<ICheckEmailForm, ResponseReturn>(
-                CHECK_EMAIL_URL,
-                "POST",
-                formData
-            ).then(({ data, error }) => {
-                if (data) {
-                    onSuccess(formData.email, data.resetQuestion);
-                } else {
-                    onError(error);
-                }
-            });
+            const { data, error } = await useFetch<
+                ICheckEmailForm,
+                ResponseReturn
+            >(CHECK_EMAIL_URL, "POST", formData);
+
+            if (data) {
+                onSuccess(formData.email, data.resetQuestion);
+            } else if (error) {
+                onError(error);
+            }
         } catch (err) {
             onError(err);
         }
@@ -47,6 +46,8 @@ const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
         <>
             <Heading>이메일 확인</Heading>
             <Form
+                ariaLabel="checking email form"
+                ariaDescription="checking email form for reset password"
                 onSubmit={handleSubmit(onSubmit)}
                 display="flex"
                 flexDirection="column"

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import MainListItem from "./MainListItem";
-import { SunIcon } from "@components/atoms";
+import { MoonIcon, SunIcon } from "@components/atoms";
 
 const meta = {
     component: MainListItem,
@@ -14,7 +14,17 @@ type MainListItemStory = StoryObj<typeof MainListItem>;
 export const Base: MainListItemStory = {
     args: {
         href: "#",
-        heading: "스토리북 테스트",
+        heading: "스토리북",
         Child: SunIcon,
+        isDarkmode: false,
+    },
+};
+
+export const Darkmode: MainListItemStory = {
+    args: {
+        href: "#",
+        heading: "스토리북",
+        Child: MoonIcon,
+        isDarkmode: true,
     },
 };

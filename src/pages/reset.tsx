@@ -29,7 +29,7 @@ const Reset: NextPage = () => {
         query: { email, resetQuestion },
         replace,
     } = useRouter();
-    const { register, handleSubmit, setError, setValue } = useForm<IResetForm>({
+    const { register, handleSubmit, setValue } = useForm<IResetForm>({
         mode: "onBlur",
     });
     const dispatch = useAppDispatch();
