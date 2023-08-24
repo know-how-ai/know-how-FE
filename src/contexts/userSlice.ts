@@ -1,16 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useAppSelector } from "./contextHooks";
 
-interface User {
+interface IPoint {
+    point: number;
+}
+
+interface IUser extends IPoint {
     id: number;
     username: string;
-    point: number;
     [key: string]: any;
 }
 
 interface UserState {
     isLoggedIn: boolean;
-    data: User | null;
+    data: IUser | null;
 }
 
 const initialState: UserState = {
@@ -18,16 +21,16 @@ const initialState: UserState = {
     data: null,
 };
 
-interface UserAction {
+interface UserAction<T> {
     type: string;
-    payload: User;
+    payload: T;
 }
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        loggedIn: (state, action: UserAction) => {
+        loggedIn: (state, action: UserAction<IUser>) => {
             state.isLoggedIn = true;
             state.data = { ...action.payload };
         },
@@ -35,12 +38,17 @@ const userSlice = createSlice({
             state.isLoggedIn = false;
             state.data = null;
         },
+        spendPoint: (state) => {
+            if (state.data) {
+                state.data.point -= 1;
+            }
+        },
     },
 });
 
 const { actions, reducer: userReducer } = userSlice;
 
-export const { loggedOut, loggedIn } = actions;
+export const { loggedOut, loggedIn, spendPoint } = actions;
 export const useUserSelector = useAppSelector<UserState>;
 
 export default userReducer;
