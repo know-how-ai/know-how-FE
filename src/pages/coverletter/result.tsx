@@ -1,29 +1,10 @@
 import { LabelWrapper } from "@components/molecules";
 import Layout from "../../layout/Layout";
-import { Button, Form, Heading, Input, Textarea } from "@components/atoms";
+import { Form, Heading, Input, Textarea } from "@components/atoms";
 import type { NextPage } from "next";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { useResultSelector } from "@contexts/resultSlice";
-import { media } from "@components/styles/theme";
-
-const Section = styled.section`
-    display: grid;
-    width: 100%;
-    max-width: 60vw;
-
-    ${media.tablet} {
-        max-width: 75vw;
-    }
-
-    ${media.mobile} {
-        max-width: 90vw;
-    }
-
-    margin: 4rem auto;
-    padding: 1rem;
-    gap: 2rem;
-`;
+import { ResultContainer } from "@components/organics";
 
 const SubHeading = styled.h5`
     font-weight: 600;
@@ -42,13 +23,16 @@ const Hr = styled.hr`
     box-sizing: border-box;
     width: 100%;
     margin: 1rem auto;
+    margin-top: 2rem;
 `;
 
 const CoverletterResultTitle: string = "자소서 코칭 결과";
 
 const CoverletterResult: NextPage = () => {
-    const { back } = useRouter();
-    const { request, response } = useResultSelector(({ result }) => result);
+    const {
+        request: { coverletter: cvRequest },
+        response: { coverletter: cvResponse },
+    } = useResultSelector(({ result }) => result);
 
     return (
         <Layout
@@ -65,53 +49,38 @@ const CoverletterResult: NextPage = () => {
                 gap={2}
             >
                 <LabelWrapper label="직업">
-                    <Input readOnly value={request?.job} />
+                    <Input readOnly value={cvRequest?.job} />
                 </LabelWrapper>
 
                 <LabelWrapper label="자기소개서">
-                    <Textarea readOnly value={request?.coverletter} />
+                    <Textarea readOnly value={cvRequest?.coverletter} />
                 </LabelWrapper>
 
                 <Heading>{CoverletterResultTitle}</Heading>
 
-                <Section>
-                    <SubHeading>긍정적인 부분</SubHeading>
+                <ResultContainer>
+                    <SubHeading>긍정적인 점</SubHeading>
                     <article>
-                        {response?.good?.map((v: string, k: number) => (
+                        {cvResponse?.good?.map((v: string, k: number) => (
                             <Parag key={k}>{v}</Parag>
                         ))}
                     </article>
                     <Hr />
-                    <SubHeading>아쉬운 부분</SubHeading>
+                    <SubHeading>아쉬운 점</SubHeading>
                     <article>
-                        {response?.bad?.map((v: string, k: number) => (
+                        {cvResponse?.bad?.map((v: string, k: number) => (
                             <Parag key={k}>{v}</Parag>
                         ))}
                     </article>
                     <Hr />
                     <SubHeading>정리</SubHeading>
                     <article>
-                        {response?.overall?.map((v: string, k: number) => (
+                        {cvResponse?.overall?.map((v: string, k: number) => (
                             <Parag key={k}>{v}</Parag>
                         ))}
                     </article>
-                </Section>
-
-                <Button type="button" onClick={() => back()}>
-                    다시하기
-                </Button>
-
-                <Button
-                    type="button"
-                    color="transparent"
-                    onClick={() => {
-                        back();
-                        back();
-                        // replace("/");
-                    }}
-                >
-                    메인으로
-                </Button>
+                    <Hr />
+                </ResultContainer>
             </Form>
         </Layout>
     );

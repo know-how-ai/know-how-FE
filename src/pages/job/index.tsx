@@ -1,6 +1,6 @@
 import { LabelWrapper } from "@components/molecules";
-import Layout from "../../layout/Layout";
-import { useCallback, useRef, useState } from "react";
+import Layout from "../../layout";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
     Badge,
@@ -11,6 +11,9 @@ import {
     ToolTip,
 } from "@components/atoms";
 import type { NextPage } from "next";
+import useFetchService from "@libs/useFetchService";
+import { setInit, useResultSelector } from "@contexts/resultSlice";
+import { useAppDispatch } from "@contexts/contextHooks";
 
 const BadgeContainer = styled.section`
     margin: auto;
@@ -24,6 +27,16 @@ const BadgeContainer = styled.section`
     max-width: 50vw;
 `;
 
+interface IResult {
+    status: boolean;
+    error?: string;
+    result?: string[];
+}
+
+interface IRequest {
+    personalities: string[];
+}
+
 const ToolTipContents: string[] = [
     "How to use?",
     "본인이 갖고 있는 다양한 성향을 입력해서 추가해보세요.",
@@ -32,12 +45,22 @@ const ToolTipContents: string[] = [
 ];
 
 const JobTitle: string = "직업 추천 봇";
+const JOB_URL = "/gpt/job";
 
 const Job: NextPage = () => {
+    const dispatch = useAppDispatch();
+    const { isLoading } = useResultSelector(({ result }) => result);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const [personalities, setPersonalities] = useState<string[]>([]);
 
-    const onSubmit = (e: SubmitEvent) => {
+    const onSubmit = useFetchService<IRequest, IResult>({
+        fetchUrl: JOB_URL,
+        afterFetchUrl: "/job/result",
+        target: "job",
+    });
+
+    const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
 
         // 아무 것도 추가하지 않았을 경우
@@ -45,8 +68,13 @@ const Job: NextPage = () => {
             return;
         }
 
-        console.log(personalities);
+        // await 없으면 dispatch 이전에 response가 먼저 도착해버려서 오류 발생.
+        await onSubmit({ personalities });
     };
+
+    useEffect(() => {
+        dispatch(setInit({ target: "job" }));
+    }, []);
 
     const onClickAdd = useCallback(() => {
         // save value if not empty
@@ -110,13 +138,13 @@ const Job: NextPage = () => {
             ) : null}
 
             <Form
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit}
                 display="flex"
                 gap={2}
                 alignItems="center"
                 justifyContent="center"
             >
-                <Button>추천받기</Button>
+                <Button isLoading={isLoading}>추천받기</Button>
             </Form>
         </Layout>
     );

@@ -10,15 +10,25 @@ import {
 } from "@components/atoms";
 import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
+import useFetchService from "@libs/useFetchService";
+import { useEffect } from "react";
+import { useAppDispatch } from "@contexts/contextHooks";
+import { setInit, useResultSelector } from "@contexts/resultSlice";
 
 interface IInterviewForm {
     job: string;
     domain: string;
     project: string;
     skill: string;
-    feature: string;
     description: string;
 }
+
+interface IResult {
+    job: string;
+    description: string;
+}
+
+type ResultType = IResult[];
 
 const ToolTipContents: string[] = [
     "How to use?",
@@ -28,15 +38,23 @@ const ToolTipContents: string[] = [
 ];
 
 const InterviewTitle: string = "면접 코칭 봇";
+const INTERVIEW_URL = "/gpt/interview";
 
 const interview: NextPage = () => {
+    const dispatch = useAppDispatch();
+    const { isLoading } = useResultSelector(({ result }) => result);
     const { register, handleSubmit } = useForm<IInterviewForm>({
         mode: "onBlur",
     });
 
-    const onSubmit = (data: IInterviewForm) => {
-        console.log(data);
-    };
+    const onSubmit = useFetchService<IInterviewForm, ResultType>({
+        fetchUrl: INTERVIEW_URL,
+        afterFetchUrl: "/interview/result",
+        target: "interview",
+    });
+    useEffect(() => {
+        dispatch(setInit({ target: "interview" }));
+    }, []);
 
     return (
         <Layout title={InterviewTitle} widgets={{ profile: true, theme: true }}>
@@ -81,7 +99,7 @@ const interview: NextPage = () => {
                     />
                 </LabelWrapper>
 
-                <LabelWrapper label="사용한 기술">
+                <LabelWrapper label="기술 및 노하우">
                     <Input
                         placeholder="Ex. 드레이핑, 패턴 제도 ..."
                         type="text"
@@ -91,26 +109,22 @@ const interview: NextPage = () => {
                     />
                 </LabelWrapper>
 
-                <LabelWrapper label="성과">
-                    <Input
-                        placeholder="Ex. 브랜드 고객 확보 ..."
-                        type="text"
-                        register={register("feature", {
-                            required: true,
-                        })}
-                    />
-                </LabelWrapper>
-
-                <LabelWrapper label="간략한 설명">
+                <LabelWrapper label="간단한 설명 및 성과">
                     <Textarea
-                        placeholder="Ex. 이 프로젝트에서 저는 ..."
+                        placeholder="프로젝트의 간단한 설명이나 진행하여 얻게 된 성과를 적어주세요. Ex. 이 프로젝트에서 저는 ..."
                         register={register("description", {
                             required: true,
+                            maxLength: {
+                                value: 300,
+                                message: "300자 이내로 적어주세요.",
+                            },
                         })}
                     />
                 </LabelWrapper>
 
-                <Button type="submit">제출하기</Button>
+                <Button isLoading={isLoading} type="submit">
+                    제출하기
+                </Button>
             </Form>
         </Layout>
     );

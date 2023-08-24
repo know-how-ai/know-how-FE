@@ -10,35 +10,20 @@ import {
 } from "@components/atoms";
 import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
-import useFetch from "@libs/useFetch";
 import { useAppDispatch } from "@contexts/contextHooks";
-import { setToast } from "@contexts/uiSlice";
-import {
-    setInit,
-    setLoading,
-    setRequest,
-    setResponse,
-    unsetLoading,
-    useResultSelector,
-} from "@contexts/resultSlice";
-import { useRouter } from "next/router";
+import { setInit, useResultSelector } from "@contexts/resultSlice";
 import { useEffect } from "react";
+import useFetchService from "@libs/useFetchService";
 
 interface ICoverletterForm {
     job: string;
     coverletter: string;
 }
 
-interface ResponseReturn {
-    status: boolean;
-    error?: string;
-    data?: {
-        result: {
-            good: string[];
-            bad: string[];
-            overall: string[];
-        };
-    };
+interface IResult {
+    good: string[];
+    bad: string[];
+    overall: string[];
 }
 
 const ToolTipContents: string[] = [
@@ -52,7 +37,6 @@ const CoverletterTitle: string = "자소서 코칭 봇";
 const COVERLETTER_URL = `/gpt/coverletter`;
 
 const Coverletter: NextPage = () => {
-    const { push } = useRouter();
     const dispatch = useAppDispatch();
     const { register, handleSubmit } = useForm<ICoverletterForm>({
         mode: "onBlur",
@@ -60,37 +44,14 @@ const Coverletter: NextPage = () => {
 
     const { isLoading } = useResultSelector(({ result }) => result);
 
-    const onSubmit = async (formData: ICoverletterForm) => {
-        try {
-            dispatch(setLoading());
-            dispatch(
-                setToast({
-                    toast: "인공지능이 결과를 분석하고 있어요.\n잠시만 기다려주세요.",
-                })
-            );
-
-            const { error, data } = await useFetch<
-                ICoverletterForm,
-                ResponseReturn
-            >(COVERLETTER_URL, "POST", formData);
-
-            if (data && !error) {
-                dispatch(setResponse({ response: data?.result }));
-                dispatch(setRequest({ request: formData }));
-                dispatch(unsetLoading());
-                push("/coverletter/result");
-            } else if (error) {
-                dispatch(setToast({ toast: error }));
-                dispatch(unsetLoading());
-            }
-        } catch (err) {
-            console.error(err);
-            dispatch(unsetLoading());
-        }
-    };
+    const onSubmit = useFetchService<ICoverletterForm, IResult>({
+        fetchUrl: COVERLETTER_URL,
+        afterFetchUrl: "/coverletter/result",
+        target: "coverletter",
+    });
 
     useEffect(() => {
-        dispatch(setInit());
+        dispatch(setInit({ target: "coverletter" }));
     }, []);
 
     return (
@@ -122,9 +83,13 @@ const Coverletter: NextPage = () => {
                 <LabelWrapper label="자기소개서">
                     <Textarea
                         required
-                        placeholder="Ex. 저는 ..."
+                        placeholder="최대 500자 이내의 자기소개서를 적어주세요. Ex. 저는 ..."
                         register={register("coverletter", {
                             required: true,
+                            maxLength: {
+                                value: 500,
+                                message: "500자 이내로 적어주세요.",
+                            },
                         })}
                     />
                 </LabelWrapper>
