@@ -129,14 +129,16 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
             }
             // 통신은 성공 && 요청에 오류 존재
             else if (error) {
+                // console.log(error);
                 dispatch(setToast({ toast: error }));
-
-                if (onError) {
-                    onError();
-                }
             }
         } catch (err) {
             console.error(err);
+            dispatch(
+                setToast({
+                    toast: "서버가 불안정합니다. \n잠시 후에 다시 시도해주세요.",
+                })
+            );
         }
     };
 

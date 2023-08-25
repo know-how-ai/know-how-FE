@@ -8,7 +8,7 @@ import {
 import { setToast } from "@contexts/uiSlice";
 import { useRouter } from "next/router";
 import useFetch from "./useFetch";
-import { useUserSelector, spendPoint } from "@contexts/userSlice";
+import { spendPoint } from "@contexts/userSlice";
 
 interface IUseFetchService {
     fetchUrl: string;
@@ -31,7 +31,6 @@ const useFetchService = <FormDataType, ResultType>({
 }: IUseFetchService) => {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
-    const { data } = useUserSelector(({ user }) => user);
 
     return async (formData: FormDataType) => {
         try {
@@ -48,8 +47,6 @@ const useFetchService = <FormDataType, ResultType>({
             >(fetchUrl, "POST", formData);
 
             if (data && !error) {
-                console.log(data);
-
                 dispatch(setResponse({ target, data: data?.result }));
                 dispatch(setRequest({ target, data: formData }));
 
