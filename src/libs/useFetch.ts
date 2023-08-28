@@ -13,9 +13,8 @@ const useFetch: useFetchType = async (url, method, data) => {
             "Content-Type": "application/json",
         },
         body,
+        credentials: "include",
     });
-
-    console.log(response);
 
     const json = await response.json();
 
