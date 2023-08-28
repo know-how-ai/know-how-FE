@@ -15,6 +15,8 @@ const useFetch: useFetchType = async (url, method, data) => {
         body,
     });
 
+    console.log(response);
+
     const json = await response.json();
 
     return json;

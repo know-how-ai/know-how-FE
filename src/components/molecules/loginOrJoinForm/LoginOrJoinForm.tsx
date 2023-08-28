@@ -3,6 +3,7 @@ import { LabelWrapper } from "@components/molecules";
 import { useAppDispatch } from "@contexts/contextHooks";
 import { setToast } from "@contexts/uiSlice";
 import { loggedIn } from "@contexts/userSlice";
+import { URLs } from "@libs/urls";
 import useFetch from "@libs/useFetch";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -83,15 +84,13 @@ interface ResponseReturn {
 
 interface LoginOrJoinFormProps {
     onSuccess: Function;
-    onError: Function;
+    // onError: Function;
 }
 
-const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
+const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
     const dispatch = useAppDispatch();
     const [method, setMethod] = useState<Method>("LOGIN");
-    const { register, handleSubmit, setError } = useForm<
-        ILoginForm | IJoinForm
-    >({
+    const { register, handleSubmit } = useForm<ILoginForm | IJoinForm>({
         reValidateMode: "onBlur",
     });
 
@@ -101,7 +100,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
          * 메서드에 따른 인터페이스 일치 여부 => useForm의 register에서 해결
          */
 
-        const url = method === "LOGIN" ? "/user/in" : "/user/new";
+        const url = method === "LOGIN" ? URLs.USER.LOGIN : URLs.USER.NEW;
 
         try {
             const { data, error } = await useFetch<
@@ -170,7 +169,7 @@ const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
                     <Input
                         required
                         type="email"
-                        placeholder="abcd@blogify.com"
+                        placeholder="abcd@urworkhelper.com"
                         ariaLabel={`Email Input element for ${method.toLowerCase()}`}
                         autoComplete="on"
                         autoCorrect="off"

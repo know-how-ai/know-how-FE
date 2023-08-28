@@ -3,6 +3,7 @@ import { LogTable } from "@components/molecules";
 import { useAppDispatch } from "@contexts/contextHooks";
 import { setToast } from "@contexts/uiSlice";
 import { useUserSelector } from "@contexts/userSlice";
+import { URLs } from "@libs/urls";
 import useFetch from "@libs/useFetch";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -57,8 +58,6 @@ interface IProfileModal {
 const greeting = <span>님 반가워요!</span>;
 const restPoint = <span>잔여 포인트 : </span>;
 
-const LOGS_URL = `/user/log`;
-
 const ProfileModal = ({
     handleClose,
     point,
@@ -73,7 +72,7 @@ const ProfileModal = ({
 
     const useGetLogs = useCallback(async () => {
         const { data, error } = await useFetch<any, ILogResponse>(
-            `${LOGS_URL}?skip=${logs.length}`,
+            `${URLs.USER.LOG}?skip=${logs.length}`,
             "GET"
         );
 

@@ -14,6 +14,7 @@ import { useAppDispatch } from "@contexts/contextHooks";
 import { setInit, useResultSelector } from "@contexts/resultSlice";
 import { useEffect } from "react";
 import useFetchService from "@libs/useFetchService";
+import { URLs } from "@libs/urls";
 
 interface ICoverletterForm {
     job: string;
@@ -34,7 +35,6 @@ const ToolTipContents: string[] = [
 ];
 
 const CoverletterTitle: string = "자소서 코칭 봇";
-const COVERLETTER_URL = `/gpt/coverletter`;
 
 const Coverletter: NextPage = () => {
     const dispatch = useAppDispatch();
@@ -45,7 +45,7 @@ const Coverletter: NextPage = () => {
     const { isLoading } = useResultSelector(({ result }) => result);
 
     const onSubmit = useFetchService<ICoverletterForm, IResult>({
-        fetchUrl: COVERLETTER_URL,
+        fetchUrl: URLs.GPT.COVERLETTER,
         afterFetchUrl: "/coverletter/result",
         target: "coverletter",
     });

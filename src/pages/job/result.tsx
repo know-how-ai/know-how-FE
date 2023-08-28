@@ -1,46 +1,16 @@
 import Layout from "../../layout/Layout";
-import { Badge, Form, Heading } from "@components/atoms";
+import {
+    Badge,
+    BadgeContainer,
+    Form,
+    Heading,
+    Hr,
+    Paragraph,
+    SubHeading,
+} from "@components/atoms";
 import type { NextPage } from "next";
-import styled from "styled-components";
 import { useResultSelector } from "@contexts/resultSlice";
 import { ResultContainer } from "@components/organics";
-
-const BadgeContainer = styled.section`
-    margin: auto;
-    padding: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
-    max-width: 50vw;
-`;
-
-const Article = styled.article`
-    line-height: 4rem;
-    margin-bottom: -1rem;
-`;
-
-const SubHeading = styled.h5`
-    font-weight: 600;
-    font-size: 2rem;
-    margin: 1rem initial;
-`;
-
-const Parag = styled.p`
-    line-height: 2.5rem;
-    font-size: 1.5rem;
-    color: ${(p) => p.theme.color.gray};
-    margin: 0.5rem auto;
-`;
-
-const Hr = styled.hr`
-    box-sizing: border-box;
-    width: 100%;
-    margin: 1rem auto;
-    margin-top: 2rem;
-`;
 
 const JobResultTitle: string = "직업 추천 결과";
 
@@ -82,13 +52,19 @@ const JobResult: NextPage = () => {
                             }: { job: string; description: string },
                             i: number
                         ) => (
-                            <Article key={`${job}_${i}`}>
+                            <article
+                                style={{
+                                    lineHeight: "4rem",
+                                    marginBottom: "-1rem",
+                                }}
+                                key={`${job}_${i}`}
+                            >
                                 <SubHeading key={`${job}__${i}`}>
                                     {job}
                                 </SubHeading>
-                                <Parag>{description}</Parag>
+                                <Paragraph>{description}</Paragraph>
                                 <Hr />
-                            </Article>
+                            </article>
                         )
                     )}
                 </ResultContainer>

@@ -121,7 +121,7 @@ describe("molecules 컴포넌트 유닛 테스트", () => {
 
     test("MainListItem", async () => {
         useThemeRenderWithRedux(
-            <MainListItem Child={SunIcon} heading="Test" href="#" />
+            <MainListItem isDarkmode Child={SunIcon} heading="Test" href="#" />
         );
 
         const heading = screen.getByText(/test/i);
@@ -402,20 +402,4 @@ describe("molecules 컴포넌트 기능 테스트", () => {
         await user.click(button);
         expect(current).toBe(false);
     });
-
-    // test("MainListItem: 호버링 테스트", async () => {
-    //     useThemeRenderWithRedux(
-    //         <MainListItem Child={SunIcon} heading="Test" href="#" />
-    //     );
-
-    //     const button = screen.getByRole("button");
-
-    //     const headingScrollY1 = screen.getByText(/test/i).offsetTop;
-
-    //     await user.hover(button);
-
-    //     const headingScrollY2 = screen.getByText(/test/i).offsetTop;
-
-    //     expect(headingScrollY1).not.toBe(headingScrollY2);
-    // });
 });

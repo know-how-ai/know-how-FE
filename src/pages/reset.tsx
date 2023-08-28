@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import useFetch from "@libs/useFetch";
 import { useAppDispatch } from "@contexts/contextHooks";
 import { setToast } from "@contexts/uiSlice";
+import { URLs } from "@libs/urls";
 
 interface IResetForm {
     email: string;
@@ -21,8 +22,6 @@ interface ResponseReturn {
     status: boolean;
     error?: string;
 }
-
-const RESET_URL = `/user/reset`;
 
 const Reset: NextPage = () => {
     const {
@@ -39,7 +38,7 @@ const Reset: NextPage = () => {
             const { status, error } = await useFetch<
                 IResetForm,
                 ResponseReturn
-            >(RESET_URL, "PUT", formData);
+            >(URLs.USER.RESET, "PUT", formData);
 
             if (status) {
                 replace("/");

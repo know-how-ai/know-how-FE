@@ -14,6 +14,7 @@ import useFetchService from "@libs/useFetchService";
 import { useEffect } from "react";
 import { useAppDispatch } from "@contexts/contextHooks";
 import { setInit, useResultSelector } from "@contexts/resultSlice";
+import { URLs } from "@libs/urls";
 
 interface IInterviewForm {
     job: string;
@@ -38,7 +39,6 @@ const ToolTipContents: string[] = [
 ];
 
 const InterviewTitle: string = "면접 코칭 봇";
-const INTERVIEW_URL = "/gpt/interview";
 
 const interview: NextPage = () => {
     const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ const interview: NextPage = () => {
     });
 
     const onSubmit = useFetchService<IInterviewForm, ResultType>({
-        fetchUrl: INTERVIEW_URL,
+        fetchUrl: URLs.GPT.INTERVIEW,
         afterFetchUrl: "/interview/result",
         target: "interview",
     });

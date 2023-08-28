@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { Anchor, Toast } from "@components/atoms";
-import { AuthModal, ProfileModal, HeaderWidgets } from "@components/organics";
+import { Anchor, Logo } from "@components/atoms";
+import { HeaderWidgets } from "@components/organics";
 import { darkTheme, lightTheme } from "@components/styles/theme";
 import { useAppDispatch } from "@contexts/contextHooks";
 import {
@@ -13,10 +13,18 @@ import {
     useUISelector,
 } from "@contexts/uiSlice";
 import { loggedOut, useUserSelector } from "@contexts/userSlice";
-import { type FC, type ReactNode, useCallback, useEffect } from "react";
+import { type FC, useCallback, useEffect, type ReactNode } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import useFetch from "@libs/useFetch";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { URLs } from "@libs/urls";
+
+const AuthModal = dynamic(() => import("../components/organics/authModal"));
+const ProfileModal = dynamic(
+    () => import("../components/organics/profileModal")
+);
+const Toast = dynamic(() => import("../components/atoms/toast"));
 
 interface LayoutProps {
     children?: ReactNode | string | any;
@@ -26,16 +34,6 @@ interface LayoutProps {
         profile?: boolean;
     };
 }
-
-const Logo = styled.h3`
-    display: inline-block;
-    font-weight: 600;
-    /* font-style: italic; */
-    font-size: ${(p) => p.theme.size.lg};
-    margin: auto ${(p) => p.theme.size.xl};
-    color: ${(p) => p.theme.color.textColor};
-    user-select: none;
-`;
 
 const Header = styled.header`
     position: fixed;
@@ -83,7 +81,6 @@ const Footer = styled.footer`
     color: ${(props) => props.theme.color.textColor};
     transition: ${(props) => props.theme.transition.fast};
     filter: ${(props) => props.theme.filter.blur};
-    /* border-top: ${(p) => p.theme.border.active}; */
     overflow: hidden;
 `;
 
@@ -94,8 +91,6 @@ const Copyright = styled.span`
     font-size: 1rem;
     color: ${(p) => p.theme.color.gray};
 `;
-
-const LOGOUT_URL = `/user/out`;
 
 const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     const { push } = useRouter();
@@ -118,7 +113,7 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     }, []);
 
     const handleLoggedOut = useCallback(() => {
-        useFetch<any, { status: boolean }>(LOGOUT_URL, "POST").then(
+        useFetch<any, { status: boolean }>(URLs.USER.LOGOUT, "POST").then(
             (response) => {
                 if (response.status) {
                     memorizedLoggedOut();
@@ -150,7 +145,6 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
         }
     }, []);
 
-    // 렌더 시, 세션쿠키 체크 필요 - How to?
     useEffect(() => {
         if (toast === "로그인이 필요합니다.") {
             memorizedOffModal();
@@ -161,12 +155,12 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
     return (
         <>
             <Head>
-                <title>{`${title} - Know How`}</title>
+                <title>{`${title} - urworkhelper`}</title>
             </Head>
 
             <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
                 <Header>
-                    <Logo>Know How</Logo>
+                    <Logo href="/">urworkhelper</Logo>
                     <HeaderWidgets
                         isDarkmode={isDarkmode}
                         onModal={memorizedOnModal}

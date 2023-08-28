@@ -20,7 +20,7 @@ const AuthModal = ({
     return (
         <Modal handleClose={handleClose}>
             {!isResetMode ? (
-                <LoginOrJoinForm onSuccess={onSuccessJoin} onError={onError} />
+                <LoginOrJoinForm onSuccess={onSuccessJoin} />
             ) : (
                 <CheckEmailForm onSuccess={onSuccessFound} onError={onError} />
             )}

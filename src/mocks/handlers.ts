@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 export const handlers = [
     // log - 로그인 상태/로그아웃 상태
-    rest.get("http://localhost:8080/user/log", (req, res, ctx) => {
+    rest.get("/user/log", (req, res, ctx) => {
         return res(
             ctx.json({
                 status: true,
@@ -30,6 +30,20 @@ export const handlers = [
     }),
 
     // log in
+    rest.post("/user/in", (req, res, ctx) => {
+        console.log(req);
+
+        return res(
+            ctx.json({
+                status: true,
+                data: {
+                    id: 1,
+                    username: "msw",
+                    point: 10,
+                },
+            })
+        );
+    }),
 
     // log out
 

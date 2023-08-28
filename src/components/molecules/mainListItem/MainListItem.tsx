@@ -1,6 +1,5 @@
 import { Anchor, Button, Heading } from "@components/atoms";
 import { media } from "@components/styles/theme";
-import { useUISelector } from "@contexts/uiSlice";
 import { type Variants, motion } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
@@ -43,6 +42,7 @@ const MainListItem = ({
     return (
         <Li
             onMouseEnter={() => setHovering(true)}
+            onClick={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
         >
             <Anchor href={href}>

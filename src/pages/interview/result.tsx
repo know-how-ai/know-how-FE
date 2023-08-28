@@ -1,35 +1,17 @@
 import { LabelWrapper } from "@components/molecules";
 import Layout from "../../layout/Layout";
-import { Form, Heading, Input, Textarea } from "@components/atoms";
+import {
+    Form,
+    Heading,
+    Hr,
+    Input,
+    Paragraph,
+    SubHeading,
+    Textarea,
+} from "@components/atoms";
 import type { NextPage } from "next";
-import styled from "styled-components";
 import { useResultSelector } from "@contexts/resultSlice";
 import { ResultContainer } from "@components/organics";
-
-const Article = styled.article`
-    line-height: 4rem;
-    margin-bottom: -1rem;
-`;
-
-const SubHeading = styled.h5`
-    font-weight: 600;
-    font-size: 2rem;
-    margin: 1rem initial;
-`;
-
-const Parag = styled.p`
-    line-height: 2.5rem;
-    font-size: 1.5rem;
-    color: ${(p) => p.theme.color.gray};
-    margin: 0.5rem auto;
-`;
-
-const Hr = styled.hr`
-    box-sizing: border-box;
-    width: 100%;
-    margin: 1rem auto;
-    margin-top: 2rem;
-`;
 
 const InterviewResultTitle: string = "면접 코칭 결과";
 
@@ -77,11 +59,17 @@ const InterviewResult: NextPage = () => {
 
                 <ResultContainer>
                     {intvResponse?.map((v: string, i: number) => (
-                        <Article key={`${v}__${i}`}>
+                        <article
+                            style={{
+                                lineHeight: "4rem",
+                                marginBottom: "-1rem",
+                            }}
+                            key={`${v}__${i}`}
+                        >
                             <SubHeading>{`${i + 1}번째 질문`}</SubHeading>
-                            <Parag>{v}</Parag>
+                            <Paragraph>{v}</Paragraph>
                             <Hr />
-                        </Article>
+                        </article>
                     ))}
                 </ResultContainer>
             </Form>

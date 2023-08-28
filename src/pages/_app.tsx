@@ -28,3 +28,9 @@ const App = ({ Component, ...rest }: AppProps) => {
 };
 
 export default App;
+
+export const metadata = {
+    icons: {
+        icon: "/favicon.ico",
+    },
+};

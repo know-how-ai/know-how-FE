@@ -1,9 +1,9 @@
 import { LabelWrapper } from "@components/molecules";
 import Layout from "../../layout";
 import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import {
     Badge,
+    BadgeContainer,
     Button,
     Form,
     Heading,
@@ -14,18 +14,7 @@ import type { NextPage } from "next";
 import useFetchService from "@libs/useFetchService";
 import { setInit, useResultSelector } from "@contexts/resultSlice";
 import { useAppDispatch } from "@contexts/contextHooks";
-
-const BadgeContainer = styled.section`
-    margin: auto;
-    padding: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
-    max-width: 50vw;
-`;
+import { URLs } from "@libs/urls";
 
 interface IResult {
     status: boolean;
@@ -45,7 +34,6 @@ const ToolTipContents: string[] = [
 ];
 
 const JobTitle: string = "직업 추천 봇";
-const JOB_URL = "/gpt/job";
 
 const Job: NextPage = () => {
     const dispatch = useAppDispatch();
@@ -55,7 +43,7 @@ const Job: NextPage = () => {
     const [personalities, setPersonalities] = useState<string[]>([]);
 
     const onSubmit = useFetchService<IRequest, IResult>({
-        fetchUrl: JOB_URL,
+        fetchUrl: URLs.GPT.JOB,
         afterFetchUrl: "/job/result",
         target: "job",
     });

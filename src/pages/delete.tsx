@@ -9,6 +9,7 @@ import useFetch from "@libs/useFetch";
 import { useAppDispatch } from "@contexts/contextHooks";
 import { setToast } from "@contexts/uiSlice";
 import { loggedOut } from "@contexts/userSlice";
+import { URLs } from "@libs/urls";
 
 interface IDeleteForm {
     email: string;
@@ -29,13 +30,11 @@ interface ResponseReturn {
 
 const title = "서비스 탈퇴";
 
-const DELETE_URL = `/user/delete`;
-
 const Delete: NextPage = () => {
     const dispatch = useAppDispatch();
 
     const { replace } = useRouter();
-    const { register, handleSubmit, setError } = useForm<IDeleteForm>({
+    const { register, handleSubmit } = useForm<IDeleteForm>({
         mode: "onBlur",
     });
 
@@ -44,7 +43,7 @@ const Delete: NextPage = () => {
             const { status, error } = await useFetch<
                 IDeleteForm,
                 ResponseReturn
-            >(DELETE_URL, "POST", formData);
+            >(URLs.USER.DELETE, "POST", formData);
 
             if (status && !error) {
                 replace("/");

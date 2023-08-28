@@ -1,30 +1,17 @@
 import { LabelWrapper } from "@components/molecules";
 import Layout from "../../layout/Layout";
-import { Form, Heading, Input, Textarea } from "@components/atoms";
+import {
+    Form,
+    Heading,
+    Hr,
+    Input,
+    Paragraph,
+    SubHeading,
+    Textarea,
+} from "@components/atoms";
 import type { NextPage } from "next";
-import styled from "styled-components";
 import { useResultSelector } from "@contexts/resultSlice";
 import { ResultContainer } from "@components/organics";
-
-const SubHeading = styled.h5`
-    font-weight: 600;
-    font-size: 2rem;
-    margin: 1rem initial;
-`;
-
-const Parag = styled.p`
-    line-height: 2.5rem;
-    font-size: 1.5rem;
-    color: ${(p) => p.theme.color.gray};
-    margin: 0.5rem auto;
-`;
-
-const Hr = styled.hr`
-    box-sizing: border-box;
-    width: 100%;
-    margin: 1rem auto;
-    margin-top: 2rem;
-`;
 
 const CoverletterResultTitle: string = "자소서 코칭 결과";
 
@@ -62,21 +49,21 @@ const CoverletterResult: NextPage = () => {
                     <SubHeading>긍정적인 점</SubHeading>
                     <article>
                         {cvResponse?.good?.map((v: string, k: number) => (
-                            <Parag key={k}>{v}</Parag>
+                            <Paragraph key={k}>{v}</Paragraph>
                         ))}
                     </article>
                     <Hr />
                     <SubHeading>아쉬운 점</SubHeading>
                     <article>
                         {cvResponse?.bad?.map((v: string, k: number) => (
-                            <Parag key={k}>{v}</Parag>
+                            <Paragraph key={k}>{v}</Paragraph>
                         ))}
                     </article>
                     <Hr />
                     <SubHeading>정리</SubHeading>
                     <article>
                         {cvResponse?.overall?.map((v: string, k: number) => (
-                            <Parag key={k}>{v}</Parag>
+                            <Paragraph key={k}>{v}</Paragraph>
                         ))}
                     </article>
                     <Hr />
