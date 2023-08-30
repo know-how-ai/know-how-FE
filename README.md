@@ -13,7 +13,7 @@
 
 ---
 
-![preview](public/preview.gif)
+![preview](public/service_preview.gif)
 
 ---
 
