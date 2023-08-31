@@ -33,11 +33,16 @@ const ResultContainer: FC<ResultContainerProps> = ({ children }) => {
         <>
             <ResultSection>{children}</ResultSection>
 
-            <Button type="button" onClick={() => back()}>
+            <Button
+                type="button"
+                data-testid={"again button"}
+                onClick={() => back()}
+            >
                 다시하기
             </Button>
 
             <Button
+                data-testid={"home button"}
                 type="button"
                 color="transparent"
                 onClick={() => {

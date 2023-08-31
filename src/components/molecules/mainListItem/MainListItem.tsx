@@ -25,7 +25,7 @@ const variants: Variants = {
 };
 
 interface MainListItemProps {
-    heading: string;
+    heading?: string;
     href: string;
     Child: ({ ...rest }) => JSX.Element;
     isDarkmode: boolean;

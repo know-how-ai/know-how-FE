@@ -39,7 +39,7 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ children, href }) => {
     return (
-        <LogoContainer_>
+        <LogoContainer_ data-testid={"logo"}>
             <Anchor href={href}>
                 <Logo_
                     variants={variants}

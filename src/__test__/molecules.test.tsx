@@ -53,9 +53,7 @@ describe("molecules 컴포넌트 유닛 테스트", () => {
     });
 
     test("LoginOrJoinForm", async () => {
-        useThemeRenderWithRedux(
-            <LoginOrJoinForm onError={jest.fn} onSuccess={jest.fn} />
-        );
+        useThemeRenderWithRedux(<LoginOrJoinForm onSuccess={jest.fn} />);
 
         const toggleBtn = screen.getByTestId(/toggle button/i);
         expect(toggleBtn).toBeInTheDocument();
@@ -140,7 +138,7 @@ describe("molecules 컴포넌트 유닛 테스트", () => {
     test("ProfileWidget", async () => {
         useThemeRenderWithRedux(<ProfileWidget onModal={jest.fn} />);
 
-        const button = screen.getByRole("button");
+        const button = screen.getByTestId("sign button");
 
         expect(button).toBeInTheDocument();
         expect(button).toBeEnabled();
@@ -151,7 +149,7 @@ describe("molecules 컴포넌트 유닛 테스트", () => {
             <ThemeWidget isDarkmode toggleThemeMode={jest.fn} />
         );
 
-        const button = screen.getByRole("button");
+        const button = screen.getByTestId("theme toggle button");
 
         expect(button).toBeInTheDocument();
         expect(button).toBeEnabled();
@@ -162,9 +160,7 @@ describe("molecules 컴포넌트 기능 테스트", () => {
     const user = userEvent.setup();
 
     test("LoginOrJoinForm: 메서드 토글", async () => {
-        useThemeRenderWithRedux(
-            <LoginOrJoinForm onError={jest.fn} onSuccess={jest.fn} />
-        );
+        useThemeRenderWithRedux(<LoginOrJoinForm onSuccess={jest.fn} />);
 
         const toggleBtn = screen.getByTestId(/toggle button/i);
         expect(toggleBtn).toBeEnabled();
@@ -180,9 +176,7 @@ describe("molecules 컴포넌트 기능 테스트", () => {
     });
 
     test("LoginOrJoinForm: 타이핑 테스트", async () => {
-        useThemeRenderWithRedux(
-            <LoginOrJoinForm onError={jest.fn()} onSuccess={jest.fn()} />
-        );
+        useThemeRenderWithRedux(<LoginOrJoinForm onSuccess={jest.fn()} />);
 
         const submitButton = screen.getByLabelText(
             /submitting form for login/i
@@ -360,7 +354,6 @@ describe("molecules 컴포넌트 기능 테스트", () => {
             <CheckEmailForm onError={jest.fn} onSuccess={jest.fn} />
         );
 
-        const label = screen.getByText("이메일");
         const input = screen.getByRole("textbox");
 
         await user.type(input, "test text");

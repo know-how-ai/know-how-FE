@@ -17,6 +17,7 @@ import {
     Table,
     Textarea,
     ToolTip,
+    Logo,
 } from "@components/atoms";
 import { useForm } from "react-hook-form";
 
@@ -214,7 +215,19 @@ describe("Components: atoms unit test", () => {
         expect(form).toBeEnabled();
     });
 
-    test("Select", async () => {
+    test("Logo", () => {
+        useThemeRenderWithRedux(<Logo href="#">test logo</Logo>);
+
+        const logoContainer = screen.getByTestId("logo");
+        expect(logoContainer).toBeInTheDocument();
+        expect(logoContainer).toBeEnabled();
+
+        const anchor = screen.getByRole("link");
+        expect(anchor).toBeInTheDocument();
+        expect(anchor).toBeEnabled();
+    });
+
+    test("Select", () => {
         const [choco, banana, berry] = ["choco", "banana", "berry"];
         let selected = choco;
 
@@ -401,7 +414,7 @@ describe("Components: atoms unit test", () => {
         ).not.toBeInTheDocument();
     });
 
-    test("Table", async () => {
+    test("Table", () => {
         const titleRow = ["name", "kind", "price"];
         const contentRows = [
             ["apple", "fruit", "4000"],
