@@ -64,7 +64,7 @@
 
 -   **Infrastructure** | `AWS S3`, `AWS CloudFront`, `AWS Route 53`, `AWS Lightsail`, `Github Actions`, `Apache`
 
--   **Test** | `Jest`, `Storybook`
+-   **Test** | `Jest`, `Storybook`, `Supertest`
 
 -   **Lint** | `ESLint`, `Prettier`
 
