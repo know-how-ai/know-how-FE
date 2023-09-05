@@ -96,7 +96,7 @@
 
 #### Back-end
 
--   이 프로젝트의 백엔드 파트는 `Express.js`와 `JavaScript`로 작성되었으며, `AWS Lightsail` VPS의 `Devian Linux`에서 구동 중입니다.
+-   이 프로젝트의 백엔드 파트는 `Express.js`와 `JavaScript`로 작성되었으며, `AWS Lightsail` VPS의 `Debian Linux`에서 운용중입니다.
 
 -   `MVC` 아키텍처를 기반으로, View 계층을 담당하는 `Next.js`를 Controller 계층인 `Express.js`와 분리해서 개발하여 Controller와 View 계층 간 결합도를 낮춰 의존성을 덜어내고, 유지보수성과 확장성을 더욱 확보했습니다. 프런트엔드 애플리케이션과 백엔드 애플리케이션 간의 통신은 `JSON` 인터페이스와 HTTP/S 프로토콜을 이용해 구성했습니다.
 
