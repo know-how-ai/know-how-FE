@@ -128,7 +128,7 @@
 
 -   ### 서버 환경
 
-    -   OS : `Devian Linux 11`
+    -   OS : `Debian Linux 11`
     -   DB : `MariaDB 10`
     -   Runtime : `Node.js v18`
     -   Dependency Manager : `npm`
