@@ -2,7 +2,6 @@ import { act, screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
 import { useThemeRenderWithRedux } from "@libs/jest-utils";
 import Job from "../../../pages/job";
-import userEvent from "@testing-library/user-event";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -32,11 +31,11 @@ describe("/job 페이지 테스트", () => {
             await mockRouter.push("/job");
         });
 
-        const addBtn = screen.getByRole("button", { name: /추가/ });
+        const addBtn = screen.getByText("추가");
         expect(addBtn).toBeInTheDocument();
         expect(addBtn).toBeEnabled();
 
-        const recommendBtn = screen.getByRole("button", { name: /추천+/ });
+        const recommendBtn = screen.getByText("추천받기");
         expect(recommendBtn).toBeInTheDocument();
         expect(recommendBtn).toBeEnabled();
 

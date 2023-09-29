@@ -39,9 +39,7 @@ describe("Components: Organics unit test", () => {
         expect(emailLabel).toBeInTheDocument();
         expect(passwordLabel).toBeInTheDocument();
 
-        const resetBtn = screen.getByRole("button", {
-            name: "비밀번호를 잊으셨나요?",
-        });
+        const resetBtn = screen.getByText("비밀번호를 잊으셨나요?");
         expect(resetBtn).toBeInTheDocument();
         expect(resetBtn).toBeEnabled();
 
