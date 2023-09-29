@@ -44,6 +44,11 @@
 
       <img width="480" alt="스크린샷 2023-08-29 오후 9 05 19" src="https://github.com/know-how-ai/know-how-BE/assets/105373350/465dc6fc-6654-4d9b-bb50-cb3fd00e906d">
 
+-   #### 테스트 커버리지 및 결과
+
+      <img width="922" alt="스크린샷 2023-09-30 오전 1 54 00" src="https://github.com/know-how-ai/know-how-FE/assets/105373350/563dbc47-4126-4a20-9ad5-a0d966c63c32">
+      <img width="797" alt="스크린샷 2023-09-30 오전 1 55 01" src="https://github.com/know-how-ai/know-how-FE/assets/105373350/8004f67d-9152-4cf0-8e40-3d588dd31353">
+
 ---
 
 ## _2. 기술 스택_
@@ -64,7 +69,7 @@
 
 -   **Infrastructure** | `AWS S3`, `AWS CloudFront`, `AWS Route 53`, `AWS Lightsail`, `Github Actions`, `Apache`
 
--   **Test** | `Jest`, `Storybook`
+-   **Test** | `Jest`, `Storybook`, `Cypress`
 
 -   **Lint** | `ESLint`, `Prettier`
 
@@ -90,13 +95,13 @@
 
 -   토스트 UI를 통해 사용자에게 서비스의 현재 상태를 알림으로 전달하여 인터랙티브하고 반응성이 좋다는 인식을 줄 수 있도록 유도하였습니다.
 
--   단위 테스트는 `Jest` 프레임워크를 이용해 시행하고, UI 테스트는 `Storybook`을 이용하였습니다. <span style="color:gray">_2023-08-28 기준 코드 커버리지는 85.47%입니다. 향후 애플리케이션의 안정성을 검증하기 위해 다양한 테스트를 추가할 예정입니다._</span>
+-   단위 테스트는 `Jest` 프레임워크를 이용해 시행하고, UI 테스트는 `Storybook`을 이용하였습니다. E2E 테스트는 `Cypress` 프레임워크를 이용해 시행했습니다. <span style="color:gray">_2023-09-30 기준 테스트 코드 커버리지는 86.04%입니다. 향후 애플리케이션의 안정성을 검증하기 위해 다양한 테스트를 추가할 예정입니다._</span>
 
 -   `Github Actions`를 이용한 테스트 자동화를 도입하고, 테스트 통과 시에 메인 브랜치로 푸시하는 전략을 도입하는 과정 속에서, `actions/cache` 액션 패키지를 이용해 이전과 동일한 의존성 패키지라면 캐싱한 데이터를 사용하는 캐싱 전략을 도입해, 2분 이상이 소요되는 워크플로우를 1분 내외로 줄이며 약 50%를 절약했습니다.
 
 #### Back-end
 
--   이 프로젝트의 백엔드 파트는 `Express.js`와 `JavaScript`로 작성되었으며, `AWS Lightsail` VPS의 `Devian Linux`에서 구동 중입니다.
+-   이 프로젝트의 백엔드 파트는 `Express.js`와 `JavaScript`로 작성되었으며, `AWS Lightsail` VPS의 `Debian Linux`에서 구동 중입니다.
 
 -   `MVC` 아키텍처를 기반으로, View 계층을 담당하는 `Next.js`를 Controller 계층인 `Express.js`와 분리해서 개발하여 Controller와 View 계층 간 결합도를 낮춰 의존성을 덜어내고, 유지보수성과 확장성을 더욱 확보했습니다. 프런트엔드 애플리케이션과 백엔드 애플리케이션 간의 통신은 `JSON` 인터페이스와 HTTP/S 프로토콜을 이용해 구성했습니다.
 
