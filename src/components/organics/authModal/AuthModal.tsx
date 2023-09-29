@@ -20,13 +20,14 @@ const AuthModal = ({
     return (
         <Modal handleClose={handleClose}>
             {!isResetMode ? (
-                <LoginOrJoinForm onSuccess={onSuccessJoin} />
+                <LoginOrJoinForm onSuccess={onSuccessJoin} onError={onError} />
             ) : (
                 <CheckEmailForm onSuccess={onSuccessFound} onError={onError} />
             )}
 
             <Button
                 color="transparent"
+                ariaLabel="reset password button"
                 onClick={() => setIsResetMode(!isResetMode)}
             >
                 {!isResetMode ? "비밀번호를 잊으셨나요?" : "돌아가기"}

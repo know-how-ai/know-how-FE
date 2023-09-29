@@ -37,7 +37,8 @@ const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
                 onError(error);
             }
         } catch (err) {
-            onError(err);
+            console.error(err);
+            onError("서버가 불안정합니다. \n잠시 후에 다시 시도해주세요.");
         }
     };
 
@@ -70,7 +71,7 @@ const CheckEmailForm = ({ onSuccess, onError }: CheckEmailFormProps) => {
                         })}
                     />
                 </LabelWrapper>
-                <Button>확인하기</Button>
+                <Button ariaLabel="checking the email button">확인하기</Button>
             </Form>
         </>
     );

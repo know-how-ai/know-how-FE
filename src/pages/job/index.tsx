@@ -106,7 +106,9 @@ const Job: NextPage = () => {
                         placeholder="Ex. 끈기, 섬세함, ..."
                     />
                 </LabelWrapper>
-                <Button onClick={onClickAdd}>추가</Button>
+                <Button ariaLabel="add personality button" onClick={onClickAdd}>
+                    추가
+                </Button>
             </Form>
 
             {personalities.length ? (
@@ -132,7 +134,12 @@ const Job: NextPage = () => {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Button isLoading={isLoading}>추천받기</Button>
+                <Button
+                    ariaLabel="require recommendation button"
+                    isLoading={isLoading}
+                >
+                    추천받기
+                </Button>
             </Form>
         </Layout>
     );

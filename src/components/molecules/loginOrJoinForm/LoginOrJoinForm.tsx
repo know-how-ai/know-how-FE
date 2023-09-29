@@ -84,10 +84,10 @@ interface ResponseReturn {
 
 interface LoginOrJoinFormProps {
     onSuccess: Function;
-    // onError: Function;
+    onError: Function;
 }
 
-const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
+const LoginOrJoinForm = ({ onSuccess, onError }: LoginOrJoinFormProps) => {
     const dispatch = useAppDispatch();
     const [method, setMethod] = useState<Method>("LOGIN");
     const { register, handleSubmit } = useForm<ILoginForm | IJoinForm>({
@@ -129,22 +129,23 @@ const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
             // 통신은 성공 && 요청에 오류 존재
             else if (error) {
                 // console.log(error);
-                dispatch(setToast({ toast: error }));
+                onError(error);
             }
         } catch (err) {
             console.error(err);
-            dispatch(
-                setToast({
-                    toast: "서버가 불안정합니다. \n잠시 후에 다시 시도해주세요.",
-                })
-            );
+            onError("서버가 불안정합니다. \n잠시 후에 다시 시도해주세요.");
         }
     };
 
     return (
         <Container>
             <TitleContainer>
-                <HeadLine isSelected={method === "LOGIN"}>접속하기</HeadLine>
+                <HeadLine
+                    data-testid="login heading"
+                    isSelected={method === "LOGIN"}
+                >
+                    접속하기
+                </HeadLine>
                 <ToggleButton
                     variant="dual"
                     statement={method === "LOGIN"}
@@ -154,7 +155,12 @@ const LoginOrJoinForm = ({ onSuccess }: LoginOrJoinFormProps) => {
                     ariaLabel={"Login or Join toggle Button"}
                     ariaDescription={`Current method is ${method}.`}
                 />
-                <HeadLine isSelected={method === "JOIN"}>가입하기</HeadLine>
+                <HeadLine
+                    data-testid="join heading"
+                    isSelected={method === "JOIN"}
+                >
+                    가입하기
+                </HeadLine>
             </TitleContainer>
 
             <Form

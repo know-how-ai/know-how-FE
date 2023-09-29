@@ -130,9 +130,9 @@ const Layout: FC<LayoutProps> = ({ children, title, widgets }) => {
         );
     }, []);
 
-    const onError = (message: string) => {
-        dispatch(setToast({ toast: message }));
-    };
+    const onError = useCallback((error: string) => {
+        dispatch(setToast({ toast: error }));
+    }, []);
 
     const onSuccessFound = (email: string, resetQuestion: string) => {
         push(`/reset?email=${email}&resetQuestion=${resetQuestion}`);

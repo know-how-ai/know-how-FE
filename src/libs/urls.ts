@@ -1,4 +1,6 @@
-const BASE_URL = "https://api.urworkhelper.net";
+// const BASE_URL = "https://api.urworkhelper.net";
+const BASE_URL = "http://localhost:8080";
+// const TEST_URL = "http://localhost:8080";
 
 const USER = "/user";
 const GPT = "/gpt";
